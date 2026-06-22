@@ -1371,14 +1371,18 @@
     document.getElementById('weightChange').textContent = `${change > 0 ? '+' : ''}${change} kg`;
     document.getElementById('recordCount').textContent = String(records.length);
 
-    [...records].reverse().forEach((record, index, arr) => {
-      const prev = arr[index + 1];
-      const delta = prev ? (record.weight - prev.weight).toFixed(1) : '0.0';
+    const rows = records.map((record, index) => {
+      const prevChronological = records[index - 1];
+      const delta = prevChronological ? (record.weight - prevChronological.weight).toFixed(1) : '0.0';
+      return { ...record, delta };
+    });
+
+    rows.reverse().forEach(record => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${record.date}</td>
         <td>${record.weight.toFixed(1)} kg</td>
-        <td>${delta > 0 ? '+' : ''}${delta} kg</td>
+        <td>${record.delta > 0 ? '+' : ''}${record.delta} kg</td>
         <td class="weight-table-actions"><button onclick="deleteWeightRecord('${record.date}')">删除</button></td>
       `;
       tbody.appendChild(row);

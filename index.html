@@ -513,7 +513,7 @@
   <div class="page-wrap">
     <div class="page-header">
       <h1>🥗 减脂人粮 · 周晚餐方案</h1>
-      <p>173cm · 85kg · 26岁 · 男 · 高尿酸史</p>
+      <p>按个人情况灵活调整热量目标与饮食结构</p>
     </div>
 
     <div class="card">
@@ -1335,7 +1335,7 @@
     if (!date || Number.isNaN(value)) return;
 
     const records = getWeightRecords().filter(r => r.date !== date);
-    records.push({ date, weight: Number(value.toFixed(1)) });
+    records.push({ date, weight: Math.round(value * 10) / 10 });
     records.sort((a, b) => a.date.localeCompare(b.date));
     setWeightRecords(records);
     renderWeightRecords();
@@ -1373,7 +1373,7 @@
 
     [...records].reverse().forEach((record, index, arr) => {
       const prev = arr[index + 1];
-      const delta = prev ? (record.weight - prev.weight).toFixed(1) : '0.0';
+      const delta = prev ? (prev.weight - record.weight).toFixed(1) : '0.0';
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${record.date}</td>

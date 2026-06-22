@@ -152,68 +152,6 @@
   .tbl tr:hover td { background: var(--gray-light); }
   .tbl .total td { font-weight: 700; background: var(--green-light); }
 
-  /* ── Weight tracker ── */
-  .weight-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 10px;
-    align-items: end;
-  }
-  .weight-field label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .weight-field input {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-  .weight-btn {
-    border: none;
-    background: var(--green);
-    color: var(--white);
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .weight-btn:hover { background: var(--green-dark); }
-  .weight-summary {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .weight-stat {
-    background: var(--green-light);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-  }
-  .weight-stat-value { font-size: 20px; font-weight: 800; color: var(--green-dark); }
-  .weight-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .weight-table-actions button {
-    border: 1px solid var(--border);
-    background: var(--white);
-    color: var(--text-muted);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  .weight-table-actions button:hover { border-color: var(--red); color: var(--red); }
-  .empty-tip {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-align: center;
-    padding: 12px 0 2px;
-  }
-
   /* ── Alert boxes ── */
   .alert {
     border-radius: 10px;
@@ -483,6 +421,105 @@
   .shop-item-detail { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
   .shop-item-price { font-size: 12px; color: var(--green-dark); font-weight: 600; }
 
+  /* ── Pool / Week tabs ── */
+  .pool-tabs, .week-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .pool-tab {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--gray);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .pool-tab:hover { border-color: var(--green); color: var(--green-dark); }
+  .pool-tab.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .week-tab {
+    flex: 1;
+    min-width: 70px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--gray);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .week-tab:hover { border-color: var(--green); color: var(--green-dark); }
+  .week-tab.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .pool-panel, .week-panel { display: none; }
+  .pool-panel.active, .week-panel.active { display: block; }
+
+  /* ── Ingredient card ── */
+  .ingr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .ingr-card {
+    border-radius: 10px;
+    padding: 16px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+  }
+  .ingr-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .ingr-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .ingr-method {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.75;
+  }
+  .ingr-method strong {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* ── Purine badge ── */
+  .purine-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .purine-low  { background: var(--green-light);  color: var(--green-dark); }
+  .purine-mid  { background: var(--orange-light); color: #92400e; }
+  .purine-high { background: var(--red-light);    color: #991b1b; }
+
   @media (max-width: 600px) and (orientation: portrait) {
     .top-nav { padding: 0 10px; }
     .nav-inner { gap: 6px; padding: 8px 0; }
@@ -494,10 +531,7 @@
     .card { padding: 16px; }
     .card-title { margin-bottom: 12px; }
 
-    .stat-grid,
-    .weight-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .weight-form { grid-template-columns: 1fr; }
-    .weight-btn { width: 100%; }
+    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .tbl { font-size: 13px; }
     .tbl th, .tbl td { padding: 8px 8px; }
@@ -510,7 +544,9 @@
     .step-title-block h2 { font-size: 17px; }
 
     .seasoning-grid,
-    .shop-grid { grid-template-columns: 1fr; }
+    .shop-grid,
+    .ingr-grid { grid-template-columns: 1fr; }
+    .pool-tab { padding: 5px 10px; font-size: 12px; }
     .meal-item { flex-direction: column; gap: 6px; }
     .meal-time { width: auto; padding-top: 0; }
   }
@@ -527,8 +563,9 @@
     <button class="nav-btn" onclick="showPage('reheat')">🔥 复热方法</button>
     <button class="nav-btn" onclick="showPage('seasoning')">🧂 调味方案</button>
     <button class="nav-btn" onclick="showPage('diet')">🌅 全天饮食</button>
-    <button class="nav-btn" onclick="showPage('weight')">⚖️ 体重追踪</button>
     <button class="nav-btn" onclick="showPage('gout')">⚠️ 痛风须知</button>
+    <button class="nav-btn" onclick="showPage('pools')">📦 营养池</button>
+    <button class="nav-btn" onclick="showPage('rotation')">📅 轮换菜单</button>
   </div>
 </nav>
 
@@ -539,26 +576,26 @@
   <div class="page-wrap">
     <div class="page-header">
       <h1>🥗 减脂人粮 · 周晚餐方案</h1>
-      <p>按个人情况灵活调整热量目标与饮食结构</p>
+      <p>173cm · 85kg · 26岁 · 男 · 高尿酸史</p>
     </div>
 
     <div class="card">
       <div class="card-title"><span class="icon">📏</span>个人指标</div>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">--</div>
-          <div class="stat-label">BMI（按实测体重填写）</div>
+          <div class="stat-value">28.4</div>
+          <div class="stat-label">BMI（超重）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">--</div>
-          <div class="stat-label">去脂体重（估算）</div>
+          <div class="stat-value">~63kg</div>
+          <div class="stat-label">去脂体重</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">--</div>
+          <div class="stat-value">1806</div>
           <div class="stat-label">BMR（kcal/天）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">--</div>
+          <div class="stat-value">~2450</div>
           <div class="stat-label">TDEE（kcal/天）</div>
         </div>
       </div>
@@ -1148,58 +1185,6 @@
 </div>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- PAGE: weight                              -->
-<!-- ══════════════════════════════════════════ -->
-<div id="page-weight" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>⚖️ 每日体重追踪</h1>
-      <p>记录每天体重，观察减脂趋势与波动</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">📝</span>新增记录</div>
-      <form class="weight-form" onsubmit="saveWeightRecord(event)">
-        <div class="weight-field">
-          <label for="weightDate">日期</label>
-          <input id="weightDate" type="date" required>
-        </div>
-        <div class="weight-field">
-          <label for="weightValue">体重（kg）</label>
-          <input id="weightValue" type="number" min="20" max="300" step="0.1" placeholder="例如 84.6" required>
-        </div>
-        <button class="weight-btn" type="submit">保存记录</button>
-      </form>
-      <div class="weight-summary">
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="latestWeight">--</div>
-          <div class="weight-stat-label">最近体重</div>
-        </div>
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="weightChange">--</div>
-          <div class="weight-stat-label">累计变化</div>
-        </div>
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="recordCount">0</div>
-          <div class="weight-stat-label">总记录天数</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">📅</span>历史记录</div>
-      <table class="tbl">
-        <thead>
-          <tr><th>日期</th><th>体重</th><th>变化</th><th>操作</th></tr>
-        </thead>
-        <tbody id="weightTableBody"></tbody>
-      </table>
-      <div class="empty-tip" id="weightEmptyTip">暂无记录，先添加今天的体重吧。</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
 <!-- PAGE: gout                                -->
 <!-- ══════════════════════════════════════════ -->
 <div id="page-gout" class="page">
@@ -1268,6 +1253,637 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: pools (营养池)                       -->
+<!-- ══════════════════════════════════════════ -->
+<div id="page-pools" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>📦 食材营养池</h1>
+      <p>每100g生重 · 按主要营养成分分类 · ⚠️标注痛风注意项</p>
+    </div>
+
+    <div class="pool-tabs">
+      <button class="pool-tab active" onclick="showPool('carb')">🌾 碳水池</button>
+      <button class="pool-tab" onclick="showPool('protein')">🥩 蛋白质池</button>
+      <button class="pool-tab" onclick="showPool('fat')">🫒 脂肪池</button>
+      <button class="pool-tab" onclick="showPool('micro')">🥦 微量元素池</button>
+    </div>
+
+    <!-- ─── 碳水化合物池 ─── -->
+    <div id="pool-carb" class="pool-panel active">
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>碳水化合物池（每100g）</div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>选择原则</strong>
+          优先选择低GI复合碳水，避免血糖剧烈波动。高膳食纤维粗粮有助减脂、稳定尿酸。每日碳水目标约190g。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>食材</th><th>热量(kcal)</th><th>碳水(g)</th><th>蛋白质(g)</th><th>脂肪(g)</th><th>膳食纤维(g)</th><th>GI</th><th>特点</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>糙米（干）</td><td>364</td><td>76</td><td>8.0</td><td>2.7</td><td>3.4</td><td>低 55</td><td>B族维生素丰富，减脂主食首选</td></tr>
+              <tr><td>燕麦（干）</td><td>389</td><td>67</td><td>17</td><td>7.0</td><td>10</td><td>低 55</td><td>β-葡聚糖降胆固醇，高蛋白主食</td></tr>
+              <tr><td>藜麦（干）</td><td>368</td><td>64</td><td>14</td><td>6.1</td><td>7.0</td><td>低 53</td><td>完全蛋白，含全部必需氨基酸</td></tr>
+              <tr><td>荞麦（干）</td><td>343</td><td>71</td><td>13</td><td>3.4</td><td>6.5</td><td>低 54</td><td>含芦丁，改善血管通透性</td></tr>
+              <tr><td>红薯（生）</td><td>90</td><td>21</td><td>1.6</td><td>0.1</td><td>3.0</td><td>中 61</td><td>β-胡萝卜素丰富，高钾低脂</td></tr>
+              <tr><td>紫薯（生）</td><td>82</td><td>19</td><td>1.5</td><td>0.1</td><td>2.5</td><td>中 58</td><td>花青素强效抗氧化</td></tr>
+              <tr><td>山药（生）</td><td>57</td><td>13</td><td>1.9</td><td>0.2</td><td>1.0</td><td>低 51</td><td>助消化，低热量饱腹感强</td></tr>
+              <tr><td>芋头（生）</td><td>80</td><td>18</td><td>2.2</td><td>0.2</td><td>1.0</td><td>低 55</td><td>富含钾、镁，低过敏性</td></tr>
+              <tr><td>玉米（鲜）</td><td>96</td><td>22</td><td>3.4</td><td>1.2</td><td>2.8</td><td>中 70</td><td>叶黄素护眼，可整段烤制备餐</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 蛋白质池 ─── -->
+    <div id="pool-protein" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质池（每100g生重）</div>
+        <div class="alert alert-orange" style="margin-bottom:14px">
+          <strong>⚠️ 嘌呤分级说明</strong>
+          低 &lt;25 mg · 中 25–150 mg · 高 &gt;150 mg（每100g）。痛风史：中嘌呤食材每份熟重≤80g，每天不超2种；高嘌呤食材禁用。每日蛋白质目标≥120g。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>食材（部位）</th><th>热量(kcal)</th><th>蛋白质(g)</th><th>脂肪(g)</th><th>碳水(g)</th><th>嘌呤</th><th>备注</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>🐔 鸡胸肉（去皮去骨）</td><td>165</td><td>31</td><td>3.6</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>高蛋白低脂，减脂首选</td></tr>
+              <tr><td>🐔 鸡大腿（去皮）</td><td>161</td><td>26</td><td>6.0</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>含铁稍高，肉质嫩润</td></tr>
+              <tr><td>🐔 鸡小腿（去皮）</td><td>135</td><td>24</td><td>4.0</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>富含胶原蛋白，炖煮更佳</td></tr>
+              <tr><td>🐄 牛里脊</td><td>147</td><td>22</td><td>6.5</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>铁2.7mg，锌4.4mg；薄片快炒</td></tr>
+              <tr><td>🐄 牛腱子</td><td>139</td><td>21</td><td>6.0</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>高胶原蛋白，炖煮弹牙</td></tr>
+              <tr><td>🐄 牛腩</td><td>295</td><td>17</td><td>25</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>铁丰富，脂肪高⚠️每份≤50g</td></tr>
+              <tr><td>🐷 猪里脊</td><td>143</td><td>22</td><td>6.2</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>瘦肉比例高，低脂易消化</td></tr>
+              <tr><td>🐷 猪梅头肉（颈背）</td><td>168</td><td>20</td><td>9.8</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>肥瘦均匀，口感最嫩，含B12</td></tr>
+              <tr><td>🐷 猪后腿肉</td><td>143</td><td>20</td><td>7.0</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>性价比高，可替代梅头肉</td></tr>
+              <tr><td>🐟 鲈鱼（海鲈）</td><td>105</td><td>19</td><td>3.4</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>DHA丰富，清蒸最佳</td></tr>
+              <tr><td>🐟 草鱼</td><td>113</td><td>18</td><td>4.3</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>价廉低脂，适合蒸或清汤</td></tr>
+              <tr><td>🐟 罗非鱼</td><td>96</td><td>20</td><td>1.7</td><td>0</td><td><span class="purine-badge purine-mid">中</span></td><td>极低脂高蛋白，刺少易备餐</td></tr>
+              <tr><td>🥚 鸡蛋（全蛋）</td><td>155</td><td>13</td><td>11</td><td>1.1</td><td><span class="purine-badge purine-low">低</span></td><td>无嘌呤限制，完全蛋白，性价比最高</td></tr>
+              <tr><td>🫘 老豆腐（北豆腐）</td><td>76</td><td>8.1</td><td>4.8</td><td>1.5</td><td><span class="purine-badge purine-low">低</span></td><td>促尿酸排泄，烤后冷冻不软烂</td></tr>
+              <tr><td>🫘 嫩豆腐</td><td>55</td><td>5.3</td><td>3.1</td><td>1.3</td><td><span class="purine-badge purine-low">低</span></td><td>钙100mg，适合蒸煮或煎制</td></tr>
+              <tr><td>🥛 低脂希腊酸奶</td><td>59</td><td>10</td><td>0.4</td><td>3.9</td><td><span class="purine-badge purine-low">极低</span></td><td>促尿酸排泄，高蛋白加餐首选</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-red" style="margin-top:16px">
+          <strong>❌ 蛋白质池禁用食材（高嘌呤）</strong>
+          动物内脏（肝/肾/脑/肠） · 带壳海鲜（虾/蛤/牡蛎/扇贝） · 沙丁鱼 · 凤尾鱼 · 鲭鱼 · 鱼皮/鱼籽
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 脂肪池 ─── -->
+    <div id="pool-fat" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🫒</span>脂肪池（每100g）</div>
+        <div class="alert alert-green" style="margin-bottom:14px">
+          <strong>选择原则</strong>
+          优先单不饱和脂肪酸（橄榄油、牛油果）和ω-3多不饱和脂肪酸（核桃、亚麻籽油）；减少饱和脂肪。每日总脂肪目标约55g，烹饪用油控制在10ml以内。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>食材</th><th>热量(kcal)</th><th>总脂肪(g)</th><th>饱和脂肪(g)</th><th>单不饱和(g)</th><th>ω-3(g)</th><th>蛋白质(g)</th><th>备注</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>橄榄油（初榨）</td><td>884</td><td>100</td><td>13.8</td><td>72.9</td><td>0.8</td><td>0</td><td>抗炎，可用于腌制和煎炒</td></tr>
+              <tr><td>亚麻籽油</td><td>884</td><td>100</td><td>9.4</td><td>18.4</td><td>53.4</td><td>0</td><td>ω-3最佳植物来源，不耐高温，拌凉菜用</td></tr>
+              <tr><td>牛油果（鲜）</td><td>160</td><td>15</td><td>2.1</td><td>9.8</td><td>0.1</td><td>2.0</td><td>钾487mg，膳食纤维7g，可替代部分油脂</td></tr>
+              <tr><td>核桃（生）</td><td>654</td><td>65</td><td>6.1</td><td>8.9</td><td>9.1</td><td>15</td><td>ω-3最丰富坚果，每天≤30g</td></tr>
+              <tr><td>杏仁（生）</td><td>579</td><td>50</td><td>3.8</td><td>31.6</td><td>0.003</td><td>21</td><td>维E丰富，Mg 268mg，每天≤30g</td></tr>
+              <tr><td>芝麻酱</td><td>593</td><td>53</td><td>7.4</td><td>19.7</td><td>0.4</td><td>17</td><td>钙870mg，铁10mg；⚠️高热量控量15g/次</td></tr>
+              <tr><td>鸡蛋黄</td><td>323</td><td>27</td><td>8.3</td><td>10.8</td><td>0.1</td><td>16</td><td>卵磷脂丰富，每天≤2个蛋黄无需限制</td></tr>
+              <tr><td>猪梅头肉（生）</td><td>168</td><td>9.8</td><td>3.4</td><td>4.2</td><td>0.1</td><td>20</td><td>脂肪适中均匀，同列蛋白池</td></tr>
+              <tr><td>牛腩（生）</td><td>295</td><td>25</td><td>10.6</td><td>11.0</td><td>0.4</td><td>17</td><td>⚠️控量≤50g/份；铁2.9mg，同列蛋白池</td></tr>
+              <tr><td>五花肉（生）</td><td>395</td><td>35</td><td>12.8</td><td>15.6</td><td>0.2</td><td>14</td><td>⚠️高饱和脂肪，偶尔少量，不进入轮换菜单</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 微量元素池 ─── -->
+    <div id="pool-micro" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>微量元素池（每100g）</div>
+        <div class="alert alert-green" style="margin-bottom:14px">
+          <strong>注意</strong>
+          蔬菜是微量元素主要来源，大部分蔬菜嘌呤极低，可大量食用。维生素C有助促进尿酸排泄，彩椒✨是维C最高来源之一。菠菜需焯水去除草酸。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>食材</th><th>热量(kcal)</th><th>铁 Fe(mg)</th><th>钙 Ca(mg)</th><th>维C(mg)</th><th>钾 K(mg)</th><th>镁 Mg(mg)</th><th>嘌呤</th><th>备注</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>🌿 菠菜</td><td>23</td><td>2.7</td><td>99</td><td>28</td><td>558</td><td>79</td><td><span class="purine-badge purine-low">低</span></td><td>⚠️草酸高，必须焯水再食用</td></tr>
+              <tr><td>🥬 羽衣甘蓝</td><td>50</td><td>1.5</td><td>150</td><td>120</td><td>491</td><td>34</td><td><span class="purine-badge purine-low">低</span></td><td>钙媲美牛奶，维C极高</td></tr>
+              <tr><td>🥦 西兰花</td><td>34</td><td>0.7</td><td>47</td><td>89</td><td>316</td><td>21</td><td><span class="purine-badge purine-low">低</span></td><td>萝卜硫素抗癌，维C高</td></tr>
+              <tr><td>🥕 胡萝卜</td><td>41</td><td>0.3</td><td>33</td><td>6</td><td>320</td><td>12</td><td><span class="purine-badge purine-low">低</span></td><td>β-胡萝卜素8285μg，与油同食吸收更好</td></tr>
+              <tr><td>🫑 彩椒（红/黄）</td><td>31</td><td>0.4</td><td>7</td><td>128</td><td>211</td><td>12</td><td><span class="purine-badge purine-low">低</span></td><td>✨维C最高，有助降尿酸，可生食</td></tr>
+              <tr><td>🥒 西葫芦</td><td>17</td><td>0.4</td><td>16</td><td>17</td><td>262</td><td>18</td><td><span class="purine-badge purine-low">低</span></td><td>低热量，冷冻复热口感好</td></tr>
+              <tr><td>🍅 番茄</td><td>18</td><td>0.5</td><td>10</td><td>23</td><td>237</td><td>11</td><td><span class="purine-badge purine-low">低</span></td><td>番茄红素2573μg，加热后吸收翻倍</td></tr>
+              <tr><td>🥒 黄瓜</td><td>15</td><td>0.3</td><td>16</td><td>2.8</td><td>147</td><td>13</td><td><span class="purine-badge purine-low">低</span></td><td>促进水分代谢，建议生食鲜加</td></tr>
+              <tr><td>🍆 茄子</td><td>25</td><td>0.2</td><td>9</td><td>2.5</td><td>229</td><td>14</td><td><span class="purine-badge purine-low">低</span></td><td>花青素护血管；⚠️吸油强，用空气炸锅</td></tr>
+              <tr><td>🥬 小白菜</td><td>13</td><td>1.9</td><td>90</td><td>28</td><td>178</td><td>18</td><td><span class="purine-badge purine-low">低</span></td><td>铁钙均衡，适合快速焯水</td></tr>
+              <tr><td>🥬 圆白菜</td><td>25</td><td>0.5</td><td>40</td><td>45</td><td>170</td><td>12</td><td><span class="purine-badge purine-low">低</span></td><td>维C丰富，生食炒食均可</td></tr>
+              <tr><td>🥬 大白菜</td><td>18</td><td>0.3</td><td>50</td><td>19</td><td>137</td><td>9</td><td><span class="purine-badge purine-low">低</span></td><td>高水分低热量，冬季首选</td></tr>
+              <tr><td>🫘 四季豆</td><td>30</td><td>1.5</td><td>55</td><td>19</td><td>209</td><td>28</td><td><span class="purine-badge purine-low">低</span></td><td>⚠️必须熟透，生食含凝集素毒素</td></tr>
+              <tr><td>🍄 平菇</td><td>25</td><td>1.0</td><td>8</td><td>5</td><td>306</td><td>12</td><td><span class="purine-badge purine-mid">中</span></td><td>⚠️中嘌呤，每次限50g；钾K高</td></tr>
+              <tr><td>🐄 牛里脊</td><td>147</td><td>2.7</td><td>11</td><td>—</td><td>322</td><td>22</td><td><span class="purine-badge purine-mid">中</span></td><td>铁+锌优质肉类来源，同列蛋白池</td></tr>
+              <tr><td>🌰 核桃</td><td>654</td><td>2.9</td><td>98</td><td>1.3</td><td>441</td><td>158</td><td><span class="purine-badge purine-low">低</span></td><td>Mg极高，ω-3丰富，每天≤30g</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: rotation (轮换菜单)                  -->
+<!-- ══════════════════════════════════════════ -->
+<div id="page-rotation" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>📅 轮换菜单</h1>
+      <p>四周循环 · 与上周重复食材≤3种 · 与上上周不完全相同</p>
+    </div>
+
+    <div class="alert alert-blue" style="margin-bottom:16px">
+      <strong>💡 使用说明</strong>
+      <span class="pill pill-green">🆕 本周新增</span> 使用对应的新备菜方法；
+      <span class="pill pill-orange">🔄 沿用</span> 可直接沿用上周剩余备菜法或重新制作。
+      🥒🍅 标注「生鲜鲜加」的食材不适合混合冷冻，建议每天取出时现切加入。
+    </div>
+
+    <div class="week-tabs">
+      <button class="week-tab active" onclick="showWeek(1)">第1周</button>
+      <button class="week-tab" onclick="showWeek(2)">第2周</button>
+      <button class="week-tab" onclick="showWeek(3)">第3周</button>
+      <button class="week-tab" onclick="showWeek(4)">第4周</button>
+    </div>
+
+    <!-- ═══ 第1周 ═══ -->
+    <div id="week-1" class="week-panel active">
+      <div class="card">
+        <div class="card-title"><span class="icon">📋</span>第1周概览</div>
+        <div class="stat-grid" style="margin-bottom:14px">
+          <div class="stat-item"><div class="stat-value">10</div><div class="stat-label">食材总数</div></div>
+          <div class="stat-item"><div class="stat-value">10</div><div class="stat-label">🆕 新增</div></div>
+          <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">🔄 沿用</div></div>
+          <div class="stat-item"><div class="stat-value">~670</div><div class="stat-label">每份热量(kcal)</div></div>
+        </div>
+        <div class="alert alert-green">
+          <strong>本周主题：低脂高蛋白经典版</strong>
+          鸡胸肉+老豆腐为主要蛋白质来源，糙米+红薯提供复合碳水，彩色蔬菜补充维C和矿物质。
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🐔 鸡胸肉（去皮） <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">400g生重 · 约80g熟重/份 · 蛋白质≈25g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 空气炸锅法</strong>
+              ① 橄榄油+蒜末+黑胡椒均匀涂抹，腌制5分钟<br>
+              ② 空气炸锅180°C 烤18-20分钟，中途翻面一次<br>
+              ③ 冷却后顺纤维方向撕成细丝（冷冻复热口感更佳）
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🥚 鸡蛋 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">10个 · 约2个/份 · 蛋白质≈12.6g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 水煮全熟法</strong>
+              ① 冷水放入鸡蛋，开大火<br>
+              ② 水沸后计时10分钟（全熟）<br>
+              ③ 捞出立即冰水浸泡5分钟（易剥壳）<br>
+              ④ 全部剥壳，每个切4瓣备用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🫘 老豆腐 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 蛋白质≈5.7g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 压干+空气炸锅法</strong>
+              ① 切1.5cm小块，厨房纸包裹<br>
+              ② 重物压置10分钟排出多余水分<br>
+              ③ 空气炸锅200°C 烤10-12分钟至表面金黄<br>
+              ④ 冷却备用（冷冻后质地紧实不软烂）
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>主食</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🍚 糙米 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">320g干重 → 约800g熟重 · 160g熟/份</div>
+            <div class="ingr-method">
+              <strong>▸ 电饭锅法</strong>
+              ① 淘洗2-3遍至水清<br>
+              ② 1:1.5比例加水（320g米+480ml水）<br>
+              ③ 电饭锅"糙米"档；或大火烧开转小火焖40分钟<br>
+              ④ 摊开晾凉防结块
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🍠 红薯 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 空气炸锅法</strong>
+              ① 去皮切约2cm小块<br>
+              ② 空气炸锅200°C 烤20-22分钟<br>
+              ③ 至熟软表面微干，冷却备用
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
+        <div class="alert alert-orange" style="margin-bottom:14px">
+          <strong>焯水顺序（同一锅水）：</strong>
+          胡萝卜3min → 西兰花2min → 西葫芦1.5min → 彩椒1min → 菠菜30秒。每种捞出立即过冰水，然后充分沥干。
+        </div>
+        <table class="tbl">
+          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>🥦 西兰花</td><td><span class="pill pill-green">🆕</span></td><td>400g</td><td>切小朵，焯水2分钟，冰水过凉</td><td>富含萝卜硫素</td></tr>
+            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-green">🆕</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>与油同食吸收更好</td></tr>
+            <tr><td>🫑 彩椒（红/黄）</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切小块，焯水1分钟，冰水过凉</td><td>维C最高，尽量少焯</td></tr>
+            <tr><td>🥒 西葫芦</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>冷冻复热口感佳</td></tr>
+            <tr><td>🌿 菠菜</td><td><span class="pill pill-green">🆕</span></td><td>150g</td><td>整叶入水，焯水30秒</td><td>⚠️草酸高，必须焯水</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ 第2周 ═══ -->
+    <div id="week-2" class="week-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">📋</span>第2周概览</div>
+        <div class="stat-grid" style="margin-bottom:14px">
+          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
+          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
+          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
+          <div class="stat-item"><div class="stat-value">~650</div><div class="stat-label">每份热量(kcal)</div></div>
+        </div>
+        <div class="alert alert-green">
+          <strong>本周主题：猪肉+鲈鱼双蛋白版</strong>
+          猪梅头肉和清蒸鲈鱼替换鸡胸肉，藜麦+紫薯替换主食，引入番茄和黄瓜提升清爽感。
+        </div>
+        <div class="alert alert-blue">
+          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 西葫芦
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🐷 猪梅头肉 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g生重 · 约60g/份 · 蛋白质≈12g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 水煮法</strong>
+              ① 切薄片（约5mm），冷水下锅<br>
+              ② 大火烧开后撇去浮沫<br>
+              ③ 转小火煮15分钟至熟<br>
+              ④ 捞出沥干，冷却备用（吃时再调味）
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🐟 鲈鱼 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g净重(约2条小鲈) · 约60g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 清蒸法</strong>
+              ① 鱼身两面划几刀，姜片垫底<br>
+              ② 蒸锅水开后大火蒸10-12分钟<br>
+              ③ 取出去皮去骨，撕成鱼块<br>
+              ④ 冷却备用（不加调料，吃时鲜加）
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
+            <div class="ingr-meta">10个 · 约2个/份 · 同第1周方法</div>
+            <div class="ingr-method">
+              <strong>▸ 水煮全熟法（同第1周）</strong>
+              ① 冷水放蛋，大火烧开<br>
+              ② 水沸后计时10分钟<br>
+              ③ 冰水浸泡5分钟，剥壳切4瓣
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🫘 北豆腐（嫩豆腐） <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 换豆腐品种</div>
+            <div class="ingr-method">
+              <strong>▸ 平底锅煎法</strong>
+              ① 切1.5cm厚片，厨房纸吸干表面<br>
+              ② 平底锅加5ml橄榄油，中火预热<br>
+              ③ 每面煎3-4分钟至金黄<br>
+              ④ 冷却备用（外酥内嫩）
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>主食</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🌾 藜麦 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g干重 → 约750g熟重 · 150g熟/份</div>
+            <div class="ingr-method">
+              <strong>▸ 电饭锅法（需预洗去皂苷）</strong>
+              ① 冷水搓洗至不起泡（去苦味皂苷）<br>
+              ② 1:1.5加水（300g+450ml水）<br>
+              ③ 大火烧开转小火焖15分钟<br>
+              ④ 摊开晾凉，颗粒分明即可
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🍠 紫薯 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 换薯类品种</div>
+            <div class="ingr-method">
+              <strong>▸ 蒸锅法</strong>
+              ① 去皮切2cm小块<br>
+              ② 上蒸锅，水开后蒸20分钟<br>
+              ③ 筷子能轻松穿透即可，冷却备用
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>🥒🍅 本周含生鲜鲜加蔬菜：</strong>番茄、黄瓜建议每天取出时现切加入，不混入冷冻批次。
+        </div>
+        <table class="tbl">
+          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
+            <tr><td>🥒 西葫芦</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>同第1周</td></tr>
+            <tr><td>🍅 番茄</td><td><span class="pill pill-green">🆕</span></td><td>250g</td><td>切小块，生用鲜加（不冷冻）</td><td>番茄红素丰富</td></tr>
+            <tr><td>🥒 黄瓜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>拍碎或切片，生用鲜加（不冷冻）</td><td>促水分代谢</td></tr>
+            <tr><td>🥬 小白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>整叶焯水30秒，冰水过凉，沥干</td><td>铁钙均衡</td></tr>
+            <tr><td>🥬 圆白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>手撕大块，焯水2分钟</td><td>维C丰富</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ 第3周 ═══ -->
+    <div id="week-3" class="week-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">📋</span>第3周概览</div>
+        <div class="stat-grid" style="margin-bottom:14px">
+          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
+          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
+          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
+          <div class="stat-item"><div class="stat-value">~680</div><div class="stat-label">每份热量(kcal)</div></div>
+        </div>
+        <div class="alert alert-green">
+          <strong>本周主题：牛肉大补版</strong>
+          换用牛里脊提供铁和锌，老豆腐用蒸法呈现不同质感，引入茄子和四季豆丰富蔬菜种类。
+        </div>
+        <div class="alert alert-blue">
+          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 番茄
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🐄 牛里脊 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g生重 · 约60g/份 · 铁2.7mg+锌4.4mg/份</div>
+            <div class="ingr-method">
+              <strong>▸ 热锅快炒法</strong>
+              ① 逆纹切薄片（约3mm），加生抽10ml腌制10分钟<br>
+              ② 热锅加橄榄油5ml，大火翻炒2分钟<br>
+              ③ 保留嫩度，不要过熟<br>
+              ④ 冷却备用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
+            <div class="ingr-meta">10个 · 本周换炒法，口感更均匀</div>
+            <div class="ingr-method">
+              <strong>▸ 炒蛋碎法（本周换法）</strong>
+              ① 10个蛋打散，加少量盐搅匀<br>
+              ② 热锅加5ml橄榄油，中大火<br>
+              ③ 倒入蛋液，快速翻炒至碎粒状<br>
+              ④ 冷却备用（炒蛋碎冷冻口感优于整蛋）
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🫘 老豆腐 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 本周换蒸法</div>
+            <div class="ingr-method">
+              <strong>▸ 蒸法（本周换法）</strong>
+              ① 切1.5cm小块，铺在蒸盘<br>
+              ② 蒸锅水开后，蒸10分钟<br>
+              ③ 冷却备用（质地更嫩，口感不同于烤）
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>主食</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🍚 糙米 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">320g干重 · 同第1周食材，重新制作</div>
+            <div class="ingr-method">
+              <strong>▸ 电饭锅法（同第1周）</strong>
+              ① 淘洗后1:1.5加水<br>
+              ② 电饭锅糙米档煮熟，摊开晾凉
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🍠 红薯 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 本周换微波炉法</div>
+            <div class="ingr-method">
+              <strong>▸ 微波炉法（本周换法）</strong>
+              ① 去皮切2cm块，平铺微波容器<br>
+              ② 加2汤匙水，高火5-6分钟至熟软<br>
+              ③ 冷却备用
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
+        <div class="alert alert-red" style="margin-bottom:14px">
+          <strong>⚠️ 四季豆必须熟透：</strong>焯水至少4分钟，确认颜色由鲜绿变暗绿，生食四季豆含凝集素毒素。
+        </div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>🫑 本周彩椒生切鲜加：</strong>保留更多维C，与番茄一起每天现切加入。
+        </div>
+        <table class="tbl">
+          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
+            <tr><td>🍅 番茄</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切小块，热锅略炒1分钟出汁</td><td>加热后番茄红素更易吸收</td></tr>
+            <tr><td>🥦 西兰花</td><td><span class="pill pill-green">🆕</span></td><td>400g</td><td>切小朵，焯水2分钟，冰水过凉</td><td>同第1周方法</td></tr>
+            <tr><td>🫑 彩椒（红/黄）</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切细条生用，每天现切加入（不冷冻）</td><td>✨维C最高，生食更佳</td></tr>
+            <tr><td>🍆 茄子</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切2cm块，空气炸锅200°C烤15分钟</td><td>⚠️不用刷油，茄子吸油多</td></tr>
+            <tr><td>🫘 四季豆</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>去筋折段，焯水4分钟至暗绿色</td><td>⚠️必须熟透，见备注</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ 第4周 ═══ -->
+    <div id="week-4" class="week-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">📋</span>第4周概览</div>
+        <div class="stat-grid" style="margin-bottom:14px">
+          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
+          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
+          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
+          <div class="stat-item"><div class="stat-value">~640</div><div class="stat-label">每份热量(kcal)</div></div>
+        </div>
+        <div class="alert alert-green">
+          <strong>本周主题：猪里脊+草鱼清淡版</strong>
+          猪里脊和草鱼替换蛋白来源，燕麦+山药替换主食，引入菠菜回归及西葫芦，整体口味更清淡。
+        </div>
+        <div class="alert alert-blue">
+          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 番茄
+        </div>
+        <div class="alert alert-orange">
+          <strong>✅ 与第2周不完全相同：</strong>第4周换用猪里脊/草鱼（第2周为猪梅头肉/鲈鱼），燕麦/山药（第2周为藜麦/紫薯），菠菜/西葫芦（第2周为小白菜/圆白菜），满足"与上上周不完全相同"要求。
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🐷 猪里脊 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g生重 · 约60g/份 · 高蛋白低脂</div>
+            <div class="ingr-method">
+              <strong>▸ 水煮腌制法</strong>
+              ① 切薄片(3-5mm)，加生抽10ml腌制10分钟<br>
+              ② 煮锅水开后，放入猪里脊片<br>
+              ③ 中火煮8分钟至熟透<br>
+              ④ 捞出冷却备用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🐟 草鱼 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g净重 · 约60g/份 · 低脂高蛋白</div>
+            <div class="ingr-method">
+              <strong>▸ 清蒸法</strong>
+              ① 切段，姜片垫底入盘<br>
+              ② 蒸锅水开后大火蒸12分钟<br>
+              ③ 取出去皮去刺，撕成鱼块<br>
+              ④ 冷却备用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
+            <div class="ingr-meta">10个 · 本周改溏心蛋，仅冷藏不冷冻</div>
+            <div class="ingr-method">
+              <strong>▸ 溏心水煮法（本周换法）</strong>
+              ① 冷水放蛋，大火烧开<br>
+              ② 水沸后计时8分钟（溏心）<br>
+              ③ 冰水浸泡5分钟，剥壳对半切<br>
+              ④ ⚠️溏心蛋仅冷藏保存，3天内食用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🫘 北豆腐 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 本周用空气炸锅</div>
+            <div class="ingr-method">
+              <strong>▸ 空气炸锅法（本周换法）</strong>
+              ① 切1.5cm小块，厨房纸吸干表面<br>
+              ② 空气炸锅200°C 烤10-12分钟至金黄<br>
+              ③ 冷却备用（外酥内嫩）
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>主食</div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <h3>🌾 燕麦 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">300g干重 → 约600g泡发 · 120g/份</div>
+            <div class="ingr-method">
+              <strong>▸ 电饭锅保温法</strong>
+              ① 量入锅胆，加入开水至刚好没过<br>
+              ② 电饭锅保温档焖15分钟至软<br>
+              ③ 适当干一些便于分装（不要太稀）<br>
+              ④ 摊开晾凉备用
+            </div>
+          </div>
+          <div class="ingr-card">
+            <h3>🥔 山药 <span class="pill pill-green">🆕</span></h3>
+            <div class="ingr-meta">350g · 约70g/份 · 低GI主食</div>
+            <div class="ingr-method">
+              <strong>▸ 蒸锅法</strong>
+              ① ⚠️戴手套去皮（防黏液致痒）<br>
+              ② 切滚刀块约3cm<br>
+              ③ 上蒸锅，水开后蒸15分钟至软熟<br>
+              ④ 冷却备用
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>🥒🍅 本周含生鲜鲜加蔬菜：</strong>番茄、黄瓜建议每天取出时现切加入，不混入冷冻批次。
+        </div>
+        <table class="tbl">
+          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
+            <tr><td>🍅 番茄</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切小块，生用每天鲜加（不冷冻）</td><td>清爽口感</td></tr>
+            <tr><td>🌿 菠菜</td><td><span class="pill pill-green">🆕</span></td><td>150g</td><td>整叶焯水30秒，冰水过凉，沥干</td><td>⚠️草酸高，必须焯水</td></tr>
+            <tr><td>🥒 西葫芦</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>同第1周方法</td></tr>
+            <tr><td>🥒 黄瓜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切片，生用每天鲜加（不冷冻）</td><td>促水分代谢</td></tr>
+            <tr><td>🥬 大白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>手撕块，焯水2分钟，沥干</td><td>高水分低热量</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 轮换规则总结 -->
+    <div class="card" style="margin-top:8px">
+      <div class="card-title"><span class="icon">📊</span>四周轮换规则验证</div>
+      <table class="tbl">
+        <thead><tr><th>对比</th><th>共同食材数</th><th>是否满足≤3条件</th><th>是否完全相同</th></tr></thead>
+        <tbody>
+          <tr><td>第1周 → 第2周</td><td>3（鸡蛋、胡萝卜、西葫芦）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
+          <tr><td>第2周 → 第3周</td><td>3（鸡蛋、胡萝卜、番茄）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
+          <tr><td>第3周 → 第4周</td><td>3（鸡蛋、胡萝卜、番茄）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
+          <tr><td>第1周 vs 第3周（间隔一周）</td><td>7（共有但不完全相同）</td><td>—</td><td>✅ 不完全相同</td></tr>
+          <tr><td>第2周 vs 第4周（间隔一周）</td><td>5（共有但不完全相同）</td><td>—</td><td>✅ 不完全相同</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <!-- ── JavaScript ── -->
 <script>
   // ── Page switching ──
@@ -1276,7 +1892,7 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     navBtns.forEach(b => b.classList.remove('active'));
-    const idx = ['overview','shopping','prep','reheat','seasoning','diet','weight','gout'].indexOf(id);
+    const idx = ['overview','shopping','prep','reheat','seasoning','diet','gout','pools','rotation'].indexOf(id);
     navBtns[idx].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1342,95 +1958,24 @@
     updateStepUI();
   }
 
-  // ── Weight tracking ──
-  const WEIGHT_KEY = 'daily_weight_records';
-  const roundToOneDecimal = value => Math.round(value * 10) / 10;
-  const formatSigned = value => `${value > 0 ? '+' : ''}${value.toFixed(1)}`;
-
-  function getWeightRecords() {
-    const data = JSON.parse(localStorage.getItem(WEIGHT_KEY) || '[]');
-    return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
-  }
-
-  function setWeightRecords(records) {
-    localStorage.setItem(WEIGHT_KEY, JSON.stringify(records));
-  }
-
-  function saveWeightRecord(event) {
-    event.preventDefault();
-    const date = document.getElementById('weightDate').value;
-    const value = parseFloat(document.getElementById('weightValue').value);
-    if (!date || Number.isNaN(value) || value < 20 || value > 300) {
-      window.alert('请输入有效日期和体重（20-300kg）。');
-      return;
-    }
-
-    const existingRecords = getWeightRecords();
-    const existed = existingRecords.some(r => r.date === date);
-    if (existed && !window.confirm('该日期已有记录，是否覆盖？')) return;
-
-    const records = existingRecords.filter(r => r.date !== date);
-    records.push({ date, weight: roundToOneDecimal(value) });
-    setWeightRecords(records);
-    renderWeightRecords();
-    document.getElementById('weightValue').value = '';
-  }
-
-  function deleteWeightRecord(date) {
-    const records = getWeightRecords().filter(r => r.date !== date);
-    setWeightRecords(records);
-    renderWeightRecords();
-  }
-
-  function renderWeightRecords() {
-    const records = getWeightRecords();
-    const tbody = document.getElementById('weightTableBody');
-    const emptyTip = document.getElementById('weightEmptyTip');
-    tbody.innerHTML = '';
-
-    if (!records.length) {
-      emptyTip.style.display = 'block';
-      document.getElementById('latestWeight').textContent = '--';
-      document.getElementById('weightChange').textContent = '--';
-      document.getElementById('recordCount').textContent = '0';
-      return;
-    }
-
-    emptyTip.style.display = 'none';
-    const first = records[0];
-    const latest = records[records.length - 1];
-    const change = roundToOneDecimal(latest.weight - first.weight);
-
-    document.getElementById('latestWeight').textContent = `${latest.weight.toFixed(1)} kg`;
-    document.getElementById('weightChange').textContent = `${formatSigned(change)} kg`;
-    document.getElementById('recordCount').textContent = String(records.length);
-
-    const rows = records.map((record, index) => {
-      const prevChronological = records[index - 1];
-      const delta = prevChronological ? roundToOneDecimal(record.weight - prevChronological.weight) : 0;
-      return { ...record, delta };
-    });
-
-    [...rows].reverse().forEach(record => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${record.date}</td>
-        <td>${record.weight.toFixed(1)} kg</td>
-        <td>${formatSigned(record.delta)} kg</td>
-        <td class="weight-table-actions"><button onclick="deleteWeightRecord('${record.date}')">删除</button></td>
-      `;
-      tbody.appendChild(row);
+  // ── Nutrition pool tabs ──
+  const POOL_IDS = ['carb', 'protein', 'fat', 'micro'];
+  function showPool(id) {
+    document.querySelectorAll('.pool-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('pool-' + id).classList.add('active');
+    document.querySelectorAll('.pool-tab').forEach((t, i) => {
+      t.classList.toggle('active', POOL_IDS[i] === id);
     });
   }
 
-  function initWeightTracker() {
-    const now = new Date();
-    const localDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    document.getElementById('weightDate').value = localDate;
-    renderWeightRecords();
+  // ── Weekly rotation tabs ──
+  function showWeek(n) {
+    document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('week-' + n).classList.add('active');
+    document.querySelectorAll('.week-tab').forEach((t, i) => {
+      t.classList.toggle('active', i + 1 === n);
+    });
   }
-
-  initWeightTracker();
 </script>
 </body>
 </html>

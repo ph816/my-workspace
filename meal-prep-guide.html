@@ -1151,7 +1151,7 @@
     const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
     return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
   }
-  const CURRENT_WEEK = (getISOWeek(new Date()) % 4) || 4;
+  const CURRENT_WEEK = ((getISOWeek(new Date()) - 1) % 4) + 1;
 
   // ── 4-week rotation data ──
   const WEEK_DATA = [
@@ -1659,7 +1659,7 @@
   }
 
   // ── Prep page renderer ──
-  let TOTAL_STEPS = 6;
+  let TOTAL_STEPS = 0;
   let currentStep = 1;
 
   function renderPrepPage(week) {

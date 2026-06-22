@@ -640,24 +640,7 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><span class="icon">🍱</span>每份"人粮"营养（约680g混合物）</div>
-      <table class="tbl">
-        <thead>
-          <tr><th>食材</th><th>熟重</th><th>热量</th><th>蛋白质</th><th>碳水</th><th>脂肪</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>鸡胸肉（熟撕丝）</td><td>80g</td><td>132 kcal</td><td>25g</td><td>0g</td><td>3g</td></tr>
-          <tr><td>鸡蛋（全熟）</td><td>2个（~100g）</td><td>143 kcal</td><td>12.6g</td><td>0.7g</td><td>9.5g</td></tr>
-          <tr><td>老豆腐（烤压干）</td><td>70g</td><td>56 kcal</td><td>5.1g</td><td>1.5g</td><td>3.4g</td></tr>
-          <tr><td>熟糙米</td><td>160g</td><td>185 kcal</td><td>3.9g</td><td>41g</td><td>1.6g</td></tr>
-          <tr><td>红薯（烤熟）</td><td>70g</td><td>63 kcal</td><td>1.1g</td><td>15g</td><td>0.1g</td></tr>
-          <tr><td>混合蔬菜（焯水）</td><td>200g</td><td>65 kcal</td><td>4.2g</td><td>12g</td><td>0.8g</td></tr>
-          <tr><td>烹饪用油（残留）</td><td>—</td><td>25 kcal</td><td>0g</td><td>0g</td><td>2.8g</td></tr>
-          <tr class="total"><td>合计</td><td>~680g</td><td>≈669 kcal</td><td>≈52g</td><td>≈70g</td><td>≈21g</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div id="overview-nutrition-content"></div>
   </div>
 </div>
 
@@ -1258,6 +1241,19 @@
           tip: '<strong>🎉 备餐完成！</strong> 储存时限：冷藏保鲜3天，冷冻最佳赏味期2周（最长4周）。记得提前一晚将冷冻份转移到冷藏解冻。',
         },
       ],
+      nutrition: {
+        portionDesc: '约680g混合物',
+        rows: [
+          { name: '鸡胸肉（熟撕丝）',   weight: '80g',        kcal: '132 kcal', protein: '25g',   carb: '0g',   fat: '3g'   },
+          { name: '鸡蛋（全熟）',        weight: '2个（~100g）', kcal: '143 kcal', protein: '12.6g', carb: '0.7g', fat: '9.5g' },
+          { name: '老豆腐（烤压干）',    weight: '70g',        kcal: '56 kcal',  protein: '5.1g',  carb: '1.5g', fat: '3.4g' },
+          { name: '熟糙米',             weight: '160g',       kcal: '185 kcal', protein: '3.9g',  carb: '41g',  fat: '1.6g' },
+          { name: '红薯（烤熟）',        weight: '70g',        kcal: '63 kcal',  protein: '1.1g',  carb: '15g',  fat: '0.1g' },
+          { name: '混合蔬菜（焯水）',    weight: '200g',       kcal: '65 kcal',  protein: '4.2g',  carb: '12g',  fat: '0.8g' },
+          { name: '烹饪用油（残留）',    weight: '—',          kcal: '25 kcal',  protein: '0g',    carb: '0g',   fat: '2.8g' },
+        ],
+        total: { weight: '~680g', kcal: '≈669 kcal', protein: '≈52g', carb: '≈70g', fat: '≈21g' },
+      },
     },
     // ─── Week 2: 猪肉+鲈鱼双蛋白版 ───
     {
@@ -1375,6 +1371,20 @@
           tip: '<strong>🎉 备餐完成！</strong> 每天取出时鲜加番茄和黄瓜，提升口感和营养。',
         },
       ],
+      nutrition: {
+        portionDesc: '约675g混合物',
+        rows: [
+          { name: '猪梅头肉（熟切片）',  weight: '50g',        kcal: '90 kcal',  protein: '9g',    carb: '0g',   fat: '6g'   },
+          { name: '鲈鱼（蒸熟）',        weight: '50g',        kcal: '52 kcal',  protein: '9.4g',  carb: '0g',   fat: '1.7g' },
+          { name: '鸡蛋（全熟）',        weight: '2个（~100g）', kcal: '143 kcal', protein: '12.6g', carb: '0.7g', fat: '9.5g' },
+          { name: '北豆腐（煎）',        weight: '70g',        kcal: '57 kcal',  protein: '5.7g',  carb: '1.1g', fat: '3.5g' },
+          { name: '熟藜麦',             weight: '140g',       kcal: '150 kcal', protein: '5.3g',  carb: '28g',  fat: '2.4g' },
+          { name: '紫薯（蒸熟）',        weight: '65g',        kcal: '59 kcal',  protein: '1g',    carb: '13g',  fat: '0.1g' },
+          { name: '混合蔬菜（焯水）',    weight: '200g',       kcal: '65 kcal',  protein: '4.2g',  carb: '12g',  fat: '0.8g' },
+          { name: '烹饪用油（残留）',    weight: '—',          kcal: '25 kcal',  protein: '0g',    carb: '0g',   fat: '2.8g' },
+        ],
+        total: { weight: '~675g', kcal: '≈641 kcal', protein: '≈47g', carb: '≈55g', fat: '≈27g' },
+      },
     },
     // ─── Week 3: 牛肉大补版 ───
     {
@@ -1478,6 +1488,19 @@
           tip: '<strong>🎉 备餐完成！</strong> 每天复热时加入生切彩椒，清爽口感与维C加倍。',
         },
       ],
+      nutrition: {
+        portionDesc: '约650g混合物',
+        rows: [
+          { name: '牛里脊（熟炒）',      weight: '50g',        kcal: '78 kcal',  protein: '11.3g', carb: '0g',   fat: '3.8g' },
+          { name: '鸡蛋（炒碎）',        weight: '2个（~100g）', kcal: '155 kcal', protein: '12.6g', carb: '0.7g', fat: '11g'  },
+          { name: '老豆腐（蒸）',        weight: '70g',        kcal: '56 kcal',  protein: '5.1g',  carb: '1.5g', fat: '3.4g' },
+          { name: '熟糙米',             weight: '160g',       kcal: '185 kcal', protein: '3.9g',  carb: '41g',  fat: '1.6g' },
+          { name: '红薯（微波熟）',      weight: '70g',        kcal: '63 kcal',  protein: '1.1g',  carb: '15g',  fat: '0.1g' },
+          { name: '混合蔬菜（焯水）',    weight: '200g',       kcal: '65 kcal',  protein: '4.2g',  carb: '12g',  fat: '0.8g' },
+          { name: '烹饪用油（残留）',    weight: '—',          kcal: '25 kcal',  protein: '0g',    carb: '0g',   fat: '2.8g' },
+        ],
+        total: { weight: '~650g', kcal: '≈627 kcal', protein: '≈38g', carb: '≈70g', fat: '≈24g' },
+      },
     },
     // ─── Week 4: 猪里脊+草鱼清淡版 ───
     {
@@ -1595,6 +1618,20 @@
           tip: '<strong>🎉 备餐完成！</strong> 本周全批冷藏，溏心蛋3天内食用。每天取出时鲜加番茄和黄瓜。',
         },
       ],
+      nutrition: {
+        portionDesc: '约690g混合物',
+        rows: [
+          { name: '猪里脊（熟切片）',    weight: '50g',        kcal: '61 kcal',  protein: '11.2g', carb: '0g',   fat: '1.7g' },
+          { name: '草鱼（蒸熟）',        weight: '50g',        kcal: '57 kcal',  protein: '8.8g',  carb: '0g',   fat: '2.5g' },
+          { name: '鸡蛋（溏心）',        weight: '2个（~100g）', kcal: '143 kcal', protein: '12.6g', carb: '0.7g', fat: '9.5g' },
+          { name: '北豆腐（烤）',        weight: '70g',        kcal: '57 kcal',  protein: '5.7g',  carb: '1.1g', fat: '3.5g' },
+          { name: '熟燕麦粒',           weight: '150g',       kcal: '137 kcal', protein: '4.5g',  carb: '27g',  fat: '2.6g' },
+          { name: '山药（蒸熟）',        weight: '70g',        kcal: '42 kcal',  protein: '0.9g',  carb: '9.7g', fat: '0.1g' },
+          { name: '混合蔬菜（焯水）',    weight: '200g',       kcal: '65 kcal',  protein: '4.2g',  carb: '12g',  fat: '0.8g' },
+          { name: '烹饪用油（残留）',    weight: '—',          kcal: '25 kcal',  protein: '0g',    carb: '0g',   fat: '2.8g' },
+        ],
+        total: { weight: '~690g', kcal: '≈587 kcal', protein: '≈48g', carb: '≈51g', fat: '≈24g' },
+      },
     },
   ];
 
@@ -1615,6 +1652,30 @@
   }
   function toggleShop(el) {
     el.classList.toggle('got');
+  }
+
+  // ── Overview page renderer ──
+  function renderOverviewPage(week) {
+    const { nutrition, label } = WEEK_DATA[week - 1];
+    const rowHtml = nutrition.rows.map(r =>
+      `<tr><td>${r.name}</td><td>${r.weight}</td><td>${r.kcal}</td><td>${r.protein}</td><td>${r.carb}</td><td>${r.fat}</td></tr>`
+    ).join('');
+    const t = nutrition.total;
+    document.getElementById('overview-nutrition-content').innerHTML =
+      `<div class="card">
+        <div class="card-title"><span class="icon">🍱</span>每份"人粮"营养（${nutrition.portionDesc}）<span style="font-size:13px;font-weight:normal;color:var(--text-muted);margin-left:8px">第${week}周 · ${label}</span></div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>食材</th><th>熟重</th><th>热量</th><th>蛋白质</th><th>碳水</th><th>脂肪</th></tr>
+            </thead>
+            <tbody>
+              ${rowHtml}
+              <tr class="total"><td>合计</td><td>${t.weight}</td><td>${t.kcal}</td><td>${t.protein}</td><td>${t.carb}</td><td>${t.fat}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`;
   }
 
   // ── Shopping page renderer ──
@@ -1751,6 +1812,7 @@
 
   // ── Initialise on load ──
   document.getElementById('navWeekNum').textContent = CURRENT_WEEK;
+  renderOverviewPage(CURRENT_WEEK);
   renderShoppingPage(CURRENT_WEEK);
   renderPrepPage(CURRENT_WEEK);
 </script>

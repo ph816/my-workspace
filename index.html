@@ -520,19 +520,19 @@
       <div class="card-title"><span class="icon">📏</span>个人指标</div>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">28.4</div>
-          <div class="stat-label">BMI（超重）</div>
+          <div class="stat-value">--</div>
+          <div class="stat-label">BMI（按实测填写）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">~63kg</div>
-          <div class="stat-label">去脂体重</div>
+          <div class="stat-value">--</div>
+          <div class="stat-label">去脂体重（估算）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">1806</div>
+          <div class="stat-value">--</div>
           <div class="stat-label">BMR（kcal/天）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">~2450</div>
+          <div class="stat-value">--</div>
           <div class="stat-label">TDEE（kcal/天）</div>
         </div>
       </div>
@@ -1373,7 +1373,7 @@
 
     [...records].reverse().forEach((record, index, arr) => {
       const prev = arr[index + 1];
-      const delta = prev ? (prev.weight - record.weight).toFixed(1) : '0.0';
+      const delta = prev ? (record.weight - prev.weight).toFixed(1) : '0.0';
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${record.date}</td>

@@ -521,7 +521,7 @@
       <div class="stat-grid">
         <div class="stat-item">
           <div class="stat-value">--</div>
-          <div class="stat-label">BMI（按实测填写）</div>
+          <div class="stat-label">BMI（按实测体重填写）</div>
         </div>
         <div class="stat-item">
           <div class="stat-value">--</div>
@@ -1334,7 +1334,11 @@
     const value = parseFloat(document.getElementById('weightValue').value);
     if (!date || Number.isNaN(value)) return;
 
-    const records = getWeightRecords().filter(r => r.date !== date);
+    const existingRecords = getWeightRecords();
+    const existed = existingRecords.some(r => r.date === date);
+    if (existed && !window.confirm('该日期已有记录，是否覆盖？')) return;
+
+    const records = existingRecords.filter(r => r.date !== date);
     records.push({ date, weight: Math.round(value * 10) / 10 });
     records.sort((a, b) => a.date.localeCompare(b.date));
     setWeightRecords(records);

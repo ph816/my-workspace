@@ -1323,7 +1323,7 @@
 
   function getWeightRecords() {
     const data = JSON.parse(localStorage.getItem(WEIGHT_KEY) || '[]');
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
   }
 
   function setWeightRecords(records) {
@@ -1334,8 +1334,8 @@
     event.preventDefault();
     const date = document.getElementById('weightDate').value;
     const value = parseFloat(document.getElementById('weightValue').value);
-    if (!date || Number.isNaN(value)) {
-      window.alert('请输入有效日期和体重数值。');
+    if (!date || Number.isNaN(value) || value < 20 || value > 300) {
+      window.alert('请输入有效日期和体重（20-300kg）。');
       return;
     }
 
@@ -1345,7 +1345,6 @@
 
     const records = existingRecords.filter(r => r.date !== date);
     records.push({ date, weight: roundToOneDecimal(value) });
-    records.sort((a, b) => new Date(a.date) - new Date(b.date));
     setWeightRecords(records);
     renderWeightRecords();
     document.getElementById('weightValue').value = '';
@@ -1386,7 +1385,7 @@
       return { ...record, delta };
     });
 
-    rows.reverse().forEach(record => {
+    [...rows].reverse().forEach(record => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${record.date}</td>
@@ -1399,7 +1398,9 @@
   }
 
   function initWeightTracker() {
-    document.getElementById('weightDate').value = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const localDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    document.getElementById('weightDate').value = localDate;
     renderWeightRecords();
   }
 

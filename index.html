@@ -550,6 +550,19 @@
     .meal-item { flex-direction: column; gap: 6px; }
     .meal-time { width: auto; padding-top: 0; }
   }
+
+  /* ── Week indicator pill ── */
+  .nav-week-pill {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1.5px solid var(--green);
+  }
 </style>
 </head>
 <body>
@@ -557,6 +570,7 @@
 <!-- ── Navigation ── -->
 <nav class="top-nav">
   <div class="nav-inner">
+    <div class="nav-week-pill">📅 第<span id="navWeekNum">?</span>周</div>
     <button class="nav-btn active" onclick="showPage('overview')">📊 营养目标</button>
     <button class="nav-btn" onclick="showPage('shopping')">🛒 购物清单</button>
     <button class="nav-btn" onclick="showPage('prep')">👨‍🍳 备餐步骤</button>
@@ -565,7 +579,6 @@
     <button class="nav-btn" onclick="showPage('diet')">🌅 全天饮食</button>
     <button class="nav-btn" onclick="showPage('gout')">⚠️ 痛风须知</button>
     <button class="nav-btn" onclick="showPage('pools')">📦 营养池</button>
-    <button class="nav-btn" onclick="showPage('rotation')">📅 轮换菜单</button>
   </div>
 </nav>
 
@@ -655,136 +668,10 @@
   <div class="page-wrap">
     <div class="page-header">
       <h1>🛒 购物清单</h1>
-      <p>5天用量 · 点击勾选已购买的食材</p>
+      <p>5天用量 · 点击勾选已购买的食材 · <span id="shopping-week-label" style="color:var(--green-dark);font-weight:700"></span></p>
     </div>
 
-    <div class="card">
-      <div class="card-title"><span class="icon">🥩</span>蛋白质来源</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">鸡胸肉（去皮去骨）</div>
-            <div class="shop-item-detail">400g 生重</div>
-          </div>
-          <div class="shop-item-price">¥8-12</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">鸡蛋</div>
-            <div class="shop-item-detail">10个</div>
-          </div>
-          <div class="shop-item-price">¥6-8</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">老豆腐 / 北豆腐</div>
-            <div class="shop-item-detail">350g</div>
-          </div>
-          <div class="shop-item-price">¥3-5</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🌾</span>主食</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">糙米</div>
-            <div class="shop-item-detail">500g（余下备下次）</div>
-          </div>
-          <div class="shop-item-price">¥5-8</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">红薯</div>
-            <div class="shop-item-detail">400g</div>
-          </div>
-          <div class="shop-item-price">¥3-5</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">西兰花</div>
-            <div class="shop-item-detail">400g</div>
-          </div>
-          <div class="shop-item-price">¥4-6</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">胡萝卜</div>
-            <div class="shop-item-detail">180g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">红/黄彩椒</div>
-            <div class="shop-item-detail">200g（富含维C，有益降尿酸）</div>
-          </div>
-          <div class="shop-item-price">¥4-6</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">西葫芦</div>
-            <div class="shop-item-detail">200g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">菠菜 / 羽衣甘蓝</div>
-            <div class="shop-item-detail">150g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🫒</span>辅料</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">橄榄油</div>
-            <div class="shop-item-detail">少量（约20ml用于处理鸡胸/豆腐）</div>
-          </div>
-          <div class="shop-item-price">已有即可</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">大蒜</div>
-            <div class="shop-item-detail">5瓣</div>
-          </div>
-          <div class="shop-item-price">¥1</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">黑胡椒</div>
-            <div class="shop-item-detail">适量（腌鸡胸用）</div>
-          </div>
-          <div class="shop-item-price">已有即可</div>
-        </div>
-      </div>
-    </div>
+    <div id="shopping-content"></div>
 
     <div class="alert alert-orange" style="margin-top:0">
       <strong>⚠️ 痛风禁忌食材 — 请勿购买</strong>
@@ -805,7 +692,7 @@
   <div class="page-wrap">
     <div class="page-header">
       <h1>👨‍🍳 备餐步骤</h1>
-      <p>建议周日下午进行 · 总计约90分钟</p>
+      <p>建议周日下午进行 · 总计约90分钟 · <span id="prep-week-label" style="color:var(--green-dark);font-weight:700"></span></p>
     </div>
 
     <!-- Step progress dots -->
@@ -814,171 +701,17 @@
     <!-- Step navigation -->
     <div class="step-nav">
       <button class="step-nav-btn" id="btnPrev" onclick="changeStep(-1)" disabled>← 上一步</button>
-      <span class="step-counter" id="stepCounter">第 1 步 / 共 6 步</span>
+      <span class="step-counter" id="stepCounter"></span>
       <button class="step-nav-btn" id="btnNext" onclick="changeStep(1)">下一步 →</button>
     </div>
 
-    <!-- Step 1: Rice -->
-    <div class="step-panel active" id="step-1">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">1</div>
-          <div class="step-title-block">
-            <h2>煮糙米</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 主动操作20分钟 + 被动等待40分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-1">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>称出 <strong>320g 糙米</strong>，充分淘洗2-3遍至水变清</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>按 <strong>1:1.5 比例</strong> 加水（糙米320g → 加水480ml）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>用电饭锅或普通锅煮熟（电饭锅选"糙米"档，或大火烧开转小火焖40分钟）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>煮好后<strong>摊开在烤盘或大盘上晾凉</strong>（防结块，加速冷却）— 同时进行后续步骤</span></li>
-        </ul>
-        <div class="alert alert-blue step-tip">
-          <strong>💡 小贴士</strong>
-          糙米煮好后会膨胀约2.5倍，320g干重 ≈ 800g熟重，正好5份每份160g。晾凉时可用风扇辅助。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Chicken -->
-    <div class="step-panel" id="step-2">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">2</div>
-          <div class="step-title-block">
-            <h2>处理鸡胸肉</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约25分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-2">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>鸡胸肉400g均匀涂抹少量<strong>橄榄油、蒜末、黑胡椒</strong>（不加盐，后续调味时控钠）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>腌制5分钟等待入味</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>放入<strong>空气炸锅</strong>，180°C 烤 <strong>18-20分钟</strong>（中途翻面一次）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出，用竹签刺入最厚处确认无粉红色，确认熟透</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>冷却至不烫手后，<strong>用手顺纤维方向撕成细丝</strong>（勿切，撕丝冻后口感更佳）</span></li>
-        </ul>
-        <div class="alert alert-orange step-tip">
-          <strong>⚠️ 痛风提示</strong>
-          鸡肉属中嘌呤食物，每份80g（熟重）在安全范围内，无需完全避免。若近期关节不适，可将此份量减至50g，豆腐增至100g。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Tofu -->
-    <div class="step-panel" id="step-3">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">3</div>
-          <div class="step-title-block">
-            <h2>处理老豆腐</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约10分钟（含压水）</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-3">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>老豆腐350g切成约 <strong>1.5cm 小块</strong></span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>用<strong>厨房纸巾</strong>包裹后放在砧板上，上方压一个重物（碗/锅）静置 <strong>10分钟</strong> 排出多余水分</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>豆腐擦干表面，放入空气炸锅 <strong>200°C 烤10-12分钟</strong> 至表面微金黄（不需加任何调味料）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出冷却备用（烤制后质地更紧实，冷冻复热后不会变软烂）</span></li>
-        </ul>
-        <div class="alert alert-green step-tip">
-          <strong>✅ 为什么选老豆腐？</strong>
-          北豆腐/老豆腐嘌呤含量低于嫩豆腐和豆浆，且低脂乳蛋白有助于促进尿酸排泄。是痛风患者优质蛋白质来源。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Eggs -->
-    <div class="step-panel" id="step-4">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">4</div>
-          <div class="step-title-block">
-            <h2>煮鸡蛋</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约15分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-4">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>冷水</strong>放入10个鸡蛋，开火</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>水沸腾后继续计时 <strong>10分钟</strong>（全熟蛋，混合后不会变质）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>捞出立即放入<strong>冰水</strong>浸泡5分钟（好剥壳）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>全部剥壳，每个切成<strong>4瓣</strong>备用</span></li>
-        </ul>
-        <div class="alert alert-blue step-tip">
-          <strong>💡 蛋黄处理提示</strong>
-          全蛋冷冻后蛋白质地会变橡皮。若介意，可将蛋黄单独放一个容器（复热后加），蛋白切碎混入。或全部打散炒成蛋碎（口感最均匀）。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 5: Vegetables -->
-    <div class="step-panel" id="step-5">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">5</div>
-          <div class="step-title-block">
-            <h2>蔬菜焯水</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约15分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-5">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>烧一大锅水至沸腾，<strong>不加盐</strong></span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>胡萝卜</strong>（切小丁，180g）先下锅，焯 <strong>3分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>西兰花</strong>（切小朵，400g）焯 <strong>2分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>西葫芦</strong>（切半圆片，200g）焯 <strong>1.5分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>彩椒</strong>（切小块，200g）焯 <strong>1分钟</strong>（保留维C），捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>菠菜/甘蓝</strong>（150g）最后放，焯 <strong>30秒</strong>即可，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>所有蔬菜从冰水捞出，<strong>充分甩干/沥干水分</strong>（这一步非常关键！水分越少，冷冻质量越好）</span></li>
-        </ul>
-        <div class="alert alert-orange step-tip">
-          <strong>⚠️ 注意焯水顺序</strong>
-          按耐热性从高到低依次入锅，可用同一锅水无需换水。焯水保留更多营养，比炒制更适合混合冷冻。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 6: Sweet potato + Mix + Pack -->
-    <div class="step-panel" id="step-6">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">6</div>
-          <div class="step-title-block">
-            <h2>红薯 → 混合 → 分装</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约30分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-6">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>红薯350g去皮切约 <strong>2cm 小块</strong>，空气炸锅 <strong>200°C 烤20-22分钟</strong>至熟软表面微干，冷却备用</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>确认所有食材均已<strong>冷却至室温</strong>再混合（热食材会导致结露和细菌滋生）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>大盆中放入糙米 + 蔬菜 + 红薯，<strong>轻轻翻拌</strong>均匀</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>加入鸡肉丝和豆腐块，继续轻拌（勿压碎豆腐）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>加入切好的鸡蛋（全蛋或仅蛋白，蛋黄可单独封装）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>称重分为 <strong>5等份（每份约680g）</strong>，装入密封容器或冷冻袋（排尽空气）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>贴标签注明日期：<strong>前3份冷藏</strong>（3天内食用），<strong>后2份冷冻</strong></span></li>
-        </ul>
-        <div class="alert alert-green step-tip">
-          <strong>🎉 备餐完成！</strong>
-          储存时限：冷藏保鲜 3天，冷冻最佳赏味期 2周（最长4周）。记得提前一晚将冷冻份转移到冷藏解冻。
-        </div>
-      </div>
-    </div>
+    <!-- Step panels rendered by JS -->
+    <div id="prep-content"></div>
 
     <!-- Bottom step nav repeat -->
     <div class="step-nav" style="margin-top:0">
       <button class="step-nav-btn" id="btnPrev2" onclick="changeStep(-1)" disabled>← 上一步</button>
-      <span class="step-counter" id="stepCounter2">第 1 步 / 共 6 步</span>
+      <span class="step-counter" id="stepCounter2"></span>
       <button class="step-nav-btn" id="btnNext2" onclick="changeStep(1)">下一步 →</button>
     </div>
   </div>
@@ -1408,492 +1141,471 @@
 </div>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- PAGE: rotation (轮换菜单)                  -->
-<!-- ══════════════════════════════════════════ -->
-<div id="page-rotation" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>📅 轮换菜单</h1>
-      <p>四周循环 · 与上周重复食材≤3种 · 与上上周不完全相同</p>
-    </div>
-
-    <div class="alert alert-blue" style="margin-bottom:16px">
-      <strong>💡 使用说明</strong>
-      <span class="pill pill-green">🆕 本周新增</span> 使用对应的新备菜方法；
-      <span class="pill pill-orange">🔄 沿用</span> 可直接沿用上周剩余备菜法或重新制作。
-      🥒🍅 标注「生鲜鲜加」的食材不适合混合冷冻，建议每天取出时现切加入。
-    </div>
-
-    <div class="week-tabs">
-      <button class="week-tab active" onclick="showWeek(1)">第1周</button>
-      <button class="week-tab" onclick="showWeek(2)">第2周</button>
-      <button class="week-tab" onclick="showWeek(3)">第3周</button>
-      <button class="week-tab" onclick="showWeek(4)">第4周</button>
-    </div>
-
-    <!-- ═══ 第1周 ═══ -->
-    <div id="week-1" class="week-panel active">
-      <div class="card">
-        <div class="card-title"><span class="icon">📋</span>第1周概览</div>
-        <div class="stat-grid" style="margin-bottom:14px">
-          <div class="stat-item"><div class="stat-value">10</div><div class="stat-label">食材总数</div></div>
-          <div class="stat-item"><div class="stat-value">10</div><div class="stat-label">🆕 新增</div></div>
-          <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">🔄 沿用</div></div>
-          <div class="stat-item"><div class="stat-value">~670</div><div class="stat-label">每份热量(kcal)</div></div>
-        </div>
-        <div class="alert alert-green">
-          <strong>本周主题：低脂高蛋白经典版</strong>
-          鸡胸肉+老豆腐为主要蛋白质来源，糙米+红薯提供复合碳水，彩色蔬菜补充维C和矿物质。
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🐔 鸡胸肉（去皮） <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">400g生重 · 约80g熟重/份 · 蛋白质≈25g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 空气炸锅法</strong>
-              ① 橄榄油+蒜末+黑胡椒均匀涂抹，腌制5分钟<br>
-              ② 空气炸锅180°C 烤18-20分钟，中途翻面一次<br>
-              ③ 冷却后顺纤维方向撕成细丝（冷冻复热口感更佳）
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🥚 鸡蛋 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">10个 · 约2个/份 · 蛋白质≈12.6g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 水煮全熟法</strong>
-              ① 冷水放入鸡蛋，开大火<br>
-              ② 水沸后计时10分钟（全熟）<br>
-              ③ 捞出立即冰水浸泡5分钟（易剥壳）<br>
-              ④ 全部剥壳，每个切4瓣备用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🫘 老豆腐 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 蛋白质≈5.7g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 压干+空气炸锅法</strong>
-              ① 切1.5cm小块，厨房纸包裹<br>
-              ② 重物压置10分钟排出多余水分<br>
-              ③ 空气炸锅200°C 烤10-12分钟至表面金黄<br>
-              ④ 冷却备用（冷冻后质地紧实不软烂）
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🌾</span>主食</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🍚 糙米 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">320g干重 → 约800g熟重 · 160g熟/份</div>
-            <div class="ingr-method">
-              <strong>▸ 电饭锅法</strong>
-              ① 淘洗2-3遍至水清<br>
-              ② 1:1.5比例加水（320g米+480ml水）<br>
-              ③ 电饭锅"糙米"档；或大火烧开转小火焖40分钟<br>
-              ④ 摊开晾凉防结块
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🍠 红薯 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 空气炸锅法</strong>
-              ① 去皮切约2cm小块<br>
-              ② 空气炸锅200°C 烤20-22分钟<br>
-              ③ 至熟软表面微干，冷却备用
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-        <div class="alert alert-orange" style="margin-bottom:14px">
-          <strong>焯水顺序（同一锅水）：</strong>
-          胡萝卜3min → 西兰花2min → 西葫芦1.5min → 彩椒1min → 菠菜30秒。每种捞出立即过冰水，然后充分沥干。
-        </div>
-        <table class="tbl">
-          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
-          <tbody>
-            <tr><td>🥦 西兰花</td><td><span class="pill pill-green">🆕</span></td><td>400g</td><td>切小朵，焯水2分钟，冰水过凉</td><td>富含萝卜硫素</td></tr>
-            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-green">🆕</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>与油同食吸收更好</td></tr>
-            <tr><td>🫑 彩椒（红/黄）</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切小块，焯水1分钟，冰水过凉</td><td>维C最高，尽量少焯</td></tr>
-            <tr><td>🥒 西葫芦</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>冷冻复热口感佳</td></tr>
-            <tr><td>🌿 菠菜</td><td><span class="pill pill-green">🆕</span></td><td>150g</td><td>整叶入水，焯水30秒</td><td>⚠️草酸高，必须焯水</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ═══ 第2周 ═══ -->
-    <div id="week-2" class="week-panel">
-      <div class="card">
-        <div class="card-title"><span class="icon">📋</span>第2周概览</div>
-        <div class="stat-grid" style="margin-bottom:14px">
-          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
-          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
-          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
-          <div class="stat-item"><div class="stat-value">~650</div><div class="stat-label">每份热量(kcal)</div></div>
-        </div>
-        <div class="alert alert-green">
-          <strong>本周主题：猪肉+鲈鱼双蛋白版</strong>
-          猪梅头肉和清蒸鲈鱼替换鸡胸肉，藜麦+紫薯替换主食，引入番茄和黄瓜提升清爽感。
-        </div>
-        <div class="alert alert-blue">
-          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 西葫芦
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🐷 猪梅头肉 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g生重 · 约60g/份 · 蛋白质≈12g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 水煮法</strong>
-              ① 切薄片（约5mm），冷水下锅<br>
-              ② 大火烧开后撇去浮沫<br>
-              ③ 转小火煮15分钟至熟<br>
-              ④ 捞出沥干，冷却备用（吃时再调味）
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🐟 鲈鱼 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g净重(约2条小鲈) · 约60g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 清蒸法</strong>
-              ① 鱼身两面划几刀，姜片垫底<br>
-              ② 蒸锅水开后大火蒸10-12分钟<br>
-              ③ 取出去皮去骨，撕成鱼块<br>
-              ④ 冷却备用（不加调料，吃时鲜加）
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
-            <div class="ingr-meta">10个 · 约2个/份 · 同第1周方法</div>
-            <div class="ingr-method">
-              <strong>▸ 水煮全熟法（同第1周）</strong>
-              ① 冷水放蛋，大火烧开<br>
-              ② 水沸后计时10分钟<br>
-              ③ 冰水浸泡5分钟，剥壳切4瓣
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🫘 北豆腐（嫩豆腐） <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 换豆腐品种</div>
-            <div class="ingr-method">
-              <strong>▸ 平底锅煎法</strong>
-              ① 切1.5cm厚片，厨房纸吸干表面<br>
-              ② 平底锅加5ml橄榄油，中火预热<br>
-              ③ 每面煎3-4分钟至金黄<br>
-              ④ 冷却备用（外酥内嫩）
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🌾</span>主食</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🌾 藜麦 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g干重 → 约750g熟重 · 150g熟/份</div>
-            <div class="ingr-method">
-              <strong>▸ 电饭锅法（需预洗去皂苷）</strong>
-              ① 冷水搓洗至不起泡（去苦味皂苷）<br>
-              ② 1:1.5加水（300g+450ml水）<br>
-              ③ 大火烧开转小火焖15分钟<br>
-              ④ 摊开晾凉，颗粒分明即可
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🍠 紫薯 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 换薯类品种</div>
-            <div class="ingr-method">
-              <strong>▸ 蒸锅法</strong>
-              ① 去皮切2cm小块<br>
-              ② 上蒸锅，水开后蒸20分钟<br>
-              ③ 筷子能轻松穿透即可，冷却备用
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-        <div class="alert alert-blue" style="margin-bottom:14px">
-          <strong>🥒🍅 本周含生鲜鲜加蔬菜：</strong>番茄、黄瓜建议每天取出时现切加入，不混入冷冻批次。
-        </div>
-        <table class="tbl">
-          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
-          <tbody>
-            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
-            <tr><td>🥒 西葫芦</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>同第1周</td></tr>
-            <tr><td>🍅 番茄</td><td><span class="pill pill-green">🆕</span></td><td>250g</td><td>切小块，生用鲜加（不冷冻）</td><td>番茄红素丰富</td></tr>
-            <tr><td>🥒 黄瓜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>拍碎或切片，生用鲜加（不冷冻）</td><td>促水分代谢</td></tr>
-            <tr><td>🥬 小白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>整叶焯水30秒，冰水过凉，沥干</td><td>铁钙均衡</td></tr>
-            <tr><td>🥬 圆白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>手撕大块，焯水2分钟</td><td>维C丰富</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ═══ 第3周 ═══ -->
-    <div id="week-3" class="week-panel">
-      <div class="card">
-        <div class="card-title"><span class="icon">📋</span>第3周概览</div>
-        <div class="stat-grid" style="margin-bottom:14px">
-          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
-          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
-          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
-          <div class="stat-item"><div class="stat-value">~680</div><div class="stat-label">每份热量(kcal)</div></div>
-        </div>
-        <div class="alert alert-green">
-          <strong>本周主题：牛肉大补版</strong>
-          换用牛里脊提供铁和锌，老豆腐用蒸法呈现不同质感，引入茄子和四季豆丰富蔬菜种类。
-        </div>
-        <div class="alert alert-blue">
-          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 番茄
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🐄 牛里脊 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g生重 · 约60g/份 · 铁2.7mg+锌4.4mg/份</div>
-            <div class="ingr-method">
-              <strong>▸ 热锅快炒法</strong>
-              ① 逆纹切薄片（约3mm），加生抽10ml腌制10分钟<br>
-              ② 热锅加橄榄油5ml，大火翻炒2分钟<br>
-              ③ 保留嫩度，不要过熟<br>
-              ④ 冷却备用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
-            <div class="ingr-meta">10个 · 本周换炒法，口感更均匀</div>
-            <div class="ingr-method">
-              <strong>▸ 炒蛋碎法（本周换法）</strong>
-              ① 10个蛋打散，加少量盐搅匀<br>
-              ② 热锅加5ml橄榄油，中大火<br>
-              ③ 倒入蛋液，快速翻炒至碎粒状<br>
-              ④ 冷却备用（炒蛋碎冷冻口感优于整蛋）
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🫘 老豆腐 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 本周换蒸法</div>
-            <div class="ingr-method">
-              <strong>▸ 蒸法（本周换法）</strong>
-              ① 切1.5cm小块，铺在蒸盘<br>
-              ② 蒸锅水开后，蒸10分钟<br>
-              ③ 冷却备用（质地更嫩，口感不同于烤）
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🌾</span>主食</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🍚 糙米 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">320g干重 · 同第1周食材，重新制作</div>
-            <div class="ingr-method">
-              <strong>▸ 电饭锅法（同第1周）</strong>
-              ① 淘洗后1:1.5加水<br>
-              ② 电饭锅糙米档煮熟，摊开晾凉
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🍠 红薯 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 本周换微波炉法</div>
-            <div class="ingr-method">
-              <strong>▸ 微波炉法（本周换法）</strong>
-              ① 去皮切2cm块，平铺微波容器<br>
-              ② 加2汤匙水，高火5-6分钟至熟软<br>
-              ③ 冷却备用
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-        <div class="alert alert-red" style="margin-bottom:14px">
-          <strong>⚠️ 四季豆必须熟透：</strong>焯水至少4分钟，确认颜色由鲜绿变暗绿，生食四季豆含凝集素毒素。
-        </div>
-        <div class="alert alert-blue" style="margin-bottom:14px">
-          <strong>🫑 本周彩椒生切鲜加：</strong>保留更多维C，与番茄一起每天现切加入。
-        </div>
-        <table class="tbl">
-          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
-          <tbody>
-            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
-            <tr><td>🍅 番茄</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切小块，热锅略炒1分钟出汁</td><td>加热后番茄红素更易吸收</td></tr>
-            <tr><td>🥦 西兰花</td><td><span class="pill pill-green">🆕</span></td><td>400g</td><td>切小朵，焯水2分钟，冰水过凉</td><td>同第1周方法</td></tr>
-            <tr><td>🫑 彩椒（红/黄）</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切细条生用，每天现切加入（不冷冻）</td><td>✨维C最高，生食更佳</td></tr>
-            <tr><td>🍆 茄子</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切2cm块，空气炸锅200°C烤15分钟</td><td>⚠️不用刷油，茄子吸油多</td></tr>
-            <tr><td>🫘 四季豆</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>去筋折段，焯水4分钟至暗绿色</td><td>⚠️必须熟透，见备注</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ═══ 第4周 ═══ -->
-    <div id="week-4" class="week-panel">
-      <div class="card">
-        <div class="card-title"><span class="icon">📋</span>第4周概览</div>
-        <div class="stat-grid" style="margin-bottom:14px">
-          <div class="stat-item"><div class="stat-value">11</div><div class="stat-label">食材总数</div></div>
-          <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">🆕 新增</div></div>
-          <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">🔄 沿用（≤3）</div></div>
-          <div class="stat-item"><div class="stat-value">~640</div><div class="stat-label">每份热量(kcal)</div></div>
-        </div>
-        <div class="alert alert-green">
-          <strong>本周主题：猪里脊+草鱼清淡版</strong>
-          猪里脊和草鱼替换蛋白来源，燕麦+山药替换主食，引入菠菜回归及西葫芦，整体口味更清淡。
-        </div>
-        <div class="alert alert-blue">
-          <strong>🔄 与上周相同的3种食材：</strong>鸡蛋 · 胡萝卜 · 番茄
-        </div>
-        <div class="alert alert-orange">
-          <strong>✅ 与第2周不完全相同：</strong>第4周换用猪里脊/草鱼（第2周为猪梅头肉/鲈鱼），燕麦/山药（第2周为藜麦/紫薯），菠菜/西葫芦（第2周为小白菜/圆白菜），满足"与上上周不完全相同"要求。
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥩</span>蛋白质食材</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🐷 猪里脊 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g生重 · 约60g/份 · 高蛋白低脂</div>
-            <div class="ingr-method">
-              <strong>▸ 水煮腌制法</strong>
-              ① 切薄片(3-5mm)，加生抽10ml腌制10分钟<br>
-              ② 煮锅水开后，放入猪里脊片<br>
-              ③ 中火煮8分钟至熟透<br>
-              ④ 捞出冷却备用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🐟 草鱼 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g净重 · 约60g/份 · 低脂高蛋白</div>
-            <div class="ingr-method">
-              <strong>▸ 清蒸法</strong>
-              ① 切段，姜片垫底入盘<br>
-              ② 蒸锅水开后大火蒸12分钟<br>
-              ③ 取出去皮去刺，撕成鱼块<br>
-              ④ 冷却备用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🥚 鸡蛋 <span class="pill pill-orange">🔄</span></h3>
-            <div class="ingr-meta">10个 · 本周改溏心蛋，仅冷藏不冷冻</div>
-            <div class="ingr-method">
-              <strong>▸ 溏心水煮法（本周换法）</strong>
-              ① 冷水放蛋，大火烧开<br>
-              ② 水沸后计时8分钟（溏心）<br>
-              ③ 冰水浸泡5分钟，剥壳对半切<br>
-              ④ ⚠️溏心蛋仅冷藏保存，3天内食用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🫘 北豆腐 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 本周用空气炸锅</div>
-            <div class="ingr-method">
-              <strong>▸ 空气炸锅法（本周换法）</strong>
-              ① 切1.5cm小块，厨房纸吸干表面<br>
-              ② 空气炸锅200°C 烤10-12分钟至金黄<br>
-              ③ 冷却备用（外酥内嫩）
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🌾</span>主食</div>
-        <div class="ingr-grid">
-          <div class="ingr-card">
-            <h3>🌾 燕麦 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">300g干重 → 约600g泡发 · 120g/份</div>
-            <div class="ingr-method">
-              <strong>▸ 电饭锅保温法</strong>
-              ① 量入锅胆，加入开水至刚好没过<br>
-              ② 电饭锅保温档焖15分钟至软<br>
-              ③ 适当干一些便于分装（不要太稀）<br>
-              ④ 摊开晾凉备用
-            </div>
-          </div>
-          <div class="ingr-card">
-            <h3>🥔 山药 <span class="pill pill-green">🆕</span></h3>
-            <div class="ingr-meta">350g · 约70g/份 · 低GI主食</div>
-            <div class="ingr-method">
-              <strong>▸ 蒸锅法</strong>
-              ① ⚠️戴手套去皮（防黏液致痒）<br>
-              ② 切滚刀块约3cm<br>
-              ③ 上蒸锅，水开后蒸15分钟至软熟<br>
-              ④ 冷却备用
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-        <div class="alert alert-blue" style="margin-bottom:14px">
-          <strong>🥒🍅 本周含生鲜鲜加蔬菜：</strong>番茄、黄瓜建议每天取出时现切加入，不混入冷冻批次。
-        </div>
-        <table class="tbl">
-          <thead><tr><th>蔬菜</th><th>状态</th><th>用量(5份)</th><th>处理方法</th><th>备注</th></tr></thead>
-          <tbody>
-            <tr><td>🥕 胡萝卜</td><td><span class="pill pill-orange">🔄</span></td><td>180g</td><td>切小丁，焯水3分钟，冰水过凉</td><td>同第1周</td></tr>
-            <tr><td>🍅 番茄</td><td><span class="pill pill-orange">🔄</span></td><td>200g</td><td>切小块，生用每天鲜加（不冷冻）</td><td>清爽口感</td></tr>
-            <tr><td>🌿 菠菜</td><td><span class="pill pill-green">🆕</span></td><td>150g</td><td>整叶焯水30秒，冰水过凉，沥干</td><td>⚠️草酸高，必须焯水</td></tr>
-            <tr><td>🥒 西葫芦</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切半圆片，焯水1.5分钟</td><td>同第1周方法</td></tr>
-            <tr><td>🥒 黄瓜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>切片，生用每天鲜加（不冷冻）</td><td>促水分代谢</td></tr>
-            <tr><td>🥬 大白菜</td><td><span class="pill pill-green">🆕</span></td><td>200g</td><td>手撕块，焯水2分钟，沥干</td><td>高水分低热量</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 轮换规则总结 -->
-    <div class="card" style="margin-top:8px">
-      <div class="card-title"><span class="icon">📊</span>四周轮换规则验证</div>
-      <table class="tbl">
-        <thead><tr><th>对比</th><th>共同食材数</th><th>是否满足≤3条件</th><th>是否完全相同</th></tr></thead>
-        <tbody>
-          <tr><td>第1周 → 第2周</td><td>3（鸡蛋、胡萝卜、西葫芦）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
-          <tr><td>第2周 → 第3周</td><td>3（鸡蛋、胡萝卜、番茄）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
-          <tr><td>第3周 → 第4周</td><td>3（鸡蛋、胡萝卜、番茄）</td><td>✅ 满足</td><td>✅ 不同</td></tr>
-          <tr><td>第1周 vs 第3周（间隔一周）</td><td>7（共有但不完全相同）</td><td>—</td><td>✅ 不完全相同</td></tr>
-          <tr><td>第2周 vs 第4周（间隔一周）</td><td>5（共有但不完全相同）</td><td>—</td><td>✅ 不完全相同</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
 <!-- ── JavaScript ── -->
 <script>
+  // ── Current rotation week (ISO week % 4, mapped to 1-4) ──
+  function getISOWeek(d) {
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = date.getUTCDay() || 7;
+    date.setUTCDate(date.getUTCDate() + 4 - day);
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  }
+  const CURRENT_WEEK = (getISOWeek(new Date()) % 4) || 4;
+
+  // ── 4-week rotation data ──
+  const WEEK_DATA = [
+    // ─── Week 1: 低脂高蛋白经典版 ───
+    {
+      label: '低脂高蛋白经典版',
+      shopping: {
+        protein: [
+          { name: '鸡胸肉（去皮去骨）', detail: '400g 生重', price: '¥8-12' },
+          { name: '鸡蛋', detail: '10个', price: '¥6-8' },
+          { name: '老豆腐 / 北豆腐', detail: '350g', price: '¥3-5' },
+        ],
+        grain: [
+          { name: '糙米', detail: '500g（余下备下次）', price: '¥5-8' },
+          { name: '红薯', detail: '400g', price: '¥3-5' },
+        ],
+        veg: [
+          { name: '西兰花', detail: '400g', price: '¥4-6' },
+          { name: '胡萝卜', detail: '180g', price: '¥2-3' },
+          { name: '红/黄彩椒', detail: '200g（富含维C，有益降尿酸）', price: '¥4-6' },
+          { name: '西葫芦', detail: '200g', price: '¥2-3' },
+          { name: '菠菜 / 羽衣甘蓝', detail: '150g', price: '¥2-3' },
+        ],
+      },
+      freshNote: null,
+      steps: [
+        {
+          title: '煮糙米',
+          time: '主动操作20分钟 + 被动等待40分钟',
+          items: [
+            '称出 <strong>320g 糙米</strong>，充分淘洗2-3遍至水变清',
+            '按 <strong>1:1.5 比例</strong> 加水（糙米320g → 加水480ml）',
+            '电饭锅选"糙米"档，或大火烧开转小火焖40分钟',
+            '煮好后<strong>摊开在大盘上晾凉</strong>（防结块，加速冷却）— 同时进行后续步骤',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 小贴士</strong> 糙米320g干重 ≈ 800g熟重，正好5份每份160g。晾凉时可用风扇辅助。',
+        },
+        {
+          title: '处理鸡胸肉',
+          time: '约25分钟',
+          items: [
+            '鸡胸肉400g均匀涂抹少量<strong>橄榄油、蒜末、黑胡椒</strong>（不加盐）',
+            '腌制5分钟等待入味',
+            '放入<strong>空气炸锅</strong>，180°C 烤 <strong>18-20分钟</strong>（中途翻面一次）',
+            '用竹签刺入最厚处确认无粉红色，熟透后取出',
+            '冷却后<strong>顺纤维方向撕成细丝</strong>（撕丝冻后口感更佳）',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 痛风提示</strong> 鸡肉属中嘌呤食物，每份80g（熟重）在安全范围内。若近期关节不适，可将份量减至50g，豆腐增至100g。',
+        },
+        {
+          title: '处理老豆腐',
+          time: '约10分钟（含压水）',
+          items: [
+            '老豆腐350g切成约 <strong>1.5cm 小块</strong>',
+            '用<strong>厨房纸巾</strong>包裹，上方压重物静置 <strong>10分钟</strong> 排出多余水分',
+            '放入空气炸锅 <strong>200°C 烤10-12分钟</strong> 至表面微金黄',
+            '取出冷却备用（烤后质地紧实，冷冻复热不会软烂）',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>✅ 为什么选老豆腐？</strong> 北豆腐/老豆腐嘌呤含量低，低脂乳蛋白有助于促进尿酸排泄，是痛风患者优质蛋白质来源。',
+        },
+        {
+          title: '煮鸡蛋（全熟）',
+          time: '约15分钟',
+          items: [
+            '<strong>冷水</strong>放入10个鸡蛋，开火',
+            '水沸腾后继续计时 <strong>10分钟</strong>（全熟蛋）',
+            '捞出立即放入<strong>冰水</strong>浸泡5分钟（好剥壳）',
+            '全部剥壳，每个切成<strong>4瓣</strong>备用',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 蛋黄提示</strong> 全蛋冷冻后蛋白会变橡皮。若介意，可将蛋黄单独封装，或全部打散炒成蛋碎（口感最均匀）。',
+        },
+        {
+          title: '蔬菜焯水',
+          time: '约15分钟',
+          items: [
+            '烧一大锅水至沸腾，<strong>不加盐</strong>',
+            '<strong>胡萝卜</strong>（切小丁，180g）先下锅，焯 <strong>3分钟</strong>，捞出放冰水',
+            '<strong>西兰花</strong>（切小朵，400g）焯 <strong>2分钟</strong>，捞出放冰水',
+            '<strong>西葫芦</strong>（切半圆片，200g）焯 <strong>1.5分钟</strong>，捞出放冰水',
+            '<strong>彩椒</strong>（切小块，200g）焯 <strong>1分钟</strong>（保留维C），捞出放冰水',
+            '<strong>菠菜</strong>（150g）最后放，焯 <strong>30秒</strong>即可，捞出放冰水',
+            '所有蔬菜从冰水捞出，<strong>充分甩干/沥干水分</strong>（水分越少冷冻质量越好）',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 注意焯水顺序</strong> 按耐热性从高到低依次入锅，可用同一锅水无需换水。',
+        },
+        {
+          title: '红薯 → 混合 → 分装',
+          time: '约30分钟',
+          items: [
+            '红薯400g去皮切约 <strong>2cm 小块</strong>，空气炸锅 <strong>200°C 烤20-22分钟</strong>至熟软，冷却备用',
+            '确认所有食材均已<strong>冷却至室温</strong>再混合',
+            '大盆中放入糙米 + 蔬菜 + 红薯，<strong>轻轻翻拌</strong>均匀',
+            '加入鸡肉丝和豆腐块，继续轻拌（勿压碎豆腐）',
+            '加入切好的鸡蛋',
+            '称重分为 <strong>5等份（每份约680g）</strong>，装入密封容器或冷冻袋',
+            '贴标签：<strong>前3份冷藏</strong>（3天内食用），<strong>后2份冷冻</strong>',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>🎉 备餐完成！</strong> 储存时限：冷藏保鲜3天，冷冻最佳赏味期2周（最长4周）。记得提前一晚将冷冻份转移到冷藏解冻。',
+        },
+      ],
+    },
+    // ─── Week 2: 猪肉+鲈鱼双蛋白版 ───
+    {
+      label: '猪肉+鲈鱼双蛋白版',
+      shopping: {
+        protein: [
+          { name: '猪梅头肉', detail: '300g 生重', price: '¥10-15' },
+          { name: '鲈鱼', detail: '300g 净重（约2条小鲈）', price: '¥15-20' },
+          { name: '鸡蛋', detail: '10个', price: '¥6-8' },
+          { name: '北豆腐（嫩豆腐）', detail: '350g', price: '¥3-5' },
+        ],
+        grain: [
+          { name: '藜麦', detail: '300g（需充分预洗去皂苷）', price: '¥12-18' },
+          { name: '紫薯', detail: '350g', price: '¥4-6' },
+        ],
+        veg: [
+          { name: '胡萝卜', detail: '180g', price: '¥2-3' },
+          { name: '西葫芦', detail: '200g', price: '¥2-3' },
+          { name: '番茄', detail: '250g（🥒生鲜鲜加，不冷冻）', price: '¥3-5' },
+          { name: '黄瓜', detail: '200g（🥒生鲜鲜加，不冷冻）', price: '¥2-3' },
+          { name: '小白菜', detail: '200g', price: '¥2-3' },
+          { name: '圆白菜', detail: '200g', price: '¥2-3' },
+        ],
+      },
+      freshNote: '🥒🍅 本周含生鲜蔬菜：番茄、黄瓜每天现切鲜加，不混入冷冻批次',
+      steps: [
+        {
+          title: '煮藜麦',
+          time: '约30分钟（含预洗）',
+          items: [
+            '<strong>冷水搓洗藜麦300g</strong>至水不起泡（去除苦味皂苷，此步不可省略）',
+            '加水450ml（1:1.5比例）放入锅中',
+            '大火烧开转小火，焖煮 <strong>15分钟</strong>至颗粒透明出现小白圈',
+            '摊开晾凉，颗粒分明即可',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 藜麦小贴士</strong> 藜麦含完全蛋白质，GI值比糙米低。预洗是关键，不洗会有明显苦味。',
+        },
+        {
+          title: '处理猪梅头肉',
+          time: '约20分钟',
+          items: [
+            '猪梅头肉300g切薄片（约5mm厚）',
+            '冷水下锅，<strong>大火烧开后撇去浮沫</strong>',
+            '转小火煮 <strong>15分钟</strong>至熟透',
+            '捞出沥干，冷却备用（吃时再调味）',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 猪肉嘌呤提示</strong> 猪梅头肉属中嘌呤食物，每份60g在安全范围。若关节不适，可减量至40g，增加豆腐补足蛋白。',
+        },
+        {
+          title: '清蒸鲈鱼',
+          time: '约20分钟',
+          items: [
+            '鲈鱼300g鱼身两面划几刀，姜片垫底入盘',
+            '<strong>蒸锅水开后</strong>大火蒸 <strong>10-12分钟</strong>',
+            '取出去皮去骨，撕成鱼块',
+            '冷却备用（不加调料，吃时鲜加少量生抽）',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 鲈鱼低嘌呤</strong> 鲈鱼嘌呤含量相对较低，富含DHA和优质蛋白，是痛风患者可适量食用的鱼类。',
+        },
+        {
+          title: '煎北豆腐',
+          time: '约15分钟',
+          items: [
+            '北豆腐350g切1.5cm厚片，厨房纸吸干表面水分',
+            '平底锅加 <strong>5ml橄榄油</strong>，中火预热',
+            '每面煎 <strong>3-4分钟</strong>至表面金黄',
+            '冷却备用（外酥内嫩）',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>✅ 本周换北豆腐</strong> 北豆腐与老豆腐交替使用，保持饮食多样性，嘌呤含量同样较低。',
+        },
+        {
+          title: '煮鸡蛋（全熟）',
+          time: '约15分钟',
+          items: [
+            '<strong>冷水</strong>放入10个鸡蛋，开火',
+            '水沸腾后继续计时 <strong>10分钟</strong>（全熟蛋）',
+            '捞出立即放入<strong>冰水</strong>浸泡5分钟',
+            '全部剥壳，每个切成<strong>4瓣</strong>备用',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 同第1周方法</strong> 全熟蛋冷冻效果好，可与其他食材混合储存。',
+        },
+        {
+          title: '蔬菜焯水',
+          time: '约15分钟',
+          items: [
+            '烧一大锅水至沸腾，<strong>不加盐</strong>',
+            '<strong>胡萝卜</strong>（切小丁，180g）先下锅，焯 <strong>3分钟</strong>，捞出放冰水',
+            '<strong>西葫芦</strong>（切半圆片，200g）焯 <strong>1.5分钟</strong>，捞出放冰水',
+            '<strong>小白菜</strong>（整叶，200g）焯 <strong>30秒</strong>，捞出放冰水',
+            '<strong>圆白菜</strong>（手撕大块，200g）焯 <strong>2分钟</strong>，捞出放冰水',
+            '所有焯水蔬菜<strong>充分沥干</strong>，冷却备用',
+            '⚠️ <strong>番茄和黄瓜不焯水</strong>，每天取出时现切鲜加',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>🥒🍅 生鲜蔬菜处理</strong> 番茄和黄瓜不适合冷冻，每天复热时现切加入，保持清爽口感和维C。',
+        },
+        {
+          title: '紫薯 → 混合 → 分装',
+          time: '约30分钟',
+          items: [
+            '紫薯350g去皮切2cm小块，上蒸锅，水开后蒸 <strong>20分钟</strong>至熟软，冷却备用',
+            '确认所有食材均已<strong>冷却至室温</strong>再混合',
+            '大盆中放入藜麦 + 焯水蔬菜 + 紫薯，<strong>轻轻翻拌</strong>均匀',
+            '加入猪梅头肉片、鱼块、豆腐，继续轻拌',
+            '加入切好的鸡蛋',
+            '称重分为 <strong>5等份</strong>，装入密封容器',
+            '贴标签：前3份冷藏，后2份冷冻；另备好番茄和黄瓜单独冷藏',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>🎉 备餐完成！</strong> 每天取出时鲜加番茄和黄瓜，提升口感和营养。',
+        },
+      ],
+    },
+    // ─── Week 3: 牛肉大补版 ───
+    {
+      label: '牛肉大补版',
+      shopping: {
+        protein: [
+          { name: '牛里脊', detail: '300g 生重（富含铁和锌）', price: '¥18-25' },
+          { name: '鸡蛋', detail: '10个', price: '¥6-8' },
+          { name: '老豆腐', detail: '350g', price: '¥3-5' },
+        ],
+        grain: [
+          { name: '糙米', detail: '320g（若上周有剩可不买）', price: '¥3-5' },
+          { name: '红薯', detail: '350g', price: '¥3-5' },
+        ],
+        veg: [
+          { name: '胡萝卜', detail: '180g', price: '¥2-3' },
+          { name: '番茄', detail: '200g（热锅略炒提升吸收）', price: '¥3-4' },
+          { name: '西兰花', detail: '400g', price: '¥4-6' },
+          { name: '彩椒（红/黄）', detail: '200g（🥒生鲜鲜加，不冷冻）', price: '¥4-6' },
+          { name: '茄子', detail: '200g（空气炸锅，勿刷油）', price: '¥2-3' },
+          { name: '四季豆', detail: '200g（⚠️必须焯熟≥4分钟）', price: '¥2-3' },
+        ],
+      },
+      freshNote: '🫑 本周彩椒生鲜鲜加：每天现切加入，保留更多维C，不混入冷冻批次',
+      steps: [
+        {
+          title: '煮糙米',
+          time: '主动操作20分钟 + 被动等待40分钟',
+          items: [
+            '称出 <strong>320g 糙米</strong>，充分淘洗2-3遍至水变清',
+            '按 <strong>1:1.5 比例</strong> 加水（糙米320g → 加水480ml）',
+            '电饭锅"糙米"档煮熟，或大火烧开转小火焖40分钟',
+            '煮好后<strong>摊开晾凉</strong>，同时进行后续步骤',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 本周同第1周</strong> 糙米320g干重 ≈ 800g熟重，正好5份每份160g。',
+        },
+        {
+          title: '处理牛里脊',
+          time: '约15分钟（含腌制）',
+          items: [
+            '牛里脊300g <strong>逆纹切薄片</strong>（约3mm），加生抽10ml腌制10分钟',
+            '热锅加橄榄油5ml，<strong>大火</strong>翻炒 <strong>2分钟</strong>',
+            '保留嫩度，不要炒过头（变柴影响口感）',
+            '冷却备用',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 牛肉铁锌</strong> 牛里脊富含血红素铁（吸收率比植物铁高2-3倍）和锌，有助于提升免疫力和能量代谢。',
+        },
+        {
+          title: '处理老豆腐（蒸法）',
+          time: '约15分钟',
+          items: [
+            '老豆腐350g切成约 <strong>1.5cm 小块</strong>',
+            '铺在蒸盘中，<strong>蒸锅水开后</strong>大火蒸 <strong>10分钟</strong>',
+            '冷却备用（蒸法口感更嫩，与第1周烤法形成变化）',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>✅ 本周换蒸法</strong> 蒸豆腐质地更嫩滑，与牛肉搭配形成软嫩对比。',
+        },
+        {
+          title: '炒鸡蛋碎',
+          time: '约10分钟',
+          items: [
+            '10个鸡蛋全部打散，加少量盐搅匀',
+            '热锅加<strong>5ml橄榄油</strong>，中大火',
+            '倒入蛋液，<strong>快速翻炒至碎粒状</strong>（不要炒整块）',
+            '冷却备用（炒蛋碎冷冻后口感优于整蛋，均匀分布在每份中）',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 本周换炒碎法</strong> 蛋碎均匀混入备餐中，每份蛋白质分布更均匀，复热效果更好。',
+        },
+        {
+          title: '蔬菜处理',
+          time: '约20分钟',
+          items: [
+            '烧一大锅水至沸腾，<strong>不加盐</strong>',
+            '<strong>胡萝卜</strong>（切小丁，180g）焯 <strong>3分钟</strong>，捞出放冰水',
+            '<strong>西兰花</strong>（切小朵，400g）焯 <strong>2分钟</strong>，捞出放冰水',
+            '⚠️ <strong>四季豆</strong>（去筋折段，200g）焯 <strong>4分钟至暗绿色</strong>，确保熟透防凝集素中毒',
+            '茄子200g切2cm块，<strong>空气炸锅200°C烤15分钟</strong>（不用刷油）',
+            '番茄200g切小块，热锅 <strong>略炒1分钟</strong>出汁备用（加热后番茄红素更易吸收）',
+            '⚠️ <strong>彩椒(200g)不焯水</strong>，每天取出时现切细条鲜加',
+          ],
+          tipClass: 'alert-red',
+          tip: '<strong>⚠️ 四季豆安全提示</strong> 生四季豆含凝集素毒素，必须焯至颜色变暗绿（至少4分钟），确认无生脆感方可食用。',
+        },
+        {
+          title: '红薯（微波炉）→ 混合 → 分装',
+          time: '约25分钟',
+          items: [
+            '红薯350g去皮切2cm块，平铺微波容器，加2汤匙水',
+            '微波炉<strong>高火5-6分钟</strong>至熟软，冷却备用',
+            '确认所有食材均已<strong>冷却至室温</strong>',
+            '大盆中放入糙米 + 胡萝卜 + 西兰花 + 四季豆 + 茄子 + 番茄 + 红薯，轻拌',
+            '加入牛里脊片、豆腐块、鸡蛋碎，继续轻拌',
+            '称重分为 <strong>5等份</strong>，装入密封容器；另备彩椒放冷藏',
+            '贴标签：前3份冷藏，后2份冷冻',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>🎉 备餐完成！</strong> 每天复热时加入生切彩椒，清爽口感与维C加倍。',
+        },
+      ],
+    },
+    // ─── Week 4: 猪里脊+草鱼清淡版 ───
+    {
+      label: '猪里脊+草鱼清淡版',
+      shopping: {
+        protein: [
+          { name: '猪里脊', detail: '300g 生重（高蛋白低脂）', price: '¥12-16' },
+          { name: '草鱼', detail: '300g 净重', price: '¥10-15' },
+          { name: '鸡蛋', detail: '10个（本周做溏心蛋，仅冷藏）', price: '¥6-8' },
+          { name: '北豆腐', detail: '350g', price: '¥3-5' },
+        ],
+        grain: [
+          { name: '燕麦（整燕麦粒/燕麦米）', detail: '300g干重', price: '¥8-12' },
+          { name: '山药', detail: '350g（⚠️戴手套去皮）', price: '¥5-8' },
+        ],
+        veg: [
+          { name: '胡萝卜', detail: '180g', price: '¥2-3' },
+          { name: '番茄', detail: '200g（🥒生鲜鲜加，不冷冻）', price: '¥3-4' },
+          { name: '菠菜', detail: '150g（⚠️草酸高，必须焯水）', price: '¥2-3' },
+          { name: '西葫芦', detail: '200g', price: '¥2-3' },
+          { name: '黄瓜', detail: '200g（🥒生鲜鲜加，不冷冻）', price: '¥2-3' },
+          { name: '大白菜', detail: '200g', price: '¥1-2' },
+        ],
+      },
+      freshNote: '🥒🍅 本周含生鲜蔬菜：番茄、黄瓜每天现切鲜加，不混入冷冻批次',
+      steps: [
+        {
+          title: '煮燕麦',
+          time: '约25分钟',
+          items: [
+            '整燕麦粒300g量入锅胆',
+            '加入<strong>开水</strong>至刚好没过燕麦',
+            '电饭锅<strong>保温档焖15分钟</strong>至软（或小火煮15分钟）',
+            '适当干一些便于分装，摊开晾凉备用',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 燕麦选整粒</strong> 选整燕麦粒（燕麦米）而非即食燕麦片，GI值更低，饱腹感更持久，冷冻复热效果更好。',
+        },
+        {
+          title: '处理猪里脊',
+          time: '约20分钟（含腌制）',
+          items: [
+            '猪里脊300g切薄片（3-5mm），加生抽10ml腌制 <strong>10分钟</strong>',
+            '煮锅水开后，放入猪里脊片',
+            '中火煮 <strong>8分钟</strong>至熟透',
+            '捞出冷却备用',
+          ],
+          tipClass: 'alert-blue',
+          tip: '<strong>💡 猪里脊更清淡</strong> 猪里脊脂肪含量比梅头肉更低，与第2周形成变化，整体口味更清淡。',
+        },
+        {
+          title: '清蒸草鱼',
+          time: '约20分钟',
+          items: [
+            '草鱼300g切段，姜片垫底入盘',
+            '<strong>蒸锅水开后</strong>大火蒸 <strong>12分钟</strong>',
+            '取出<strong>去皮去刺</strong>（草鱼刺较多，需仔细），撕成鱼块',
+            '冷却备用',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 去刺提示</strong> 草鱼肌间刺较多，务必仔细去除后再混入备餐，避免误食。',
+        },
+        {
+          title: '处理北豆腐（空气炸锅）',
+          time: '约15分钟',
+          items: [
+            '北豆腐350g切成约 <strong>1.5cm 小块</strong>，厨房纸吸干表面',
+            '放入空气炸锅 <strong>200°C 烤10-12分钟</strong>至金黄',
+            '冷却备用（外酥内嫩）',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>✅ 空气炸锅更省油</strong> 不需额外加油，热量更低，与第2周平底锅煎法形成变化。',
+        },
+        {
+          title: '溏心蛋（仅冷藏）',
+          time: '约15分钟',
+          items: [
+            '<strong>冷水</strong>放入10个鸡蛋，开火',
+            '水沸腾后继续计时 <strong>8分钟</strong>（溏心）',
+            '捞出立即放入<strong>冰水</strong>浸泡5分钟，剥壳后对半切',
+            '⚠️ <strong>溏心蛋仅冷藏保存</strong>，3天内食用，不可冷冻',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 重要提示</strong> 溏心蛋蛋黄未完全熟透，仅适合冷藏3天内食用。如需冷冻该份备餐，此份鸡蛋请改用全熟法（10分钟）。',
+        },
+        {
+          title: '蔬菜焯水',
+          time: '约15分钟',
+          items: [
+            '烧一大锅水至沸腾，<strong>不加盐</strong>',
+            '<strong>胡萝卜</strong>（切小丁，180g）焯 <strong>3分钟</strong>，捞出放冰水',
+            '<strong>西葫芦</strong>（切半圆片，200g）焯 <strong>1.5分钟</strong>，捞出放冰水',
+            '⚠️ <strong>菠菜</strong>（整叶，150g）焯 <strong>30秒</strong>（去草酸），捞出放冰水',
+            '<strong>大白菜</strong>（手撕块，200g）焯 <strong>2分钟</strong>，捞出放冰水',
+            '所有蔬菜充分<strong>沥干水分</strong>',
+            '⚠️ <strong>番茄和黄瓜不焯水</strong>，每天现切鲜加',
+          ],
+          tipClass: 'alert-orange',
+          tip: '<strong>⚠️ 菠菜注意</strong> 菠菜草酸含量高，必须焯水30秒以上去除大部分草酸，减少与钙结合的影响。',
+        },
+        {
+          title: '山药 → 混合 → 分装',
+          time: '约30分钟',
+          items: [
+            '⚠️ <strong>戴手套</strong>将山药350g去皮（防黏液致痒），切滚刀块约3cm',
+            '上蒸锅，水开后蒸 <strong>15分钟</strong>至软熟，冷却备用',
+            '确认所有食材均已<strong>冷却至室温</strong>',
+            '大盆中放入燕麦 + 蔬菜 + 山药，轻拌均匀',
+            '加入猪里脊片、鱼块、豆腐块，继续轻拌',
+            '加入溏心蛋（对半切）',
+            '称重分为 <strong>5等份</strong>，<strong>全部冷藏</strong>（3天内食用）；另备番茄黄瓜单独冷藏',
+            '贴标签注明日期（溏心蛋批次请勿冷冻）',
+          ],
+          tipClass: 'alert-green',
+          tip: '<strong>🎉 备餐完成！</strong> 本周全批冷藏，溏心蛋3天内食用。每天取出时鲜加番茄和黄瓜。',
+        },
+      ],
+    },
+  ];
+
   // ── Page switching ──
   const navBtns = document.querySelectorAll('.nav-btn');
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     navBtns.forEach(b => b.classList.remove('active'));
-    const idx = ['overview','shopping','prep','reheat','seasoning','diet','gout','pools','rotation'].indexOf(id);
-    navBtns[idx].classList.add('active');
+    const idx = ['overview','shopping','prep','reheat','seasoning','diet','gout','pools'].indexOf(id);
+    if (idx >= 0) navBtns[idx].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1905,31 +1617,101 @@
     el.classList.toggle('got');
   }
 
-  // ── Step-by-step prep ──
-  const TOTAL_STEPS = 6;
+  // ── Shopping page renderer ──
+  function renderShoppingPage(week) {
+    const data = WEEK_DATA[week - 1];
+    const shopItem = ({ name, detail, price }) =>
+      `<div class="shop-item" onclick="toggleShop(this)">
+        <div class="shop-check">✓</div>
+        <div class="shop-item-info">
+          <div class="shop-item-name">${name}</div>
+          <div class="shop-item-detail">${detail}</div>
+        </div>
+        <div class="shop-item-price">${price}</div>
+      </div>`;
+    const section = (icon, title, items) =>
+      `<div class="card">
+        <div class="card-title"><span class="icon">${icon}</span>${title}</div>
+        <div class="shop-grid">${items.map(shopItem).join('')}</div>
+      </div>`;
+
+    let html = '';
+    if (data.freshNote) {
+      html += `<div class="alert alert-blue" style="margin-bottom:8px">${data.freshNote}</div>`;
+    }
+    html += section('🥩', '蛋白质来源', data.shopping.protein);
+    html += section('🌾', '主食', data.shopping.grain);
+    html += section('🥦', '蔬菜', data.shopping.veg);
+    html += `<div class="card">
+      <div class="card-title"><span class="icon">🫒</span>辅料（每周通用）</div>
+      <div class="shop-grid">
+        ${shopItem({ name: '橄榄油', detail: '少量（约20ml）', price: '已有即可' })}
+        ${shopItem({ name: '大蒜', detail: '5瓣', price: '¥1' })}
+        ${shopItem({ name: '生姜', detail: '少量（蒸鱼用，第2/4周）', price: '¥1' })}
+        ${shopItem({ name: '生抽', detail: '少量（腌肉/调味用）', price: '已有即可' })}
+        ${shopItem({ name: '黑胡椒', detail: '适量', price: '已有即可' })}
+      </div>
+    </div>`;
+
+    document.getElementById('shopping-content').innerHTML = html;
+    document.getElementById('shopping-week-label').textContent =
+      `第${week}周 · ${data.label}`;
+  }
+
+  // ── Prep page renderer ──
+  let TOTAL_STEPS = 6;
   let currentStep = 1;
 
-  // Build progress dots
-  const dotsContainer = document.getElementById('stepDots');
-  for (let i = 1; i <= TOTAL_STEPS; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'step-dot' + (i === 1 ? ' current' : '');
-    dot.dataset.step = i;
-    dot.onclick = () => goToStep(i);
-    dotsContainer.appendChild(dot);
+  function renderPrepPage(week) {
+    const { steps, label } = WEEK_DATA[week - 1];
+    TOTAL_STEPS = steps.length;
+    currentStep = 1;
+
+    // Render step panels
+    document.getElementById('prep-content').innerHTML = steps.map((s, i) =>
+      `<div class="step-panel${i === 0 ? ' active' : ''}" id="step-${i + 1}">
+        <div class="card">
+          <div class="step-header">
+            <div class="step-number">${i + 1}</div>
+            <div class="step-title-block">
+              <h2>${s.title}</h2>
+              <div class="step-time"><span class="tag">⏱ ${s.time}</span></div>
+            </div>
+          </div>
+          <ul class="checklist" id="chk-${i + 1}">
+            ${s.items.map(item =>
+              `<li onclick="toggleCheck(this)"><div class="check-box"></div><span>${item}</span></li>`
+            ).join('')}
+          </ul>
+          <div class="alert ${s.tipClass} step-tip">${s.tip}</div>
+        </div>
+      </div>`
+    ).join('');
+
+    // Rebuild progress dots
+    const dotsContainer = document.getElementById('stepDots');
+    dotsContainer.innerHTML = '';
+    for (let i = 1; i <= TOTAL_STEPS; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' + (i === 1 ? ' current' : '');
+      dot.dataset.step = i;
+      dot.onclick = () => goToStep(i);
+      dotsContainer.appendChild(dot);
+    }
+
+    document.getElementById('prep-week-label').textContent =
+      `第${week}周 · ${label}`;
+    updateStepUI();
   }
 
   function updateStepUI() {
-    // Panels
     document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('step-' + currentStep).classList.add('active');
 
-    // Counters
     const txt = `第 ${currentStep} 步 / 共 ${TOTAL_STEPS} 步`;
     document.getElementById('stepCounter').textContent = txt;
     document.getElementById('stepCounter2').textContent = txt;
 
-    // Buttons
     const disablePrev = currentStep === 1;
     const disableNext = currentStep === TOTAL_STEPS;
     ['btnPrev','btnPrev2'].forEach(id => document.getElementById(id).disabled = disablePrev);
@@ -1939,7 +1721,6 @@
       btn.textContent = disableNext ? '✅ 备餐完成！' : '下一步 →';
     });
 
-    // Dots
     document.querySelectorAll('.step-dot').forEach(d => {
       const s = parseInt(d.dataset.step);
       d.className = 'step-dot' + (s < currentStep ? ' done' : s === currentStep ? ' current' : '');
@@ -1968,14 +1749,10 @@
     });
   }
 
-  // ── Weekly rotation tabs ──
-  function showWeek(n) {
-    document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('week-' + n).classList.add('active');
-    document.querySelectorAll('.week-tab').forEach((t, i) => {
-      t.classList.toggle('active', i + 1 === n);
-    });
-  }
+  // ── Initialise on load ──
+  document.getElementById('navWeekNum').textContent = CURRENT_WEEK;
+  renderShoppingPage(CURRENT_WEEK);
+  renderPrepPage(CURRENT_WEEK);
 </script>
 </body>
 </html>

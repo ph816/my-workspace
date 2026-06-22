@@ -152,6 +152,68 @@
   .tbl tr:hover td { background: var(--gray-light); }
   .tbl .total td { font-weight: 700; background: var(--green-light); }
 
+  /* ── Weight tracker ── */
+  .weight-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+  .weight-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .weight-field input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .weight-btn {
+    border: none;
+    background: var(--green);
+    color: var(--white);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .weight-btn:hover { background: var(--green-dark); }
+  .weight-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .weight-stat {
+    background: var(--green-light);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+  .weight-stat-value { font-size: 20px; font-weight: 800; color: var(--green-dark); }
+  .weight-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .weight-table-actions button {
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .weight-table-actions button:hover { border-color: var(--red); color: var(--red); }
+  .empty-tip {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 12px 0 2px;
+  }
+
   /* ── Alert boxes ── */
   .alert {
     border-radius: 10px;
@@ -432,7 +494,10 @@
     .card { padding: 16px; }
     .card-title { margin-bottom: 12px; }
 
-    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-grid,
+    .weight-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .weight-form { grid-template-columns: 1fr; }
+    .weight-btn { width: 100%; }
 
     .tbl { font-size: 13px; }
     .tbl th, .tbl td { padding: 8px 8px; }
@@ -462,6 +527,7 @@
     <button class="nav-btn" onclick="showPage('reheat')">🔥 复热方法</button>
     <button class="nav-btn" onclick="showPage('seasoning')">🧂 调味方案</button>
     <button class="nav-btn" onclick="showPage('diet')">🌅 全天饮食</button>
+    <button class="nav-btn" onclick="showPage('weight')">⚖️ 体重追踪</button>
     <button class="nav-btn" onclick="showPage('gout')">⚠️ 痛风须知</button>
   </div>
 </nav>
@@ -473,26 +539,26 @@
   <div class="page-wrap">
     <div class="page-header">
       <h1>🥗 减脂人粮 · 周晚餐方案</h1>
-      <p>173cm · 85kg · 26岁 · 男 · 高尿酸史</p>
+      <p>按个人情况灵活调整热量目标与饮食结构</p>
     </div>
 
     <div class="card">
       <div class="card-title"><span class="icon">📏</span>个人指标</div>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">28.4</div>
-          <div class="stat-label">BMI（超重）</div>
+          <div class="stat-value">--</div>
+          <div class="stat-label">BMI（按实测体重填写）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">~63kg</div>
-          <div class="stat-label">去脂体重</div>
+          <div class="stat-value">--</div>
+          <div class="stat-label">去脂体重（估算）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">1806</div>
+          <div class="stat-value">--</div>
           <div class="stat-label">BMR（kcal/天）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">~2450</div>
+          <div class="stat-value">--</div>
           <div class="stat-label">TDEE（kcal/天）</div>
         </div>
       </div>
@@ -1082,6 +1148,58 @@
 </div>
 
 <!-- ══════════════════════════════════════════ -->
+<!-- PAGE: weight                              -->
+<!-- ══════════════════════════════════════════ -->
+<div id="page-weight" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>⚖️ 每日体重追踪</h1>
+      <p>记录每天体重，观察减脂趋势与波动</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📝</span>新增记录</div>
+      <form class="weight-form" onsubmit="saveWeightRecord(event)">
+        <div class="weight-field">
+          <label for="weightDate">日期</label>
+          <input id="weightDate" type="date" required>
+        </div>
+        <div class="weight-field">
+          <label for="weightValue">体重（kg）</label>
+          <input id="weightValue" type="number" min="20" max="300" step="0.1" placeholder="例如 84.6" required>
+        </div>
+        <button class="weight-btn" type="submit">保存记录</button>
+      </form>
+      <div class="weight-summary">
+        <div class="weight-stat">
+          <div class="weight-stat-value" id="latestWeight">--</div>
+          <div class="weight-stat-label">最近体重</div>
+        </div>
+        <div class="weight-stat">
+          <div class="weight-stat-value" id="weightChange">--</div>
+          <div class="weight-stat-label">累计变化</div>
+        </div>
+        <div class="weight-stat">
+          <div class="weight-stat-value" id="recordCount">0</div>
+          <div class="weight-stat-label">总记录天数</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📅</span>历史记录</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>日期</th><th>体重</th><th>变化</th><th>操作</th></tr>
+        </thead>
+        <tbody id="weightTableBody"></tbody>
+      </table>
+      <div class="empty-tip" id="weightEmptyTip">暂无记录，先添加今天的体重吧。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
 <!-- PAGE: gout                                -->
 <!-- ══════════════════════════════════════════ -->
 <div id="page-gout" class="page">
@@ -1158,7 +1276,7 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     navBtns.forEach(b => b.classList.remove('active'));
-    const idx = ['overview','shopping','prep','reheat','seasoning','diet','gout'].indexOf(id);
+    const idx = ['overview','shopping','prep','reheat','seasoning','diet','weight','gout'].indexOf(id);
     navBtns[idx].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1223,6 +1341,96 @@
     currentStep = n;
     updateStepUI();
   }
+
+  // ── Weight tracking ──
+  const WEIGHT_KEY = 'daily_weight_records';
+  const roundToOneDecimal = value => Math.round(value * 10) / 10;
+  const formatSigned = value => `${value > 0 ? '+' : ''}${value.toFixed(1)}`;
+
+  function getWeightRecords() {
+    const data = JSON.parse(localStorage.getItem(WEIGHT_KEY) || '[]');
+    return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
+
+  function setWeightRecords(records) {
+    localStorage.setItem(WEIGHT_KEY, JSON.stringify(records));
+  }
+
+  function saveWeightRecord(event) {
+    event.preventDefault();
+    const date = document.getElementById('weightDate').value;
+    const value = parseFloat(document.getElementById('weightValue').value);
+    if (!date || Number.isNaN(value) || value < 20 || value > 300) {
+      window.alert('请输入有效日期和体重（20-300kg）。');
+      return;
+    }
+
+    const existingRecords = getWeightRecords();
+    const existed = existingRecords.some(r => r.date === date);
+    if (existed && !window.confirm('该日期已有记录，是否覆盖？')) return;
+
+    const records = existingRecords.filter(r => r.date !== date);
+    records.push({ date, weight: roundToOneDecimal(value) });
+    setWeightRecords(records);
+    renderWeightRecords();
+    document.getElementById('weightValue').value = '';
+  }
+
+  function deleteWeightRecord(date) {
+    const records = getWeightRecords().filter(r => r.date !== date);
+    setWeightRecords(records);
+    renderWeightRecords();
+  }
+
+  function renderWeightRecords() {
+    const records = getWeightRecords();
+    const tbody = document.getElementById('weightTableBody');
+    const emptyTip = document.getElementById('weightEmptyTip');
+    tbody.innerHTML = '';
+
+    if (!records.length) {
+      emptyTip.style.display = 'block';
+      document.getElementById('latestWeight').textContent = '--';
+      document.getElementById('weightChange').textContent = '--';
+      document.getElementById('recordCount').textContent = '0';
+      return;
+    }
+
+    emptyTip.style.display = 'none';
+    const first = records[0];
+    const latest = records[records.length - 1];
+    const change = roundToOneDecimal(latest.weight - first.weight);
+
+    document.getElementById('latestWeight').textContent = `${latest.weight.toFixed(1)} kg`;
+    document.getElementById('weightChange').textContent = `${formatSigned(change)} kg`;
+    document.getElementById('recordCount').textContent = String(records.length);
+
+    const rows = records.map((record, index) => {
+      const prevChronological = records[index - 1];
+      const delta = prevChronological ? roundToOneDecimal(record.weight - prevChronological.weight) : 0;
+      return { ...record, delta };
+    });
+
+    [...rows].reverse().forEach(record => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${record.date}</td>
+        <td>${record.weight.toFixed(1)} kg</td>
+        <td>${formatSigned(record.delta)} kg</td>
+        <td class="weight-table-actions"><button onclick="deleteWeightRecord('${record.date}')">删除</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  function initWeightTracker() {
+    const now = new Date();
+    const localDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    document.getElementById('weightDate').value = localDate;
+    renderWeightRecords();
+  }
+
+  initWeightTracker();
 </script>
 </body>
 </html>

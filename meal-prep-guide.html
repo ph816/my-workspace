@@ -1656,6 +1656,7 @@
 
   // ── Overview page renderer ──
   function renderOverviewPage(week) {
+    if (week < 1 || week > WEEK_DATA.length) return;
     const { nutrition, label } = WEEK_DATA[week - 1];
     const rowHtml = nutrition.rows.map(r =>
       `<tr><td>${r.name}</td><td>${r.weight}</td><td>${r.kcal}</td><td>${r.protein}</td><td>${r.carb}</td><td>${r.fat}</td></tr>`
@@ -1665,7 +1666,7 @@
       `<div class="card">
         <div class="card-title"><span class="icon">🍱</span>每份"人粮"营养（${nutrition.portionDesc}）<span style="font-size:13px;font-weight:normal;color:var(--text-muted);margin-left:8px">第${week}周 · ${label}</span></div>
         <div style="overflow-x:auto">
-          <table class="tbl">
+          <table class="tbl" aria-label="第${week}周人粮营养成分表">
             <thead>
               <tr><th>食材</th><th>熟重</th><th>热量</th><th>蛋白质</th><th>碳水</th><th>脂肪</th></tr>
             </thead>

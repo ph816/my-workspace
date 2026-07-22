@@ -7,6 +7,13 @@
 const Profile = (() => {
   const STORAGE_KEY = 'nutriplan_profile';
 
+  /** Escape HTML to prevent XSS */
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
   const DEFAULT_PROFILE = {
     name: '',
     height: 170,
@@ -106,7 +113,7 @@ const Profile = (() => {
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">昵称</label>
-            <input type="text" class="form-input" id="profileName" value="${profile.name}" placeholder="（选填）">
+            <input type="text" class="form-input" id="profileName" value="${escapeHtml(profile.name)}" placeholder="（选填）">
           </div>
           <div class="form-group">
             <label class="form-label">性别</label>
@@ -163,8 +170,8 @@ const Profile = (() => {
         <ul class="condition-list" id="conditionList">
           ${profile.conditions.map(c => `
             <li class="condition-item">
-              <span class="tag tag-red">${c}</span>
-              <button class="remove-btn" onclick="Profile.removeCondition('${c}')">✕</button>
+              <span class="tag tag-red">${escapeHtml(c)}</span>
+              <button class="remove-btn" onclick="Profile.removeCondition('${escapeHtml(c).replace(/'/g, "\\'")}')">✕</button>
             </li>
           `).join('')}
         </ul>
@@ -194,8 +201,8 @@ const Profile = (() => {
         <ul class="condition-list" id="allergyList">
           ${profile.allergies.map(a => `
             <li class="condition-item">
-              <span class="tag tag-orange">${a}</span>
-              <button class="remove-btn" onclick="Profile.removeAllergy('${a}')">✕</button>
+              <span class="tag tag-orange">${escapeHtml(a)}</span>
+              <button class="remove-btn" onclick="Profile.removeAllergy('${escapeHtml(a).replace(/'/g, "\\'")}')">✕</button>
             </li>
           `).join('')}
         </ul>
@@ -209,7 +216,7 @@ const Profile = (() => {
       <div class="card">
         <div class="card-title"><span class="icon">📝</span>注意事项 / 备注</div>
         <div class="form-group">
-          <textarea class="form-textarea" id="profileNotes" placeholder="如：不喜欢吃芹菜、每天饮水量不足、近期关节不适需要额外注意嘌呤…">${profile.notes}</textarea>
+          <textarea class="form-textarea" id="profileNotes" placeholder="如：不喜欢吃芹菜、每天饮水量不足、近期关节不适需要额外注意嘌呤…">${escapeHtml(profile.notes)}</textarea>
         </div>
       </div>
 

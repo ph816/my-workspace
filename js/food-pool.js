@@ -5,6 +5,17 @@
  */
 
 const FoodPool = (() => {
+  // Module-level state for search results
+  let _lastSearchResults = [];
+  let _prevSearchResultsHtml = '';
+
+  /**
+   * Format a nutrient value safely
+   */
+  function formatNutrient(value, decimals) {
+    const num = Number(value) || 0;
+    return num.toFixed(decimals);
+  }
 
   /**
    * Render the food search page with USDA API integration
@@ -82,8 +93,8 @@ const FoodPool = (() => {
         return;
       }
 
-      // Store search results for sync with food pool
-      window._lastSearchResults = foods;
+      // Store search results in module state
+      _lastSearchResults = foods;
 
       resultsDiv.innerHTML = `
         <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">
@@ -108,14 +119,14 @@ const FoodPool = (() => {
                   <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(f.name)}">
                     ${escapeHtml(f.name)}
                   </td>
-                  <td>${(f.nutrients.calories || 0).toFixed(0)}</td>
-                  <td>${(f.nutrients.protein || 0).toFixed(1)}</td>
-                  <td>${(f.nutrients.carbohydrates || 0).toFixed(1)}</td>
-                  <td>${(f.nutrients.totalFat || 0).toFixed(1)}</td>
-                  <td>${(f.nutrients.fiber || 0).toFixed(1)}</td>
+                  <td>${formatNutrient(f.nutrients.calories, 0)}</td>
+                  <td>${formatNutrient(f.nutrients.protein, 1)}</td>
+                  <td>${formatNutrient(f.nutrients.carbohydrates, 1)}</td>
+                  <td>${formatNutrient(f.nutrients.totalFat, 1)}</td>
+                  <td>${formatNutrient(f.nutrients.fiber, 1)}</td>
                   <td>
-                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" onclick="FoodPool.viewDetail(${f.fdcId})">详情</button>
-                    <button class="btn btn-primary" style="padding:4px 10px;font-size:12px" onclick="FoodPool.addToMyPoolFromSearch(${f.fdcId})">+ 添加</button>
+                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" data-action="detail" data-fdcid="${f.fdcId}">详情</button>
+                    <button class="btn btn-primary" style="padding:4px 10px;font-size:12px" data-action="add-from-search" data-fdcid="${f.fdcId}">+ 添加</button>
                   </td>
                 </tr>
               `).join('')}
@@ -123,8 +134,26 @@ const FoodPool = (() => {
           </table>
         </div>
       `;
+
+      // Attach event delegation for buttons
+      resultsDiv.addEventListener('click', handleSearchResultClick);
     } catch (error) {
       resultsDiv.innerHTML = `<div class="alert alert-red">❌ 搜索失败：${escapeHtml(error.message)}<br>请检查网络连接和API Key设置。</div>`;
+    }
+  }
+
+  /**
+   * Handle clicks on search result buttons via event delegation
+   */
+  function handleSearchResultClick(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    const fdcId = parseInt(btn.dataset.fdcid);
+    if (action === 'detail') {
+      viewDetail(fdcId);
+    } else if (action === 'add-from-search') {
+      addToMyPoolFromSearch(fdcId);
     }
   }
 
@@ -138,7 +167,7 @@ const FoodPool = (() => {
    */
   async function viewDetail(fdcId) {
     const resultsDiv = document.getElementById('searchResults');
-    const prevContent = resultsDiv.innerHTML;
+    _prevSearchResultsHtml = resultsDiv.innerHTML;
     resultsDiv.innerHTML = '<div class="loading-overlay"><div class="spinner"></div>加载详细营养信息…</div>';
 
     try {
@@ -154,67 +183,79 @@ const FoodPool = (() => {
           </p>
           <div class="stat-grid">
             <div class="stat-item">
-              <div class="stat-value">${(n.calories || 0).toFixed(0)}</div>
+              <div class="stat-value">${formatNutrient(n.calories, 0)}</div>
               <div class="stat-label">热量 (kcal/100g)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.protein || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.protein, 1)}</div>
               <div class="stat-label">蛋白质 (g)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.carbohydrates || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.carbohydrates, 1)}</div>
               <div class="stat-label">碳水化合物 (g)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.totalFat || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.totalFat, 1)}</div>
               <div class="stat-label">脂肪 (g)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.fiber || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.fiber, 1)}</div>
               <div class="stat-label">膳食纤维 (g)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.calcium || 0).toFixed(0)}</div>
+              <div class="stat-value">${formatNutrient(n.calcium, 0)}</div>
               <div class="stat-label">钙 (mg)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.iron || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.iron, 1)}</div>
               <div class="stat-label">铁 (mg)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.potassium || 0).toFixed(0)}</div>
+              <div class="stat-value">${formatNutrient(n.potassium, 0)}</div>
               <div class="stat-label">钾 (mg)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.sodium || 0).toFixed(0)}</div>
+              <div class="stat-value">${formatNutrient(n.sodium, 0)}</div>
               <div class="stat-label">钠 (mg)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.vitaminC || 0).toFixed(1)}</div>
+              <div class="stat-value">${formatNutrient(n.vitaminC, 1)}</div>
               <div class="stat-label">维生素C (mg)</div>
             </div>
             <div class="stat-item">
-              <div class="stat-value">${(n.magnesium || 0).toFixed(0)}</div>
+              <div class="stat-value">${formatNutrient(n.magnesium, 0)}</div>
               <div class="stat-label">镁 (mg)</div>
             </div>
           </div>
           <div style="margin-top:16px;text-align:center">
-            <button class="btn btn-secondary" onclick="FoodPool.backToResults()">← 返回搜索结果</button>
-            <button class="btn btn-primary" onclick="FoodPool.addToMyPool(${fdcId}, '${escapeHtml(simplified.name)}', ${JSON.stringify(n).replace(/'/g, "\\'")})">+ 添加到我的食物池</button>
+            <button class="btn btn-secondary" data-action="back">← 返回搜索结果</button>
+            <button class="btn btn-primary" data-action="add-detail" data-fdcid="${fdcId}" data-name="${escapeHtml(simplified.name)}" data-nutrients='${escapeHtml(JSON.stringify(n))}'>+ 添加到我的食物池</button>
           </div>
         </div>
       `;
 
-      // Store previous results for back button
-      window._prevSearchResults = prevContent;
+      // Attach event delegation for detail view buttons
+      resultsDiv.addEventListener('click', function detailHandler(e) {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        if (btn.dataset.action === 'back') {
+          backToResults();
+        } else if (btn.dataset.action === 'add-detail') {
+          const nutrients = JSON.parse(btn.dataset.nutrients);
+          addToMyPool(parseInt(btn.dataset.fdcid), btn.dataset.name, nutrients);
+        }
+        resultsDiv.removeEventListener('click', detailHandler);
+      });
     } catch (error) {
-      resultsDiv.innerHTML = `<div class="alert alert-red">❌ 加载失败：${escapeHtml(error.message)}</div>` + prevContent;
+      resultsDiv.innerHTML = `<div class="alert alert-red">❌ 加载失败：${escapeHtml(error.message)}</div>` + _prevSearchResultsHtml;
     }
   }
 
   function backToResults() {
-    if (window._prevSearchResults) {
-      document.getElementById('searchResults').innerHTML = window._prevSearchResults;
+    if (_prevSearchResultsHtml) {
+      const resultsDiv = document.getElementById('searchResults');
+      resultsDiv.innerHTML = _prevSearchResultsHtml;
+      resultsDiv.addEventListener('click', handleSearchResultClick);
     }
   }
 
@@ -222,8 +263,7 @@ const FoodPool = (() => {
    * Add food to personal pool from search results (with full nutrition data)
    */
   function addToMyPoolFromSearch(fdcId) {
-    const foods = window._lastSearchResults || [];
-    const food = foods.find(f => f.fdcId === fdcId);
+    const food = _lastSearchResults.find(f => f.fdcId === fdcId);
     if (food) {
       addToMyPool(fdcId, food.name, food.nutrients);
     } else {
@@ -311,13 +351,13 @@ const FoodPool = (() => {
                   <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(f.name)}">
                     ${escapeHtml(f.name)}
                   </td>
-                  <td>${(n.calories || 0).toFixed ? (n.calories || 0).toFixed(0) : (n.calories || 0)}</td>
-                  <td>${(n.protein || 0).toFixed ? (n.protein || 0).toFixed(1) : (n.protein || 0)}</td>
-                  <td>${(n.carbohydrates || 0).toFixed ? (n.carbohydrates || 0).toFixed(1) : (n.carbohydrates || 0)}</td>
-                  <td>${(n.totalFat || 0).toFixed ? (n.totalFat || 0).toFixed(1) : (n.totalFat || 0)}</td>
-                  <td>${(n.fiber || 0).toFixed ? (n.fiber || 0).toFixed(1) : (n.fiber || 0)}</td>
+                  <td>${formatNutrient(n.calories, 0)}</td>
+                  <td>${formatNutrient(n.protein, 1)}</td>
+                  <td>${formatNutrient(n.carbohydrates, 1)}</td>
+                  <td>${formatNutrient(n.totalFat, 1)}</td>
+                  <td>${formatNutrient(n.fiber, 1)}</td>
                   <td>
-                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;color:var(--red)" onclick="FoodPool.removeFromMyPool(${f.fdcId})">移除</button>
+                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;color:var(--red)" data-action="remove" data-fdcid="${f.fdcId}">移除</button>
                   </td>
                 </tr>
               `;
@@ -326,6 +366,14 @@ const FoodPool = (() => {
         </table>
       </div>
     `;
+
+    // Attach event delegation for remove buttons
+    container.addEventListener('click', function(e) {
+      const btn = e.target.closest('[data-action="remove"]');
+      if (btn) {
+        removeFromMyPool(parseInt(btn.dataset.fdcid));
+      }
+    });
   }
 
   function saveApiKey() {

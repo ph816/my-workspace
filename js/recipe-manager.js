@@ -7,12 +7,18 @@
 
 const RecipeManager = (() => {
   const STORAGE_KEY = 'nutriplan_recipes';
-  const RECOMMENDATIONS_KEY = 'nutriplan_recipe_recommendations';
+  // Module-level state
+  let _lastIngredientResults = [];
 
   function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = str || '';
     return div.innerHTML;
+  }
+
+  function formatNutrient(value, decimals) {
+    const num = Number(value) || 0;
+    return num.toFixed(decimals);
   }
 
   /**
@@ -208,11 +214,29 @@ const RecipeManager = (() => {
       container.innerHTML = `
         <div class="alert alert-green" style="margin-bottom:16px">
           <strong>📅 本周推荐</strong>
-          根据你的健康状况${conditions.length > 0 ? '（' + conditions.join('、') + '）' : ''}推荐以下食谱
+          根据你的健康状况${conditions.length > 0 ? '（' + escapeHtml(conditions.join('、')) + '）' : ''}推荐以下食谱
         </div>
         ${recipes.map(r => renderRecipeCard(r)).join('')}
       `;
+
+      // Attach event delegation
+      container.addEventListener('click', handleRecipeCardClick);
     }, 500);
+  }
+
+  /**
+   * Handle clicks on recipe card buttons via event delegation
+   */
+  function handleRecipeCardClick(e) {
+    const btn = e.target.closest('[data-recipe-action]');
+    if (!btn) return;
+    const action = btn.dataset.recipeAction;
+    const recipeId = btn.dataset.recipeId;
+    if (action === 'view') viewRecipe(recipeId);
+    else if (action === 'shopping') generateShoppingList(recipeId);
+    else if (action === 'lookup') lookupIngredients(recipeId);
+    else if (action === 'save') saveRecipe(recipeId);
+    else if (action === 'remove-saved') removeSavedRecipe(recipeId);
   }
 
   /**
@@ -225,15 +249,15 @@ const RecipeManager = (() => {
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px">${escapeHtml(recipe.description)}</p>
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
           <span class="tag tag-green">👥 ${recipe.servings}人份</span>
-          <span class="tag tag-blue">⏱ 准备${recipe.prepTime}</span>
-          <span class="tag tag-blue">🔥 烹饪${recipe.cookTime}</span>
+          <span class="tag tag-blue">⏱ 准备${escapeHtml(recipe.prepTime)}</span>
+          <span class="tag tag-blue">🔥 烹饪${escapeHtml(recipe.cookTime)}</span>
           ${recipe.tags.map(t => `<span class="tag tag-orange">${escapeHtml(t)}</span>`).join('')}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="RecipeManager.viewRecipe('${recipe.id}')">查看详情</button>
-          <button class="btn btn-secondary" onclick="RecipeManager.generateShoppingList('${recipe.id}')">生成购物清单</button>
-          <button class="btn btn-secondary" onclick="RecipeManager.lookupIngredients('${recipe.id}')">🔍 查询食材营养</button>
-          <button class="btn btn-secondary" onclick="RecipeManager.saveRecipe('${recipe.id}')">💾 收藏</button>
+          <button class="btn btn-primary" data-recipe-action="view" data-recipe-id="${escapeHtml(recipe.id)}">查看详情</button>
+          <button class="btn btn-secondary" data-recipe-action="shopping" data-recipe-id="${escapeHtml(recipe.id)}">生成购物清单</button>
+          <button class="btn btn-secondary" data-recipe-action="lookup" data-recipe-id="${escapeHtml(recipe.id)}">🔍 查询食材营养</button>
+          <button class="btn btn-secondary" data-recipe-action="save" data-recipe-id="${escapeHtml(recipe.id)}">💾 收藏</button>
         </div>
       </div>
     `;

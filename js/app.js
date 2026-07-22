@@ -4,6 +4,25 @@
  * Handles navigation, page routing, and shared UI utilities
  */
 
+// ── Nav scroll (PC) ──
+function scrollNav(direction) {
+  const inner = document.getElementById('navInner');
+  if (inner) {
+    inner.scrollBy({ left: direction * 200, behavior: 'smooth' });
+  }
+}
+
+// ── Update conditional nav tabs based on profile ──
+function updateConditionalTabs() {
+  const profile = Profile.load();
+  const conditions = profile.conditions || [];
+  document.querySelectorAll('.nav-btn[data-condition]').forEach(btn => {
+    const required = btn.dataset.condition.split(',');
+    const visible = required.some(c => conditions.includes(c));
+    btn.style.display = visible ? '' : 'none';
+  });
+}
+
 // ── Page navigation ──
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -26,6 +45,12 @@ function showPage(pageId) {
     Profile.attachProfileEvents();
   } else if (pageId === 'search') {
     page.innerHTML = FoodPool.renderSearchPage();
+  } else if (pageId === 'pools') {
+    // If myfoods tab is active, reload it
+    const myFoodsPanel = document.getElementById('pool-myfoods');
+    if (myFoodsPanel && myFoodsPanel.classList.contains('active')) {
+      FoodPool.renderMyFoodsPool();
+    }
   }
 
   // Save last viewed page
@@ -68,6 +93,9 @@ function toggleCheck(el) {
 
 // ── Initialize app ──
 document.addEventListener('DOMContentLoaded', () => {
+  // Update conditional tabs
+  updateConditionalTabs();
+
   // Restore last page or default to overview
   const lastPage = localStorage.getItem('nutriplan_last_page') || 'overview';
   showPage(lastPage);
@@ -149,4 +177,5 @@ function updateOverviewWithProfile() {
 // Listen for profile updates
 window.addEventListener('profileUpdated', () => {
   updateOverviewWithProfile();
+  updateConditionalTabs();
 });

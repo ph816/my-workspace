@@ -106,19 +106,21 @@
 
 <!-- ═══════════════════ Navigation ═══════════════════ -->
 <nav class="top-nav">
-  <div class="nav-inner">
+  <button class="nav-scroll-btn nav-scroll-left" onclick="scrollNav(-1)" aria-label="向左滚动">‹</button>
+  <div class="nav-inner" id="navInner">
     <div class="nav-week-pill">📅 第<span id="navWeekNum">?</span>周</div>
     <button class="nav-btn active" data-page="overview" onclick="showPage('overview')">📊 总览</button>
     <button class="nav-btn" data-page="profile" onclick="showPage('profile')">👤 个人指标</button>
     <button class="nav-btn" data-page="search" onclick="showPage('search')">🔍 食物搜索</button>
     <button class="nav-btn" data-page="shopping" onclick="showPage('shopping')">🛒 购物清单</button>
     <button class="nav-btn" data-page="prep" onclick="showPage('prep')">👨‍🍳 备餐步骤</button>
-    <button class="nav-btn" data-page="reheat" onclick="showPage('reheat')">🔥 复热</button>
     <button class="nav-btn" data-page="seasoning" onclick="showPage('seasoning')">🧂 调味</button>
     <button class="nav-btn" data-page="diet" onclick="showPage('diet')">🌅 全天饮食</button>
-    <button class="nav-btn" data-page="gout" onclick="showPage('gout')">⚠️ 痛风须知</button>
+    <button class="nav-btn" data-page="gout" onclick="showPage('gout')" data-condition="痛风,高尿酸" style="display:none">⚠️ 痛风须知</button>
+    <button class="nav-btn" data-page="recipes" onclick="showPage('recipes')">🍽️ 推荐食谱</button>
     <button class="nav-btn" data-page="pools" onclick="showPage('pools')">📦 营养池</button>
   </div>
+  <button class="nav-scroll-btn nav-scroll-right" onclick="scrollNav(1)" aria-label="向右滚动">›</button>
 </nav>
 
 <!-- ═══════════════════ PAGE: Overview ═══════════════════ -->
@@ -221,50 +223,12 @@
 </div>
 
 <!-- ═══════════════════ PAGE: Reheat ═══════════════════ -->
-<div id="page-reheat" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>🔥 复热方法</h1>
-      <p>每天只需5分钟，取出即可</p>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="icon">📦</span>取出前准备</div>
-      <ul class="checklist">
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>若为<strong>冷冻份</strong>：提前一天晚上从冷冻转移至冷藏，自然解冻过夜</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>紧急情况：用微波炉解冻档（先1-2分钟解冻，再正常加热）</span></li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="icon">📡</span>方法A：微波炉（推荐 · 5分钟）</div>
-      <ul class="checklist">
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出约680g混合物放入微波炉容器</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>加入 <strong>2-3汤匙水（约30ml）</strong>，加盖或蒙上保鲜膜（防干燥）</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>高火加热 <strong>3分钟</strong>，取出翻动一次</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>再高火 <strong>1分钟</strong>，确保中心热透</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>静置1分钟后加入调味料（见"调味方案"页）</span></li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="icon">💨</span>方法B：空气炸锅（质感更好 · 10分钟）</div>
-      <ul class="checklist">
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>解冻后均匀铺在炸篮中（不要堆叠太厚）</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>160°C</strong> 加热 <strong>8-10分钟</strong>，中途翻动一次</span></li>
-        <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出装碗，加入调味料</span></li>
-      </ul>
-      <div class="alert alert-orange" style="margin-top:16px">
-        <strong>⚠️ 注意</strong>
-        空气炸锅复热蔬菜会略微变软、鸡胸肉口感偏干，建议在调味时多加1茶匙醋或柠檬汁提升湿润感。
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════════════ PAGE: Seasoning ═══════════════════ -->
 <div id="page-seasoning" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>🧂 调味方案</h1>
-      <p>五天轮换 · 低钠低嘌呤 · 每次复热后加入</p>
+      <p>五天轮换 · 低钠低嘌呤 · 搭配食材使用</p>
     </div>
     <div class="alert alert-green" style="margin-bottom:16px">
       <strong>✅ 调味原则</strong>
@@ -341,7 +305,7 @@
           <div class="meal-time">晚餐<br>18-20时</div>
           <div class="meal-body">
             <strong>备餐（680g混合物 + 调味） <span class="meal-kcal">≈670 kcal</span></strong>
-            称取一份冷藏/解冻混合物，微波复热后按当日调味方案调味<br>
+            称取一份食材，按当日调味方案调味<br>
             <span class="pill pill-green">蛋白质≈52g</span>
           </div>
         </div>
@@ -399,6 +363,65 @@
   </div>
 </div>
 
+<!-- ═══════════════════ PAGE: Recipes ═══════════════════ -->
+<div id="page-recipes" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>🍽️ 每周推荐食谱</h1>
+      <p>从互联网获取健康食谱，自动生成购物清单与备餐步骤</p>
+    </div>
+
+    <!-- Upload recipe from URL -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🔗</span>从URL导入食谱</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">
+        粘贴食谱网页链接，系统将自动解析食材和步骤信息
+      </p>
+      <div style="display:flex;gap:8px">
+        <input type="text" class="form-input" id="recipeUrlInput" placeholder="粘贴食谱URL（如 https://example.com/recipe/...）" style="flex:1">
+        <button class="btn btn-primary" onclick="RecipeManager.importFromUrl()">导入</button>
+      </div>
+      <div id="recipeImportStatus" style="margin-top:8px"></div>
+    </div>
+
+    <!-- Recommended recipes -->
+    <div class="card">
+      <div class="card-title"><span class="icon">⭐</span>本周推荐食谱</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btn btn-primary" onclick="RecipeManager.fetchRecommendations()">🔄 获取推荐</button>
+        <button class="btn btn-secondary" onclick="RecipeManager.showMyRecipes()">📚 我的食谱</button>
+      </div>
+      <div id="recipeRecommendations">
+        <div class="alert alert-blue">点击"获取推荐"查看本周推荐的健康食谱</div>
+      </div>
+    </div>
+
+    <!-- Recipe detail view (hidden by default) -->
+    <div id="recipeDetailView" style="display:none">
+      <div class="card">
+        <div class="card-title" id="recipeDetailTitle"></div>
+        <div id="recipeDetailContent"></div>
+      </div>
+    </div>
+
+    <!-- Recipe shopping list -->
+    <div id="recipeShoppingList" style="display:none">
+      <div class="card">
+        <div class="card-title"><span class="icon">🛒</span>食谱购物清单</div>
+        <div id="recipeShoppingContent"></div>
+      </div>
+    </div>
+
+    <!-- Recipe prep steps -->
+    <div id="recipePrepSteps" style="display:none">
+      <div class="card">
+        <div class="card-title"><span class="icon">👨‍🍳</span>备餐步骤</div>
+        <div id="recipePrepContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════ PAGE: Nutrition Pools ═══════════════════ -->
 <div id="page-pools" class="page">
   <div class="page-wrap">
@@ -417,6 +440,7 @@
       <button class="pool-tab" onclick="showPool('protein')">🥩 蛋白质池</button>
       <button class="pool-tab" onclick="showPool('fat')">🫒 脂肪池</button>
       <button class="pool-tab" onclick="showPool('micro')">🥦 微量元素池</button>
+      <button class="pool-tab" onclick="showPool('myfoods')">⭐ 我的食物池</button>
     </div>
 
     <!-- Carb Pool -->
@@ -512,10 +536,24 @@
               <tr><td>🥕 胡萝卜</td><td>41</td><td>33</td><td>6</td><td>320</td><td><span class="purine-badge purine-low">低</span></td><td>β-胡萝卜素，与油同食吸收好</td></tr>
               <tr><td>🫑 彩椒</td><td>31</td><td>7</td><td>128</td><td>211</td><td><span class="purine-badge purine-low">低</span></td><td>✨维C最高，有助降尿酸</td></tr>
               <tr><td>🍅 番茄</td><td>18</td><td>10</td><td>23</td><td>237</td><td><span class="purine-badge purine-low">低</span></td><td>番茄红素，加热后吸收翻倍</td></tr>
-              <tr><td>🥒 西葫芦</td><td>17</td><td>16</td><td>17</td><td>262</td><td><span class="purine-badge purine-low">低</span></td><td>低热量，冷冻复热口感好</td></tr>
+              <tr><td>🥒 西葫芦</td><td>17</td><td>16</td><td>17</td><td>262</td><td><span class="purine-badge purine-low">低</span></td><td>低热量，口感好</td></tr>
               <tr><td>🥬 小白菜</td><td>13</td><td>90</td><td>28</td><td>178</td><td><span class="purine-badge purine-low">低</span></td><td>铁钙均衡</td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Foods Pool -->
+    <div id="pool-myfoods" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">⭐</span>我的食物池</div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>💡 个人收藏</strong>
+          通过「🔍 食物搜索」添加的食物会显示在这里，数据来自USDA FoodData Central实时查询。
+        </div>
+        <div id="myFoodsPoolContent">
+          <div class="loading-overlay"><div class="spinner"></div>加载中…</div>
         </div>
       </div>
     </div>
@@ -529,6 +567,7 @@
 <script src="js/food-pool.js"></script>
 <script src="js/week-data.js"></script>
 <script src="js/meal-plan.js"></script>
+<script src="js/recipe-manager.js"></script>
 <script src="js/app.js"></script>
 <script>
   // Initialize meal plan rendering after all modules loaded

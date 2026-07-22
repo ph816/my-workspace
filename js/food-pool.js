@@ -82,6 +82,9 @@ const FoodPool = (() => {
         return;
       }
 
+      // Store search results for sync with food pool
+      window._lastSearchResults = foods;
+
       resultsDiv.innerHTML = `
         <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">
           找到 ${foods.length} 个结果（每100g营养数据）
@@ -110,7 +113,10 @@ const FoodPool = (() => {
                   <td>${(f.nutrients.carbohydrates || 0).toFixed(1)}</td>
                   <td>${(f.nutrients.totalFat || 0).toFixed(1)}</td>
                   <td>${(f.nutrients.fiber || 0).toFixed(1)}</td>
-                  <td><button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" onclick="FoodPool.viewDetail(${f.fdcId})">详情</button></td>
+                  <td>
+                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" onclick="FoodPool.viewDetail(${f.fdcId})">详情</button>
+                    <button class="btn btn-primary" style="padding:4px 10px;font-size:12px" onclick="FoodPool.addToMyPoolFromSearch(${f.fdcId})">+ 添加</button>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -194,7 +200,7 @@ const FoodPool = (() => {
           </div>
           <div style="margin-top:16px;text-align:center">
             <button class="btn btn-secondary" onclick="FoodPool.backToResults()">← 返回搜索结果</button>
-            <button class="btn btn-primary" onclick="FoodPool.addToMyPool(${fdcId}, '${escapeHtml(simplified.name)}')">+ 添加到我的食物池</button>
+            <button class="btn btn-primary" onclick="FoodPool.addToMyPool(${fdcId}, '${escapeHtml(simplified.name)}', ${JSON.stringify(n).replace(/'/g, "\\'")})">+ 添加到我的食物池</button>
           </div>
         </div>
       `;
@@ -213,19 +219,113 @@ const FoodPool = (() => {
   }
 
   /**
-   * Add food to personal pool (stored in localStorage)
+   * Add food to personal pool from search results (with full nutrition data)
    */
-  function addToMyPool(fdcId, name) {
+  function addToMyPoolFromSearch(fdcId) {
+    const foods = window._lastSearchResults || [];
+    const food = foods.find(f => f.fdcId === fdcId);
+    if (food) {
+      addToMyPool(fdcId, food.name, food.nutrients);
+    } else {
+      showToast('⚠️ 未找到食物数据，请先查看详情再添加');
+    }
+  }
+
+  /**
+   * Add food to personal pool (stored in localStorage with full nutrition data)
+   */
+  function addToMyPool(fdcId, name, nutrients) {
     const key = 'nutriplan_my_foods';
     let foods = [];
     try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
     if (!foods.find(f => f.fdcId === fdcId)) {
-      foods.push({ fdcId, name, addedAt: new Date().toISOString() });
+      foods.push({ fdcId, name, nutrients: nutrients || {}, addedAt: new Date().toISOString() });
       localStorage.setItem(key, JSON.stringify(foods));
       showToast(`✅ "${name}" 已添加到食物池`);
     } else {
+      // Update existing entry with latest nutrition data
+      const existing = foods.find(f => f.fdcId === fdcId);
+      if (nutrients) {
+        existing.nutrients = nutrients;
+        localStorage.setItem(key, JSON.stringify(foods));
+      }
       showToast(`ℹ️ "${name}" 已在食物池中`);
     }
+  }
+
+  /**
+   * Remove food from personal pool
+   */
+  function removeFromMyPool(fdcId) {
+    const key = 'nutriplan_my_foods';
+    let foods = [];
+    try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+    foods = foods.filter(f => f.fdcId !== fdcId);
+    localStorage.setItem(key, JSON.stringify(foods));
+    showToast('🗑️ 已从食物池中移除');
+    renderMyFoodsPool();
+  }
+
+  /**
+   * Render "My Foods Pool" in the nutrition pools page
+   */
+  function renderMyFoodsPool() {
+    const container = document.getElementById('myFoodsPoolContent');
+    if (!container) return;
+
+    const key = 'nutriplan_my_foods';
+    let foods = [];
+    try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+
+    if (foods.length === 0) {
+      container.innerHTML = `
+        <div class="alert alert-orange">
+          食物池为空。前往「🔍 食物搜索」页面搜索并添加食物。
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = `
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">
+        共 ${foods.length} 种食物（每100g营养数据）
+      </div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>食物名称</th>
+              <th>热量(kcal)</th>
+              <th>蛋白质(g)</th>
+              <th>碳水(g)</th>
+              <th>脂肪(g)</th>
+              <th>纤维(g)</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${foods.map(f => {
+              const n = f.nutrients || {};
+              return `
+                <tr>
+                  <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(f.name)}">
+                    ${escapeHtml(f.name)}
+                  </td>
+                  <td>${(n.calories || 0).toFixed ? (n.calories || 0).toFixed(0) : (n.calories || 0)}</td>
+                  <td>${(n.protein || 0).toFixed ? (n.protein || 0).toFixed(1) : (n.protein || 0)}</td>
+                  <td>${(n.carbohydrates || 0).toFixed ? (n.carbohydrates || 0).toFixed(1) : (n.carbohydrates || 0)}</td>
+                  <td>${(n.totalFat || 0).toFixed ? (n.totalFat || 0).toFixed(1) : (n.totalFat || 0)}</td>
+                  <td>${(n.fiber || 0).toFixed ? (n.fiber || 0).toFixed(1) : (n.fiber || 0)}</td>
+                  <td>
+                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;color:var(--red)" onclick="FoodPool.removeFromMyPool(${f.fdcId})">移除</button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   function saveApiKey() {
@@ -258,6 +358,9 @@ const FoodPool = (() => {
     viewDetail,
     backToResults,
     addToMyPool,
+    addToMyPoolFromSearch,
+    removeFromMyPool,
+    renderMyFoodsPool,
     saveApiKey,
     testConnection,
   };

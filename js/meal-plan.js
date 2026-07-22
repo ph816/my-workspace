@@ -157,13 +157,16 @@ const MealPlan = (() => {
   }
 
   // ── Nutrition pool tabs ──
-  const POOL_IDS = ['carb', 'protein', 'fat', 'micro'];
+  const POOL_IDS = ['carb', 'protein', 'fat', 'micro', 'myfoods'];
   function showPool(id) {
     document.querySelectorAll('.pool-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('pool-' + id).classList.add('active');
     document.querySelectorAll('.pool-tab').forEach((t, i) => {
       t.classList.toggle('active', POOL_IDS[i] === id);
     });
+    if (id === 'myfoods') {
+      FoodPool.renderMyFoodsPool();
+    }
   }
 
   // ── Week selector ──

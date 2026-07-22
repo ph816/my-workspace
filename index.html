@@ -3,281 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>减脂人粮 · 备餐指南</title>
+<title>轻食智配 · NutriPlan</title>
+<link rel="stylesheet" href="css/style.css">
 <style>
-  :root {
-    --green: #4caf7d;
-    --green-light: #e8f5ee;
-    --green-dark: #357a5a;
-    --orange: #f59e0b;
-    --orange-light: #fef3c7;
-    --red: #ef4444;
-    --red-light: #fee2e2;
-    --blue: #3b82f6;
-    --blue-light: #eff6ff;
-    --gray: #6b7280;
-    --gray-light: #f3f4f6;
-    --text: #1f2937;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --white: #ffffff;
-    --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    --radius: 12px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f8fafb;
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* ── Top nav ── */
-  .top-nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 0 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .nav-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding: 10px 0;
-  }
-  .nav-inner::-webkit-scrollbar { display: none; }
-  .nav-btn {
-    flex-shrink: 0;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    color: var(--gray);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all .2s;
-    white-space: nowrap;
-  }
-  .nav-btn:hover { border-color: var(--green); color: var(--green-dark); }
-  .nav-btn.active {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--white);
-    font-weight: 600;
-  }
-
-  /* ── Pages ── */
-  .page { display: none; }
-  .page.active { display: block; }
-
-  .page-wrap {
-    max-width: 760px;
-    margin: 24px auto 80px;
-    padding: 0 16px;
-  }
-
-  /* ── Cards ── */
-  .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 24px;
-    margin-bottom: 16px;
-  }
-  .card-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .card-title .icon { font-size: 20px; }
-
-  /* ── Page header ── */
-  .page-header {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .page-header h1 {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-  .page-header p {
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-
-  /* ── Stat grid ── */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
-  }
-  .stat-item {
-    background: var(--green-light);
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
-  }
-  .stat-value { font-size: 22px; font-weight: 800; color: var(--green-dark); }
-  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
-  /* ── Table ── */
-  .tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .tbl th {
-    background: var(--gray-light);
-    padding: 10px 12px;
-    text-align: left;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border);
-  }
-  .tbl td {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .tbl tr:last-child td { border-bottom: none; }
-  .tbl tr:hover td { background: var(--gray-light); }
-  .tbl .total td { font-weight: 700; background: var(--green-light); }
-
-  /* ── Weight tracker ── */
-  .weight-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 10px;
-    align-items: end;
-  }
-  .weight-field label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .weight-field input {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-  .weight-btn {
-    border: none;
-    background: var(--green);
-    color: var(--white);
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .weight-btn:hover { background: var(--green-dark); }
-  .weight-summary {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .weight-stat {
-    background: var(--green-light);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-  }
-  .weight-stat-value { font-size: 20px; font-weight: 800; color: var(--green-dark); }
-  .weight-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .weight-table-actions button {
-    border: 1px solid var(--border);
-    background: var(--white);
-    color: var(--text-muted);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  .weight-table-actions button:hover { border-color: var(--red); color: var(--red); }
-  .empty-tip {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-align: center;
-    padding: 12px 0 2px;
-  }
-
-  /* ── Alert boxes ── */
-  .alert {
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-  .alert-red { background: var(--red-light); border-left: 4px solid var(--red); }
-  .alert-orange { background: var(--orange-light); border-left: 4px solid var(--orange); }
-  .alert-green { background: var(--green-light); border-left: 4px solid var(--green); }
-  .alert-blue { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  /* ── Additional page-specific styles ── */
   .alert strong { display: block; margin-bottom: 4px; font-size: 13px; }
 
   /* ── Step-by-step ── */
-  .step-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    gap: 8px;
-  }
-  .step-nav-btn {
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    color: var(--gray);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .step-nav-btn:hover:not(:disabled) {
-    border-color: var(--green);
-    color: var(--green-dark);
-  }
-  .step-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .step-counter {
-    font-size: 13px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
-  .step-progress {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .step-dot {
-    flex: 1;
-    min-width: 28px;
-    height: 6px;
-    border-radius: 3px;
-    background: var(--border);
-    cursor: pointer;
-    transition: background .2s;
-  }
-  .step-dot.done { background: var(--green); }
-  .step-dot.current { background: var(--green-dark); }
-
-  .step-panel { display: none; }
-  .step-panel.active { display: block; }
-
   .step-header {
     display: flex;
     align-items: flex-start;
@@ -285,71 +17,23 @@
     margin-bottom: 20px;
   }
   .step-number {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: var(--green);
     color: var(--white);
-    font-size: 20px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 20px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
   .step-title-block h2 { font-size: 19px; font-weight: 800; }
-  .step-title-block .step-time {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 3px;
-  }
+  .step-title-block .step-time { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
   .step-time .tag {
     display: inline-block;
-    background: var(--orange-light);
-    color: #92400e;
-    border-radius: 12px;
-    padding: 2px 8px;
-    font-size: 12px;
-    font-weight: 600;
+    background: var(--orange-light); color: #92400e;
+    border-radius: 12px; padding: 2px 8px;
+    font-size: 12px; font-weight: 600;
   }
-
-  .checklist { list-style: none; }
-  .checklist li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1.6;
-    transition: opacity .2s;
-  }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li.checked { opacity: 0.5; }
-  .checklist li.checked .check-box { background: var(--green); border-color: var(--green); }
-  .checklist li.checked .check-box::after {
-    content: '✓';
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .check-box {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    border: 2px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1px;
-    transition: all .2s;
-  }
-  .step-tip {
-    margin-top: 16px;
-    font-size: 13px;
-  }
+  .step-tip { margin-top: 16px; font-size: 13px; }
 
   /* ── Seasoning cards ── */
   .seasoning-grid {
@@ -358,647 +42,155 @@
     gap: 14px;
   }
   .seasoning-card {
-    border-radius: 10px;
-    padding: 16px;
+    border-radius: 10px; padding: 16px;
     border: 1.5px solid var(--border);
   }
-  .seasoning-card h3 {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .seasoning-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
   .seasoning-card ul { list-style: none; font-size: 13px; line-height: 1.9; }
   .seasoning-card ul li::before { content: '• '; color: var(--green); font-weight: 700; }
 
   /* ── Meal timeline ── */
   .meal-timeline { display: flex; flex-direction: column; gap: 12px; }
-  .meal-item {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-  .meal-time {
-    width: 60px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-muted);
-    flex-shrink: 0;
-    padding-top: 3px;
-  }
-  .meal-body {
-    flex: 1;
-    background: var(--gray-light);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .meal-body strong { display: block; margin-bottom: 4px; font-size: 14px; }
-  .meal-kcal {
-    display: inline-block;
-    background: var(--green-light);
-    color: var(--green-dark);
-    border-radius: 12px;
-    padding: 1px 8px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-left: 6px;
-  }
-
-  /* ── Tag pill ── */
-  .pill {
-    display: inline-block;
-    padding: 2px 9px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .pill-red { background: var(--red-light); color: #991b1b; }
+  .meal-item { display: flex; gap: 14px; align-items: flex-start; }
+  .meal-time { width: 60px; font-size: 13px; font-weight: 700; color: var(--text-muted); flex-shrink: 0; padding-top: 3px; }
+  .meal-body { flex: 1; background: var(--gray-light); border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.7; }
+  .meal-body strong { display: block; margin-bottom: 4px; }
+  .meal-kcal { display: inline-block; background: var(--green-light); color: var(--green-dark); border-radius: 12px; padding: 1px 8px; font-size: 12px; font-weight: 700; margin-left: 6px; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; }
   .pill-green { background: var(--green-light); color: var(--green-dark); }
   .pill-orange { background: var(--orange-light); color: #92400e; }
 
-  /* ── Gout warnings ── */
+  /* ── Gout ── */
   .gout-list { list-style: none; }
-  .gout-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    line-height: 1.7;
-    display: flex;
-    gap: 10px;
-  }
+  .gout-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; display: flex; gap: 10px; }
   .gout-list li:last-child { border-bottom: none; }
-  .gout-num {
-    width: 24px;
-    height: 24px;
-    background: var(--orange);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  .gout-num { width: 24px; height: 24px; background: var(--orange); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
-  /* ── Shopping list ── */
-  .shop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 10px;
-  }
-  .shop-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    background: var(--gray-light);
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: opacity .2s;
-  }
+  /* ── Shopping ── */
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+  .shop-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--gray-light); border-radius: 8px; font-size: 14px; cursor: pointer; transition: opacity .2s; }
   .shop-item.got { opacity: 0.45; }
   .shop-item.got .shop-check { background: var(--green); border-color: var(--green); color: white; }
-  .shop-check {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    border: 2px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    background: white;
-    transition: all .2s;
-  }
+  .shop-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; background: white; transition: all .2s; }
   .shop-item-info { flex: 1; }
   .shop-item-name { font-weight: 600; }
   .shop-item-detail { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
   .shop-item-price { font-size: 12px; color: var(--green-dark); font-weight: 600; }
 
+  /* ── Week pill ── */
+  .nav-week-pill { flex-shrink: 0; padding: 5px 12px; background: var(--green-light); color: var(--green-dark); border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; border: 1.5px solid var(--green); }
 
-  .profile-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .profile-form {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .profile-field label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .profile-field input,
-  .profile-field select {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-    background: var(--white);
-    color: var(--text);
-  }
-  .profile-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-  .secondary-btn {
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    color: var(--text-muted);
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .secondary-btn:hover { border-color: var(--blue); color: var(--blue); }
-  .form-note {
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-  .status-text {
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--green-dark);
-  }
-
-  .weekly-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .weekly-meta {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-  .weekly-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .weekly-day {
-    background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px;
-  }
-  .weekly-day-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .weekly-day-title {
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--text);
-  }
-  .weekly-day-subtitle {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 3px;
-  }
-  .weekly-total {
-    background: var(--green-light);
-    color: var(--green-dark);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .weekly-meals {
-    display: grid;
-    gap: 12px;
-  }
-  .weekly-meal {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    background: #fcfdfd;
-  }
-  .weekly-meal-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .weekly-meal-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-  }
-  .weekly-meal-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .weekly-meal-desc,
-  .weekly-meal-ingredients {
-    margin-top: 8px;
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-  .weekly-macros {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .macro-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: var(--gray-light);
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-  .macro-chip.primary {
-    background: var(--green-light);
-    color: var(--green-dark);
-  }
-
-  @media (max-width: 600px) and (orientation: portrait) {
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
     .top-nav { padding: 0 10px; }
     .nav-inner { gap: 6px; padding: 8px 0; }
     .nav-btn { padding: 6px 10px; font-size: 12px; }
-
     .page-wrap { margin: 16px auto 64px; padding: 0 12px; }
     .page-header h1 { font-size: 18px; }
-    .page-header p { font-size: 13px; }
     .card { padding: 16px; }
-    .card-title { margin-bottom: 12px; }
-
-    .stat-grid,
-    .weight-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .weight-form { grid-template-columns: 1fr; }
-    .weight-btn { width: 100%; }
-
+    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .tbl { font-size: 13px; }
-    .tbl th, .tbl td { padding: 8px 8px; }
-
+    .tbl th, .tbl td { padding: 8px; }
     .step-nav { flex-wrap: wrap; justify-content: center; }
     .step-counter { width: 100%; text-align: center; order: -1; }
     .step-nav-btn { flex: 1 1 calc(50% - 8px); padding: 8px 10px; text-align: center; }
-    .step-header { flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .step-header { flex-direction: column; gap: 10px; }
     .step-number { width: 36px; height: 36px; font-size: 16px; }
-    .step-title-block h2 { font-size: 17px; }
-
-    .seasoning-grid,
-    .shop-grid { grid-template-columns: 1fr; }
-    .profile-form { grid-template-columns: 1fr; }
-    .profile-actions,
-    .weekly-toolbar,
-    .weekly-day-header,
-    .weekly-meal-top { flex-direction: column; align-items: stretch; }
-    .weekly-total { text-align: center; }
+    .seasoning-grid, .shop-grid { grid-template-columns: 1fr; }
     .meal-item { flex-direction: column; gap: 6px; }
-    .meal-time { width: auto; padding-top: 0; }
+    .meal-time { width: auto; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── Navigation ── -->
+<!-- ═══════════════════ Navigation ═══════════════════ -->
 <nav class="top-nav">
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="showPage('overview')">📊 营养目标</button>
-    <button class="nav-btn" onclick="showPage('profile')">⚙️ 个人设置</button>
-    <button class="nav-btn" onclick="showPage('shopping')">🛒 购物清单</button>
-    <button class="nav-btn" onclick="showPage('prep')">👨‍🍳 备餐步骤</button>
-    <button class="nav-btn" onclick="showPage('reheat')">🔥 复热方法</button>
-    <button class="nav-btn" onclick="showPage('seasoning')">🧂 调味方案</button>
-    <button class="nav-btn" onclick="showPage('diet')">🌅 全天饮食</button>
-    <button class="nav-btn" onclick="showPage('weekly')">📅 每周食谱</button>
-    <button class="nav-btn" onclick="showPage('weight')">⚖️ 体重追踪</button>
-    <button class="nav-btn" onclick="showPage('gout')">⚠️ 痛风须知</button>
+    <div class="nav-week-pill">📅 第<span id="navWeekNum">?</span>周</div>
+    <button class="nav-btn active" data-page="overview" onclick="showPage('overview')">📊 总览</button>
+    <button class="nav-btn" data-page="profile" onclick="showPage('profile')">👤 个人指标</button>
+    <button class="nav-btn" data-page="search" onclick="showPage('search')">🔍 食物搜索</button>
+    <button class="nav-btn" data-page="shopping" onclick="showPage('shopping')">🛒 购物清单</button>
+    <button class="nav-btn" data-page="prep" onclick="showPage('prep')">👨‍🍳 备餐步骤</button>
+    <button class="nav-btn" data-page="reheat" onclick="showPage('reheat')">🔥 复热</button>
+    <button class="nav-btn" data-page="seasoning" onclick="showPage('seasoning')">🧂 调味</button>
+    <button class="nav-btn" data-page="diet" onclick="showPage('diet')">🌅 全天饮食</button>
+    <button class="nav-btn" data-page="gout" onclick="showPage('gout')">⚠️ 痛风须知</button>
+    <button class="nav-btn" data-page="pools" onclick="showPage('pools')">📦 营养池</button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: overview                             -->
-<!-- ══════════════════════════════════════════ -->
-
+<!-- ═══════════════════ PAGE: Overview ═══════════════════ -->
 <div id="page-overview" class="page active">
   <div class="page-wrap">
     <div class="page-header">
-      <h1>🥗 减脂人粮 · 周晚餐方案</h1>
-      <p>按个人情况灵活调整热量目标与饮食结构</p>
+      <h1>🥗 轻食智配 · 周晚餐方案</h1>
+      <p id="overviewSubtitle">填写「个人指标」后自动显示你的身体数据</p>
     </div>
 
     <div class="card">
-      <div class="card-title"><span class="icon">📏</span>个人指标</div>
-      <div class="stat-grid">
+      <div class="card-title"><span class="icon">📏</span>个人指标
+        <span style="font-size:12px;font-weight:normal;color:var(--text-muted);margin-left:auto">
+          <a href="javascript:showPage('profile')" style="color:var(--blue);text-decoration:none">✏️ 编辑</a>
+        </span>
+      </div>
+      <div class="stat-grid" id="overviewMetrics">
         <div class="stat-item">
-          <div class="stat-value" id="profileBmi">--</div>
-          <div class="stat-label">BMI（按实测体重填写）</div>
+          <div class="stat-value">—</div>
+          <div class="stat-label">BMI</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value" id="profileLeanMass">--</div>
-          <div class="stat-label">去脂体重（估算）</div>
+          <div class="stat-value">—</div>
+          <div class="stat-label">去脂体重</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value" id="profileBmr">--</div>
+          <div class="stat-value">—</div>
           <div class="stat-label">BMR（kcal/天）</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value" id="profileTdee">--</div>
+          <div class="stat-value">—</div>
           <div class="stat-label">TDEE（kcal/天）</div>
         </div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="overviewTargets">
       <div class="card-title"><span class="icon">🎯</span>热量目标</div>
-      <div class="alert alert-green">
-        <strong>热量缺口策略</strong>
-        <span id="goalStrategyText">保存个人设置后，这里会自动计算每日热量缺口与摄入目标。</span>
-      </div>
-      <div class="stat-grid">
-        <div class="stat-item">
-          <div class="stat-value" id="goalCalories">--</div>
-          <div class="stat-label">每日摄入目标 kcal</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="goalProtein">--</div>
-          <div class="stat-label">蛋白质/天（防掉肌）</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="goalFat">--</div>
-          <div class="stat-label">脂肪/天</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="goalCarb">--</div>
-          <div class="stat-label">碳水/天</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🍱</span>每份"人粮"营养（约680g混合物）</div>
-      <table class="tbl">
-        <thead>
-          <tr><th>食材</th><th>熟重</th><th>热量</th><th>蛋白质</th><th>碳水</th><th>脂肪</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>鸡胸肉（熟撕丝）</td><td>80g</td><td>132 kcal</td><td>25g</td><td>0g</td><td>3g</td></tr>
-          <tr><td>鸡蛋（全熟）</td><td>2个（~100g）</td><td>143 kcal</td><td>12.6g</td><td>0.7g</td><td>9.5g</td></tr>
-          <tr><td>老豆腐（烤压干）</td><td>70g</td><td>56 kcal</td><td>5.1g</td><td>1.5g</td><td>3.4g</td></tr>
-          <tr><td>熟糙米</td><td>160g</td><td>185 kcal</td><td>3.9g</td><td>41g</td><td>1.6g</td></tr>
-          <tr><td>红薯（烤熟）</td><td>70g</td><td>63 kcal</td><td>1.1g</td><td>15g</td><td>0.1g</td></tr>
-          <tr><td>混合蔬菜（焯水）</td><td>200g</td><td>65 kcal</td><td>4.2g</td><td>12g</td><td>0.8g</td></tr>
-          <tr><td>烹饪用油（残留）</td><td>—</td><td>25 kcal</td><td>0g</td><td>0g</td><td>2.8g</td></tr>
-          <tr class="total"><td>合计</td><td>~680g</td><td>≈669 kcal</td><td>≈52g</td><td>≈70g</td><td>≈21g</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: profile                             -->
-<!-- ══════════════════════════════════════════ -->
-<div id="page-profile" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>⚙️ 个人设置</h1>
-      <p>先保存个人资料，再自动计算每日热量与每周食谱</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🧍</span>基础资料</div>
-      <form id="profileForm" onsubmit="saveProfileSettings(event)">
-        <div class="profile-form">
-          <div class="profile-field">
-            <label for="profileHeight">身高（cm）</label>
-            <input id="profileHeight" type="number" min="120" max="230" step="1" value="170" required>
-          </div>
-          <div class="profile-field">
-            <label for="profileWeight">体重（kg）</label>
-            <input id="profileWeight" type="number" min="30" max="300" step="0.1" value="75" required>
-          </div>
-          <div class="profile-field">
-            <label for="profileAge">年龄</label>
-            <input id="profileAge" type="number" min="16" max="100" step="1" value="28" required>
-          </div>
-          <div class="profile-field">
-            <label for="profileGender">性别</label>
-            <select id="profileGender" required>
-              <option value="male">男</option>
-              <option value="female">女</option>
-            </select>
-          </div>
-          <div class="profile-field">
-            <label for="profileActivity">活动水平</label>
-            <select id="profileActivity" required>
-              <option value="sedentary">久坐少动</option>
-              <option value="light">轻量活动</option>
-              <option value="moderate" selected>中等活动</option>
-              <option value="active">高活动量</option>
-              <option value="very_active">非常活跃</option>
-            </select>
-          </div>
-          <div class="profile-field">
-            <label for="profileGoal">减重目标（kg/周）</label>
-            <select id="profileGoal" required>
-              <option value="0.25">0.25</option>
-              <option value="0.5" selected>0.5</option>
-              <option value="0.75">0.75</option>
-            </select>
-          </div>
-        </div>
-        <div class="profile-actions">
-          <button class="weight-btn" type="submit">保存设置并计算</button>
-          <button class="secondary-btn" type="button" onclick="restoreDefaultProfileForm()">恢复默认值</button>
-        </div>
-        <div class="form-note">默认值仅用于快速填写；首次打开不会自动计算，需点击“保存设置并计算”后才会驱动指标与周食谱。</div>
-        <div class="status-text" id="profileSaveStatus">当前尚未启用个人设置。</div>
-      </form>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🧠</span>计算逻辑</div>
       <div class="alert alert-blue">
-        <strong>Mifflin-St Jeor 公式</strong>
-        男：10×体重 + 6.25×身高 - 5×年龄 + 5；女：10×体重 + 6.25×身高 - 5×年龄 - 161。活动系数用于估算 TDEE，再按每周减重目标扣减每日热量。
-      </div>
-      <div class="alert alert-green" style="margin-bottom:0">
-        <strong>宏量营养素分配</strong>
-        蛋白质 = 2g/kg 体重；脂肪 = 总热量 25%；碳水 = 剩余热量。保存后会同步刷新“营养目标”和“每周食谱”。
+        请先前往「👤 个人指标」页面填写身高体重等信息，系统将自动计算你的每日热量和宏量素目标。
       </div>
     </div>
+
+    <!-- Week selector -->
+    <div class="week-selector">
+      <button class="btn btn-secondary" onclick="changeWeek(-1)">◀</button>
+      <span class="week-label" id="weekLabel">本周方案</span>
+      <button class="btn btn-secondary" onclick="changeWeek(1)">▶</button>
+    </div>
+
+    <div id="overview-nutrition-content"></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: shopping                            -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Profile (dynamic) ═══════════════════ -->
+<div id="page-profile" class="page"></div>
+
+<!-- ═══════════════════ PAGE: Food Search (dynamic) ═══════════════════ -->
+<div id="page-search" class="page"></div>
+
+<!-- ═══════════════════ PAGE: Shopping ═══════════════════ -->
 <div id="page-shopping" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>🛒 购物清单</h1>
-      <p>5天用量 · 点击勾选已购买的食材</p>
+      <p>5天用量 · 点击勾选已购买的食材 · <span id="shopping-week-label" style="color:var(--green-dark);font-weight:700"></span></p>
     </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🥩</span>蛋白质来源</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">鸡胸肉（去皮去骨）</div>
-            <div class="shop-item-detail">400g 生重</div>
-          </div>
-          <div class="shop-item-price">¥8-12</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">鸡蛋</div>
-            <div class="shop-item-detail">10个</div>
-          </div>
-          <div class="shop-item-price">¥6-8</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">老豆腐 / 北豆腐</div>
-            <div class="shop-item-detail">350g</div>
-          </div>
-          <div class="shop-item-price">¥3-5</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🌾</span>主食</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">糙米</div>
-            <div class="shop-item-detail">500g（余下备下次）</div>
-          </div>
-          <div class="shop-item-price">¥5-8</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">红薯</div>
-            <div class="shop-item-detail">400g</div>
-          </div>
-          <div class="shop-item-price">¥3-5</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🥦</span>蔬菜</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">西兰花</div>
-            <div class="shop-item-detail">400g</div>
-          </div>
-          <div class="shop-item-price">¥4-6</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">胡萝卜</div>
-            <div class="shop-item-detail">180g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">红/黄彩椒</div>
-            <div class="shop-item-detail">200g（富含维C，有益降尿酸）</div>
-          </div>
-          <div class="shop-item-price">¥4-6</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">西葫芦</div>
-            <div class="shop-item-detail">200g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">菠菜 / 羽衣甘蓝</div>
-            <div class="shop-item-detail">150g</div>
-          </div>
-          <div class="shop-item-price">¥2-3</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">🫒</span>辅料</div>
-      <div class="shop-grid">
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">橄榄油</div>
-            <div class="shop-item-detail">少量（约20ml用于处理鸡胸/豆腐）</div>
-          </div>
-          <div class="shop-item-price">已有即可</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">大蒜</div>
-            <div class="shop-item-detail">5瓣</div>
-          </div>
-          <div class="shop-item-price">¥1</div>
-        </div>
-        <div class="shop-item" onclick="toggleShop(this)">
-          <div class="shop-check">✓</div>
-          <div class="shop-item-info">
-            <div class="shop-item-name">黑胡椒</div>
-            <div class="shop-item-detail">适量（腌鸡胸用）</div>
-          </div>
-          <div class="shop-item-price">已有即可</div>
-        </div>
-      </div>
-    </div>
-
+    <div id="shopping-content"></div>
     <div class="alert alert-orange" style="margin-top:0">
       <strong>⚠️ 痛风禁忌食材 — 请勿购买</strong>
       动物内脏 · 带壳海鲜（虾/蛤/牡蛎）· 沙丁鱼 · 鲭鱼 · 啤酒 · 含高果糖饮料
     </div>
-
     <div class="alert alert-blue">
       <strong>💡 总采购费用参考</strong>
       约 ¥40–60，可供5天晚餐（每餐约¥8–12）
@@ -1006,202 +198,35 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: prep (step-by-step)                 -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Prep ═══════════════════ -->
 <div id="page-prep" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>👨‍🍳 备餐步骤</h1>
-      <p>建议周日下午进行 · 总计约90分钟</p>
+      <p>建议周日下午进行 · 总计约90分钟 · <span id="prep-week-label" style="color:var(--green-dark);font-weight:700"></span></p>
     </div>
-
-    <!-- Step progress dots -->
     <div class="step-progress" id="stepDots"></div>
-
-    <!-- Step navigation -->
     <div class="step-nav">
       <button class="step-nav-btn" id="btnPrev" onclick="changeStep(-1)" disabled>← 上一步</button>
-      <span class="step-counter" id="stepCounter">第 1 步 / 共 6 步</span>
+      <span class="step-counter" id="stepCounter"></span>
       <button class="step-nav-btn" id="btnNext" onclick="changeStep(1)">下一步 →</button>
     </div>
-
-    <!-- Step 1: Rice -->
-    <div class="step-panel active" id="step-1">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">1</div>
-          <div class="step-title-block">
-            <h2>煮糙米</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 主动操作20分钟 + 被动等待40分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-1">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>称出 <strong>320g 糙米</strong>，充分淘洗2-3遍至水变清</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>按 <strong>1:1.5 比例</strong> 加水（糙米320g → 加水480ml）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>用电饭锅或普通锅煮熟（电饭锅选"糙米"档，或大火烧开转小火焖40分钟）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>煮好后<strong>摊开在烤盘或大盘上晾凉</strong>（防结块，加速冷却）— 同时进行后续步骤</span></li>
-        </ul>
-        <div class="alert alert-blue step-tip">
-          <strong>💡 小贴士</strong>
-          糙米煮好后会膨胀约2.5倍，320g干重 ≈ 800g熟重，正好5份每份160g。晾凉时可用风扇辅助。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Chicken -->
-    <div class="step-panel" id="step-2">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">2</div>
-          <div class="step-title-block">
-            <h2>处理鸡胸肉</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约25分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-2">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>鸡胸肉400g均匀涂抹少量<strong>橄榄油、蒜末、黑胡椒</strong>（不加盐，后续调味时控钠）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>腌制5分钟等待入味</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>放入<strong>空气炸锅</strong>，180°C 烤 <strong>18-20分钟</strong>（中途翻面一次）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出，用竹签刺入最厚处确认无粉红色，确认熟透</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>冷却至不烫手后，<strong>用手顺纤维方向撕成细丝</strong>（勿切，撕丝冻后口感更佳）</span></li>
-        </ul>
-        <div class="alert alert-orange step-tip">
-          <strong>⚠️ 痛风提示</strong>
-          鸡肉属中嘌呤食物，每份80g（熟重）在安全范围内，无需完全避免。若近期关节不适，可将此份量减至50g，豆腐增至100g。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Tofu -->
-    <div class="step-panel" id="step-3">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">3</div>
-          <div class="step-title-block">
-            <h2>处理老豆腐</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约10分钟（含压水）</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-3">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>老豆腐350g切成约 <strong>1.5cm 小块</strong></span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>用<strong>厨房纸巾</strong>包裹后放在砧板上，上方压一个重物（碗/锅）静置 <strong>10分钟</strong> 排出多余水分</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>豆腐擦干表面，放入空气炸锅 <strong>200°C 烤10-12分钟</strong> 至表面微金黄（不需加任何调味料）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>取出冷却备用（烤制后质地更紧实，冷冻复热后不会变软烂）</span></li>
-        </ul>
-        <div class="alert alert-green step-tip">
-          <strong>✅ 为什么选老豆腐？</strong>
-          北豆腐/老豆腐嘌呤含量低于嫩豆腐和豆浆，且低脂乳蛋白有助于促进尿酸排泄。是痛风患者优质蛋白质来源。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Eggs -->
-    <div class="step-panel" id="step-4">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">4</div>
-          <div class="step-title-block">
-            <h2>煮鸡蛋</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约15分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-4">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>冷水</strong>放入10个鸡蛋，开火</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>水沸腾后继续计时 <strong>10分钟</strong>（全熟蛋，混合后不会变质）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>捞出立即放入<strong>冰水</strong>浸泡5分钟（好剥壳）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>全部剥壳，每个切成<strong>4瓣</strong>备用</span></li>
-        </ul>
-        <div class="alert alert-blue step-tip">
-          <strong>💡 蛋黄处理提示</strong>
-          全蛋冷冻后蛋白质地会变橡皮。若介意，可将蛋黄单独放一个容器（复热后加），蛋白切碎混入。或全部打散炒成蛋碎（口感最均匀）。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 5: Vegetables -->
-    <div class="step-panel" id="step-5">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">5</div>
-          <div class="step-title-block">
-            <h2>蔬菜焯水</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约15分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-5">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>烧一大锅水至沸腾，<strong>不加盐</strong></span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>胡萝卜</strong>（切小丁，180g）先下锅，焯 <strong>3分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>西兰花</strong>（切小朵，400g）焯 <strong>2分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>西葫芦</strong>（切半圆片，200g）焯 <strong>1.5分钟</strong>，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>彩椒</strong>（切小块，200g）焯 <strong>1分钟</strong>（保留维C），捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span><strong>菠菜/甘蓝</strong>（150g）最后放，焯 <strong>30秒</strong>即可，捞出放冰水</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>所有蔬菜从冰水捞出，<strong>充分甩干/沥干水分</strong>（这一步非常关键！水分越少，冷冻质量越好）</span></li>
-        </ul>
-        <div class="alert alert-orange step-tip">
-          <strong>⚠️ 注意焯水顺序</strong>
-          按耐热性从高到低依次入锅，可用同一锅水无需换水。焯水保留更多营养，比炒制更适合混合冷冻。
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 6: Sweet potato + Mix + Pack -->
-    <div class="step-panel" id="step-6">
-      <div class="card">
-        <div class="step-header">
-          <div class="step-number">6</div>
-          <div class="step-title-block">
-            <h2>红薯 → 混合 → 分装</h2>
-            <div class="step-time">
-              <span class="tag">⏱ 约30分钟</span>
-            </div>
-          </div>
-        </div>
-        <ul class="checklist" id="chk-6">
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>红薯350g去皮切约 <strong>2cm 小块</strong>，空气炸锅 <strong>200°C 烤20-22分钟</strong>至熟软表面微干，冷却备用</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>确认所有食材均已<strong>冷却至室温</strong>再混合（热食材会导致结露和细菌滋生）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>大盆中放入糙米 + 蔬菜 + 红薯，<strong>轻轻翻拌</strong>均匀</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>加入鸡肉丝和豆腐块，继续轻拌（勿压碎豆腐）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>加入切好的鸡蛋（全蛋或仅蛋白，蛋黄可单独封装）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>称重分为 <strong>5等份（每份约680g）</strong>，装入密封容器或冷冻袋（排尽空气）</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>贴标签注明日期：<strong>前3份冷藏</strong>（3天内食用），<strong>后2份冷冻</strong></span></li>
-        </ul>
-        <div class="alert alert-green step-tip">
-          <strong>🎉 备餐完成！</strong>
-          储存时限：冷藏保鲜 3天，冷冻最佳赏味期 2周（最长4周）。记得提前一晚将冷冻份转移到冷藏解冻。
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom step nav repeat -->
+    <div id="prep-content"></div>
     <div class="step-nav" style="margin-top:0">
       <button class="step-nav-btn" id="btnPrev2" onclick="changeStep(-1)" disabled>← 上一步</button>
-      <span class="step-counter" id="stepCounter2">第 1 步 / 共 6 步</span>
+      <span class="step-counter" id="stepCounter2"></span>
       <button class="step-nav-btn" id="btnNext2" onclick="changeStep(1)">下一步 →</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: reheat                              -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Reheat ═══════════════════ -->
 <div id="page-reheat" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>🔥 复热方法</h1>
       <p>每天只需5分钟，取出即可</p>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">📦</span>取出前准备</div>
       <ul class="checklist">
@@ -1209,7 +234,6 @@
         <li onclick="toggleCheck(this)"><div class="check-box"></div><span>紧急情况：用微波炉解冻档（先1-2分钟解冻，再正常加热）</span></li>
       </ul>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">📡</span>方法A：微波炉（推荐 · 5分钟）</div>
       <ul class="checklist">
@@ -1220,7 +244,6 @@
         <li onclick="toggleCheck(this)"><div class="check-box"></div><span>静置1分钟后加入调味料（见"调味方案"页）</span></li>
       </ul>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">💨</span>方法B：空气炸锅（质感更好 · 10分钟）</div>
       <ul class="checklist">
@@ -1236,72 +259,39 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: seasoning                           -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Seasoning ═══════════════════ -->
 <div id="page-seasoning" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>🧂 调味方案</h1>
       <p>五天轮换 · 低钠低嘌呤 · 每次复热后加入</p>
     </div>
-
     <div class="alert alert-green" style="margin-bottom:16px">
       <strong>✅ 调味原则</strong>
       原料不预先调味，每次食用时现加，既能控钠（保护肾功能、降低尿酸排泄障碍），又能让5天不单调。
     </div>
-
     <div class="seasoning-grid">
       <div class="seasoning-card">
         <h3>🇯🇵 周一：日式风味</h3>
-        <ul>
-          <li>低盐酱油 10ml</li>
-          <li>米醋 5ml</li>
-          <li>芥末少量（可选）</li>
-          <li>白芝麻少量（可选，撒面）</li>
-        </ul>
+        <ul><li>低盐酱油 10ml</li><li>米醋 5ml</li><li>芥末少量（可选）</li><li>白芝麻少量（可选）</li></ul>
       </div>
       <div class="seasoning-card">
         <h3>🇨🇳 周二：中式清爽</h3>
-        <ul>
-          <li>生抽 8ml</li>
-          <li>香醋 5ml</li>
-          <li>现磨黑胡椒适量</li>
-          <li>小葱花少量</li>
-          <li>香油 3ml（提香，可选）</li>
-        </ul>
+        <ul><li>生抽 8ml</li><li>香醋 5ml</li><li>现磨黑胡椒适量</li><li>小葱花少量</li><li>香油 3ml（可选）</li></ul>
       </div>
       <div class="seasoning-card">
         <h3>🇮🇹 周三：西式草本</h3>
-        <ul>
-          <li>柠檬汁 半个</li>
-          <li>橄榄油 5ml</li>
-          <li>海盐少量</li>
-          <li>混合香草（百里香/罗勒粉）</li>
-          <li>帕尔马干酪少量（可选）</li>
-        </ul>
+        <ul><li>柠檬汁 半个</li><li>橄榄油 5ml</li><li>海盐少量</li><li>混合香草（百里香/罗勒粉）</li><li>帕尔马干酪少量（可选）</li></ul>
       </div>
       <div class="seasoning-card">
         <h3>🇰🇷 周四：韩式辣味</h3>
-        <ul>
-          <li>韩式辣椒粉少量</li>
-          <li>生抽适量</li>
-          <li>蒜粉少量</li>
-          <li>芝麻适量</li>
-          <li>⚠️ 痛风稳定期再使用</li>
-        </ul>
+        <ul><li>韩式辣椒粉少量</li><li>生抽适量</li><li>蒜粉少量</li><li>芝麻适量</li><li>⚠️ 痛风稳定期再使用</li></ul>
       </div>
       <div class="seasoning-card">
         <h3>🥜 周五：麻酱风味</h3>
-        <ul>
-          <li>芝麻酱 15g（热水稀释）</li>
-          <li>生抽 8ml</li>
-          <li>醋 5ml</li>
-          <li>⚠️ 芝麻酱含脂较高，当天其他餐减少用油</li>
-        </ul>
+        <ul><li>芝麻酱 15g（热水稀释）</li><li>生抽 8ml</li><li>醋 5ml</li><li>⚠️ 芝麻酱含脂较高，当天减少用油</li></ul>
       </div>
     </div>
-
     <div class="card" style="margin-top:16px">
       <div class="card-title"><span class="icon">🚫</span>调味禁区</div>
       <div class="alert alert-red">
@@ -1312,16 +302,13 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: diet                                -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Diet ═══════════════════ -->
 <div id="page-diet" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>🌅 全天饮食框架</h1>
-      <p id="dietTargetText">保存个人设置后，这里会同步显示你的全天热量与蛋白目标</p>
+      <p id="dietSubtitle">填写个人指标后自动显示每日目标</p>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">⏰</span>一天饮食时间线</div>
       <div class="meal-timeline">
@@ -1338,7 +325,6 @@
           <div class="meal-body">
             <strong>杂粮饭 + 蔬菜 + 蛋白质 <span class="meal-kcal">≈530 kcal</span></strong>
             杂粮饭/白米饭150g + 炒蔬菜 + 豆腐/鸡肉/清蒸鱼<br>
-            优先选：清蒸鱼、白斩鸡、炒豆腐、水煮肉片（避免动物内脏、浓海鲜汤）<br>
             <span class="pill pill-green">蛋白质≈28g</span>
           </div>
         </div>
@@ -1354,34 +340,13 @@
         <div class="meal-item">
           <div class="meal-time">晚餐<br>18-20时</div>
           <div class="meal-body">
-            <strong>人粮（680g混合物 + 调味） <span class="meal-kcal">≈670 kcal</span></strong>
+            <strong>备餐（680g混合物 + 调味） <span class="meal-kcal">≈670 kcal</span></strong>
             称取一份冷藏/解冻混合物，微波复热后按当日调味方案调味<br>
             <span class="pill pill-green">蛋白质≈52g</span>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">📊</span>全天营养汇总</div>
-      <table class="tbl">
-        <thead>
-          <tr><th>餐次</th><th>热量</th><th>蛋白质</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>早餐</td><td>~380 kcal</td><td>~18g</td></tr>
-          <tr><td>午餐</td><td>~530 kcal</td><td>~28g</td></tr>
-          <tr><td>加餐</td><td>~180 kcal</td><td>~12g</td></tr>
-          <tr><td>晚餐（人粮）</td><td>~670 kcal</td><td>~52g</td></tr>
-          <tr class="total"><td>合计</td><td>≈1760 kcal</td><td>≈110g</td></tr>
-        </tbody>
-      </table>
-      <div class="alert alert-blue" style="margin-top:16px">
-        <strong>💡 弹性空间</strong>
-        可根据实际饥饿感在午餐+加餐区间灵活调整，总量控制在 <strong>1800–2000 kcal</strong> 之间均可。
-      </div>
-    </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">💧</span>补水目标</div>
       <div class="alert alert-green">
@@ -1392,99 +357,19 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: weekly                              -->
-<!-- ══════════════════════════════════════════ -->
-<div id="page-weekly" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>📅 每周食谱</h1>
-      <p>根据你的热量与宏量目标，自动生成 7 天早餐 / 午餐 / 加餐 / 晚餐</p>
-    </div>
-
-    <div class="card">
-      <div class="weekly-toolbar">
-        <div>
-          <div class="card-title" style="margin-bottom:6px"><span class="icon">🗓️</span>本周计划</div>
-          <div class="weekly-meta" id="weeklyPlanMeta">保存个人设置后会自动生成本周菜单。</div>
-        </div>
-        <button class="weight-btn" type="button" onclick="regenerateWeeklyPlan()">🔄 重新生成</button>
-      </div>
-      <div id="weeklyPlanContainer"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: weight                              -->
-<!-- ══════════════════════════════════════════ -->
-<div id="page-weight" class="page">
-  <div class="page-wrap">
-    <div class="page-header">
-      <h1>⚖️ 每日体重追踪</h1>
-      <p>记录每天体重，观察减脂趋势与波动</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">📝</span>新增记录</div>
-      <form class="weight-form" onsubmit="saveWeightRecord(event)">
-        <div class="weight-field">
-          <label for="weightDate">日期</label>
-          <input id="weightDate" type="date" required>
-        </div>
-        <div class="weight-field">
-          <label for="weightValue">体重（kg）</label>
-          <input id="weightValue" type="number" min="20" max="300" step="0.1" placeholder="例如 84.6" required>
-        </div>
-        <button class="weight-btn" type="submit">保存记录</button>
-      </form>
-      <div class="weight-summary">
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="latestWeight">--</div>
-          <div class="weight-stat-label">最近体重</div>
-        </div>
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="weightChange">--</div>
-          <div class="weight-stat-label">累计变化</div>
-        </div>
-        <div class="weight-stat">
-          <div class="weight-stat-value" id="recordCount">0</div>
-          <div class="weight-stat-label">总记录天数</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="icon">📅</span>历史记录</div>
-      <table class="tbl">
-        <thead>
-          <tr><th>日期</th><th>体重</th><th>变化</th><th>操作</th></tr>
-        </thead>
-        <tbody id="weightTableBody"></tbody>
-      </table>
-      <div class="empty-tip" id="weightEmptyTip">暂无记录，先添加今天的体重吧。</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- PAGE: gout                                -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════ PAGE: Gout ═══════════════════ -->
 <div id="page-gout" class="page">
   <div class="page-wrap">
     <div class="page-header">
       <h1>⚠️ 痛风专项须知</h1>
-      <p>高尿酸史 · 7个月无发作 · 计划用药前的饮食管理</p>
+      <p>高尿酸饮食管理要点</p>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">🚫</span>严格禁忌食物</div>
       <div class="alert alert-red">
-        动物内脏（肝/肾/脑）· 带壳海鲜（虾/蛤/牡蛎/扇贝）· 沙丁鱼 · 凤尾鱼 · 鲭鱼 · 啤酒及酒精 · 高果糖玉米糖浆饮料（可乐/果汁饮料）
+        动物内脏（肝/肾/脑）· 带壳海鲜（虾/蛤/牡蛎/扇贝）· 沙丁鱼 · 凤尾鱼 · 鲭鱼 · 啤酒及酒精 · 高果糖玉米糖浆饮料
       </div>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">✅</span>有益食物清单</div>
       <div class="alert alert-green">
@@ -1492,843 +377,162 @@
         低脂乳制品（促尿酸排泄）· 维C食物（彩椒、猕猴桃）· 樱桃/蓝莓（抑制尿酸生成）· 大量白水 · 蔬菜（大部分）
       </div>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">📋</span>7条行动准则</div>
       <ul class="gout-list">
-        <li>
-          <div class="gout-num">1</div>
-          <span><strong>每天饮水≥2000ml</strong> — 这是最重要的单一干预。充足水分帮助肾脏排出尿酸，稀释血尿酸浓度。</span>
-        </li>
-        <li>
-          <div class="gout-num">2</div>
-          <span><strong>避免空腹运动</strong> — 低血糖状态会升高血尿酸，游泳前务必补充少量碳水（如1个小香蕉或饼干）。</span>
-        </li>
-        <li>
-          <div class="gout-num">3</div>
-          <span><strong>游泳后补充电解质</strong> — 大量出汗/消耗后若仅补白水，可能导致脱水性尿酸升高。可喝淡盐水或运动饮料（注意选低糖款）。</span>
-        </li>
-        <li>
-          <div class="gout-num">4</div>
-          <span><strong>减脂速度控制在0.5kg/周</strong> — 过快减脂（>1kg/周）会大量分解细胞，嘌呤大量释放，显著升高血尿酸，增加痛风发作风险。你的目标速度是安全的。</span>
-        </li>
-        <li>
-          <div class="gout-num">5</div>
-          <span><strong>杜绝含果糖饮料</strong> — 果糖是升尿酸的"隐形杀手"（代谢途径直接产生尿酸）。请避免可乐、甜果汁、奶茶；鲜水果适量可以。</span>
-        </li>
-        <li>
-          <div class="gout-num">6</div>
-          <span><strong>关节隐隐不适时的应急调整</strong> — 当天将人粮中的鸡胸肉减至50g，老豆腐增至100g；避免任何海鲜和酒精；额外补充500ml水。</span>
-        </li>
-        <li>
-          <div class="gout-num">7</div>
-          <span><strong>计划服用非布司他期间</strong> — 继续本饮食方案，药物+饮食双管齐下效果最佳。注意：开始服药初期可能诱发痛风发作（尿酸重分布），这是正常现象，不必停药，遵医嘱处理。</span>
-        </li>
+        <li><div class="gout-num">1</div><span><strong>每天饮水≥2000ml</strong> — 充足水分帮助肾脏排出尿酸。</span></li>
+        <li><div class="gout-num">2</div><span><strong>避免空腹运动</strong> — 低血糖状态会升高血尿酸。</span></li>
+        <li><div class="gout-num">3</div><span><strong>运动后补充电解质</strong> — 大量出汗后仅补白水可能导致脱水性尿酸升高。</span></li>
+        <li><div class="gout-num">4</div><span><strong>减脂速度控制在0.5kg/周</strong> — 过快减脂会大量分解细胞，嘌呤释放升高血尿酸。</span></li>
+        <li><div class="gout-num">5</div><span><strong>杜绝含果糖饮料</strong> — 果糖代谢直接产生尿酸。</span></li>
+        <li><div class="gout-num">6</div><span><strong>关节不适时的应急调整</strong> — 减少肉类、增加豆腐；避免海鲜和酒精；额外补水500ml。</span></li>
+        <li><div class="gout-num">7</div><span><strong>服药期间</strong> — 继续本饮食方案，药物+饮食双管齐下效果最佳。</span></li>
       </ul>
     </div>
-
     <div class="card">
       <div class="card-title"><span class="icon">📈</span>减脂与痛风的关系</div>
       <div class="alert alert-blue">
         <strong>为什么减脂反而可能先升尿酸？</strong><br>
-        脂肪细胞分解时会释放嘌呤，同时酮体与尿酸竞争肾小管排泄。这正是不能激进节食的原因。本方案的1900 kcal缺口适中，最大程度规避此风险。
+        脂肪细胞分解时释放嘌呤，酮体与尿酸竞争肾小管排泄。因此不能激进节食。本方案热量缺口适中，最大程度规避此风险。
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── JavaScript ── -->
-<script>
-  // ── Page switching ──
-  const PAGE_IDS = ['overview', 'profile', 'shopping', 'prep', 'reheat', 'seasoning', 'diet', 'weekly', 'weight', 'gout'];
-  const navBtns = document.querySelectorAll('.nav-btn');
-  const STORAGE_KEYS = {
-    weight: 'daily_weight_records',
-    profile: 'meal_prep_profile_settings_v1',
-    weeklyPlan: 'meal_prep_weekly_plan_v1'
-  };
-  const DEFAULT_PROFILE = {
-    height: 170,
-    weight: 75,
-    age: 28,
-    gender: 'male',
-    activity: 'moderate',
-    goal: 0.5
-  };
-  const ACTIVITY_MULTIPLIERS = {
-    sedentary: 1.2,
-    light: 1.375,
-    moderate: 1.55,
-    active: 1.725,
-    very_active: 1.9
-  };
-  const ACTIVITY_LABELS = {
-    sedentary: '久坐少动',
-    light: '轻量活动',
-    moderate: '中等活动',
-    active: '高活动量',
-    very_active: '非常活跃'
-  };
-  const MEAL_LABELS = {
-    breakfast: '早餐',
-    lunch: '午餐',
-    snack: '加餐',
-    dinner: '晚餐'
-  };
-  const FOOD_DB = [
-    { name: '鸡胸肉', category: '蛋白质来源', kcal_per_100g: 165, protein_per_100g: 31, carb_per_100g: 0, fat_per_100g: 3.6, serving_g: 120, tags: ['高蛋白', '禽肉', '午餐', '晚餐'] },
-    { name: '鸡蛋', category: '蛋白质来源', kcal_per_100g: 143, protein_per_100g: 12.6, carb_per_100g: 0.7, fat_per_100g: 9.5, serving_g: 50, tags: ['早餐', '加餐', '高蛋白'] },
-    { name: '老豆腐', category: '蛋白质来源', kcal_per_100g: 80, protein_per_100g: 7.3, carb_per_100g: 2.1, fat_per_100g: 4.9, serving_g: 100, tags: ['植物蛋白', '午餐', '晚餐'] },
-    { name: '三文鱼', category: '蛋白质来源', kcal_per_100g: 208, protein_per_100g: 20, carb_per_100g: 0, fat_per_100g: 13, serving_g: 100, tags: ['鱼类', '午餐', '晚餐', 'Omega-3'] },
-    { name: '虾仁', category: '蛋白质来源', kcal_per_100g: 99, protein_per_100g: 24, carb_per_100g: 0.2, fat_per_100g: 0.3, serving_g: 100, tags: ['海鲜', '午餐', '晚餐', '痛风谨慎'] },
-    { name: '牛腱子肉', category: '蛋白质来源', kcal_per_100g: 150, protein_per_100g: 28, carb_per_100g: 0, fat_per_100g: 3.5, serving_g: 100, tags: ['红肉', '午餐', '晚餐'] },
-    { name: '猪里脊', category: '蛋白质来源', kcal_per_100g: 143, protein_per_100g: 21, carb_per_100g: 1.5, fat_per_100g: 5.5, serving_g: 100, tags: ['瘦肉', '午餐', '晚餐'] },
-    { name: '鳕鱼', category: '蛋白质来源', kcal_per_100g: 82, protein_per_100g: 18, carb_per_100g: 0, fat_per_100g: 0.7, serving_g: 100, tags: ['鱼类', '午餐', '晚餐', '低脂'] },
-    { name: '嫩豆腐', category: '蛋白质来源', kcal_per_100g: 55, protein_per_100g: 5, carb_per_100g: 2, fat_per_100g: 3, serving_g: 120, tags: ['植物蛋白', '早餐', '午餐', '晚餐'] },
-    { name: '鸡腿肉(去皮)', category: '蛋白质来源', kcal_per_100g: 177, protein_per_100g: 26, carb_per_100g: 0, fat_per_100g: 8, serving_g: 100, tags: ['禽肉', '午餐', '晚餐'] },
-    { name: '低脂希腊酸奶', category: '蛋白质来源', kcal_per_100g: 59, protein_per_100g: 10, carb_per_100g: 3.6, fat_per_100g: 0.7, serving_g: 150, tags: ['乳制品', '早餐', '加餐', '高蛋白'] },
-    { name: '脱脂牛奶', category: '蛋白质来源', kcal_per_100g: 34, protein_per_100g: 3.4, carb_per_100g: 5, fat_per_100g: 0.1, serving_g: 250, tags: ['乳制品', '早餐', '加餐', '液体'] },
-
-    { name: '糙米饭', category: '碳水来源', kcal_per_100g: 123, protein_per_100g: 2.7, carb_per_100g: 25.6, fat_per_100g: 1, serving_g: 150, tags: ['主食', '午餐', '晚餐'] },
-    { name: '红薯', category: '碳水来源', kcal_per_100g: 90, protein_per_100g: 1.6, carb_per_100g: 21, fat_per_100g: 0.1, serving_g: 150, tags: ['主食', '早餐', '午餐', '晚餐'] },
-    { name: '燕麦(干)', category: '碳水来源', kcal_per_100g: 379, protein_per_100g: 13.2, carb_per_100g: 67, fat_per_100g: 6.5, serving_g: 40, tags: ['早餐', '谷物'] },
-    { name: '全麦面包', category: '碳水来源', kcal_per_100g: 247, protein_per_100g: 13, carb_per_100g: 41, fat_per_100g: 3.4, serving_g: 60, tags: ['早餐', '主食'] },
-    { name: '意面(熟)', category: '碳水来源', kcal_per_100g: 131, protein_per_100g: 5, carb_per_100g: 25, fat_per_100g: 1.1, serving_g: 180, tags: ['午餐', '晚餐', '主食'] },
-    { name: '藜麦(熟)', category: '碳水来源', kcal_per_100g: 120, protein_per_100g: 4.4, carb_per_100g: 21.3, fat_per_100g: 1.9, serving_g: 150, tags: ['午餐', '晚餐', '主食'] },
-    { name: '土豆', category: '碳水来源', kcal_per_100g: 77, protein_per_100g: 2, carb_per_100g: 17, fat_per_100g: 0.1, serving_g: 150, tags: ['午餐', '晚餐', '主食'] },
-    { name: '玉米', category: '碳水来源', kcal_per_100g: 96, protein_per_100g: 3.4, carb_per_100g: 21, fat_per_100g: 1.5, serving_g: 100, tags: ['早餐', '午餐', '晚餐'] },
-    { name: '荞麦面(熟)', category: '碳水来源', kcal_per_100g: 99, protein_per_100g: 5.1, carb_per_100g: 21, fat_per_100g: 0.1, serving_g: 180, tags: ['午餐', '晚餐', '主食'] },
-    { name: '紫薯', category: '碳水来源', kcal_per_100g: 82, protein_per_100g: 1.6, carb_per_100g: 18.5, fat_per_100g: 0.2, serving_g: 150, tags: ['早餐', '午餐', '晚餐'] },
-
-    { name: '西兰花', category: '蔬菜', kcal_per_100g: 34, protein_per_100g: 2.8, carb_per_100g: 7, fat_per_100g: 0.4, serving_g: 100, tags: ['午餐', '晚餐', '十字花科'] },
-    { name: '菠菜', category: '蔬菜', kcal_per_100g: 23, protein_per_100g: 2.9, carb_per_100g: 3.6, fat_per_100g: 0.4, serving_g: 80, tags: ['午餐', '晚餐', '叶菜'] },
-    { name: '彩椒', category: '蔬菜', kcal_per_100g: 31, protein_per_100g: 1, carb_per_100g: 6, fat_per_100g: 0.3, serving_g: 100, tags: ['午餐', '晚餐', '高维C'] },
-    { name: '番茄', category: '蔬菜', kcal_per_100g: 18, protein_per_100g: 0.9, carb_per_100g: 3.9, fat_per_100g: 0.2, serving_g: 100, tags: ['午餐', '晚餐', '清爽'] },
-    { name: '黄瓜', category: '蔬菜', kcal_per_100g: 15, protein_per_100g: 0.7, carb_per_100g: 3.1, fat_per_100g: 0.1, serving_g: 100, tags: ['午餐', '晚餐', '清爽'] },
-    { name: '胡萝卜', category: '蔬菜', kcal_per_100g: 41, protein_per_100g: 0.9, carb_per_100g: 10, fat_per_100g: 0.2, serving_g: 80, tags: ['午餐', '晚餐', '根茎'] },
-    { name: '芦笋', category: '蔬菜', kcal_per_100g: 20, protein_per_100g: 2.2, carb_per_100g: 3.9, fat_per_100g: 0.1, serving_g: 80, tags: ['午餐', '晚餐'] },
-    { name: '生菜', category: '蔬菜', kcal_per_100g: 15, protein_per_100g: 1.4, carb_per_100g: 2.9, fat_per_100g: 0.2, serving_g: 60, tags: ['午餐', '晚餐', '沙拉'] },
-    { name: '紫甘蓝', category: '蔬菜', kcal_per_100g: 31, protein_per_100g: 1.4, carb_per_100g: 7.4, fat_per_100g: 0.2, serving_g: 80, tags: ['午餐', '晚餐', '爽脆'] },
-    { name: '西葫芦', category: '蔬菜', kcal_per_100g: 17, protein_per_100g: 1.2, carb_per_100g: 3.1, fat_per_100g: 0.3, serving_g: 100, tags: ['午餐', '晚餐'] },
-    { name: '木耳(泡发)', category: '蔬菜', kcal_per_100g: 21, protein_per_100g: 0.5, carb_per_100g: 5, fat_per_100g: 0.1, serving_g: 50, tags: ['午餐', '晚餐'] },
-    { name: '豆芽', category: '蔬菜', kcal_per_100g: 31, protein_per_100g: 3, carb_per_100g: 5.9, fat_per_100g: 0.2, serving_g: 80, tags: ['午餐', '晚餐'] },
-
-    { name: '橄榄油', category: '脂肪/调味', kcal_per_100g: 884, protein_per_100g: 0, carb_per_100g: 0, fat_per_100g: 100, serving_g: 5, tags: ['烹饪油', '午餐', '晚餐'] },
-    { name: '亚麻籽', category: '脂肪/调味', kcal_per_100g: 534, protein_per_100g: 18.3, carb_per_100g: 28.9, fat_per_100g: 42.2, serving_g: 10, tags: ['早餐', '加餐', '坚果种子'] },
-    { name: '牛油果', category: '脂肪/调味', kcal_per_100g: 160, protein_per_100g: 2, carb_per_100g: 8.5, fat_per_100g: 14.7, serving_g: 50, tags: ['午餐', '晚餐', '水果脂肪'] },
-    { name: '核桃', category: '脂肪/调味', kcal_per_100g: 654, protein_per_100g: 15.2, carb_per_100g: 13.7, fat_per_100g: 65.2, serving_g: 15, tags: ['加餐', '坚果'] },
-    { name: '杏仁', category: '脂肪/调味', kcal_per_100g: 579, protein_per_100g: 21.2, carb_per_100g: 21.7, fat_per_100g: 49.9, serving_g: 15, tags: ['加餐', '坚果'] },
-    { name: '芝麻酱', category: '脂肪/调味', kcal_per_100g: 585, protein_per_100g: 17.4, carb_per_100g: 11.8, fat_per_100g: 52.7, serving_g: 10, tags: ['午餐', '晚餐', '调味'] },
-
-    { name: '苹果', category: '水果', kcal_per_100g: 52, protein_per_100g: 0.3, carb_per_100g: 14, fat_per_100g: 0.2, serving_g: 150, tags: ['早餐', '加餐'] },
-    { name: '香蕉', category: '水果', kcal_per_100g: 89, protein_per_100g: 1.1, carb_per_100g: 23, fat_per_100g: 0.3, serving_g: 100, tags: ['早餐', '加餐', '运动前后'] },
-    { name: '蓝莓', category: '水果', kcal_per_100g: 57, protein_per_100g: 0.7, carb_per_100g: 14.5, fat_per_100g: 0.3, serving_g: 80, tags: ['早餐', '加餐', '浆果'] },
-    { name: '猕猴桃', category: '水果', kcal_per_100g: 61, protein_per_100g: 1.1, carb_per_100g: 15, fat_per_100g: 0.5, serving_g: 80, tags: ['早餐', '加餐', '高维C'] },
-    { name: '橙子', category: '水果', kcal_per_100g: 47, protein_per_100g: 0.9, carb_per_100g: 12, fat_per_100g: 0.1, serving_g: 150, tags: ['早餐', '加餐', '高维C'] }
-  ];
-  let hasSavedProfile = false;
-
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-    const target = document.getElementById('page-' + id);
-    if (target) target.classList.add('active');
-    navBtns.forEach(btn => btn.classList.remove('active'));
-    const idx = PAGE_IDS.indexOf(id);
-    if (idx >= 0 && navBtns[idx]) navBtns[idx].classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // ── Utilities ──
-  const roundToOneDecimal = value => Math.round(value * 10) / 10;
-  const roundToInt = value => Math.round(value);
-  const formatSigned = value => `${value > 0 ? '+' : ''}${value.toFixed(1)}`;
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const formatMass = value => `${roundToOneDecimal(value).toFixed(1)} kg`;
-  const formatKcal = value => `${roundToInt(value)} kcal`;
-  const formatGrams = value => `${roundToInt(value)}g`;
-  const FOOD_MAP = Object.fromEntries(FOOD_DB.map(food => [food.name, food]));
-  const FOOD_GROUPS = {
-    proteins: FOOD_DB.filter(food => food.category === '蛋白质来源'),
-    carbs: FOOD_DB.filter(food => food.category === '碳水来源'),
-    vegetables: FOOD_DB.filter(food => food.category === '蔬菜'),
-    fats: FOOD_DB.filter(food => food.category === '脂肪/调味'),
-    fruits: FOOD_DB.filter(food => food.category === '水果')
-  };
-
-  function setText(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value;
-  }
-
-  function getStoredJSON(key, fallback) {
-    try {
-      return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
-    } catch (error) {
-      return fallback;
-    }
-  }
-
-  function roundPortion(value) {
-    if (value < 20) return Math.max(1, Math.round(value));
-    return Math.max(5, Math.round(value / 5) * 5);
-  }
-
-  function createSeededRandom(seedText) {
-    function xmur3(str) {
-      let h = 1779033703 ^ str.length;
-      for (let i = 0; i < str.length; i++) {
-        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
-        h = (h << 13) | (h >>> 19);
-      }
-      return function () {
-        h = Math.imul(h ^ (h >>> 16), 2246822507);
-        h = Math.imul(h ^ (h >>> 13), 3266489909);
-        return (h ^= h >>> 16) >>> 0;
-      };
-    }
-    function mulberry32(a) {
-      return function () {
-        let t = a += 0x6D2B79F5;
-        t = Math.imul(t ^ (t >>> 15), t | 1);
-        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-      };
-    }
-    return mulberry32(xmur3(seedText)());
-  }
-
-  // ISO 8601 week number: convert JS Sunday=0 to Monday=0 indexing
-  function getWeekInfo(baseDate = new Date()) {
-    const date = new Date(baseDate);
-    const day = (date.getDay() + 6) % 7; // Monday=0 ... Sunday=6
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - day + 3);
-    const firstThursday = new Date(date.getFullYear(), 0, 4);
-    const firstThursdayDay = (firstThursday.getDay() + 6) % 7;
-    firstThursday.setDate(firstThursday.getDate() - firstThursdayDay + 3);
-    const week = 1 + Math.round((date - firstThursday) / 604800000);
-    const year = date.getFullYear();
-
-    const monday = new Date(baseDate);
-    monday.setHours(0, 0, 0, 0);
-    monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-
-    return {
-      year,
-      week,
-      key: `${year}-W${String(week).padStart(2, '0')}`,
-      startDate: monday,
-      endDate: sunday
-    };
-  }
-
-  function formatShortDate(date) {
-    return `${date.getMonth() + 1}月${date.getDate()}日`;
-  }
-
-  function getProfileSignature(profile) {
-    return [profile.height, profile.weight, profile.age, profile.gender, profile.activity, profile.goal].join('|');
-  }
-
-  // ── Checklist toggle ──
-  function toggleCheck(li) {
-    li.classList.toggle('checked');
-  }
-  function toggleShop(el) {
-    el.classList.toggle('got');
-  }
-
-  // ── Step-by-step prep ──
-  const TOTAL_STEPS = 6;
-  let currentStep = 1;
-  const dotsContainer = document.getElementById('stepDots');
-  for (let i = 1; i <= TOTAL_STEPS; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'step-dot' + (i === 1 ? ' current' : '');
-    dot.dataset.step = i;
-    dot.onclick = () => goToStep(i);
-    dotsContainer.appendChild(dot);
-  }
-
-  function updateStepUI() {
-    document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
-    document.getElementById('step-' + currentStep).classList.add('active');
-
-    const txt = `第 ${currentStep} 步 / 共 ${TOTAL_STEPS} 步`;
-    document.getElementById('stepCounter').textContent = txt;
-    document.getElementById('stepCounter2').textContent = txt;
-
-    const disablePrev = currentStep === 1;
-    const disableNext = currentStep === TOTAL_STEPS;
-    ['btnPrev', 'btnPrev2'].forEach(id => document.getElementById(id).disabled = disablePrev);
-    ['btnNext', 'btnNext2'].forEach(id => {
-      const btn = document.getElementById(id);
-      btn.disabled = disableNext;
-      btn.textContent = disableNext ? '✅ 备餐完成！' : '下一步 →';
-    });
-
-    document.querySelectorAll('.step-dot').forEach(dot => {
-      const step = parseInt(dot.dataset.step, 10);
-      dot.className = 'step-dot' + (step < currentStep ? ' done' : step === currentStep ? ' current' : '');
-    });
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function changeStep(delta) {
-    const next = currentStep + delta;
-    if (next >= 1 && next <= TOTAL_STEPS) goToStep(next);
-  }
-
-  function goToStep(step) {
-    currentStep = step;
-    updateStepUI();
-  }
-
-  // ── Profile calculations ──
-  function getProfileFormData() {
-    return {
-      height: parseFloat(document.getElementById('profileHeight').value),
-      weight: parseFloat(document.getElementById('profileWeight').value),
-      age: parseInt(document.getElementById('profileAge').value, 10),
-      gender: document.getElementById('profileGender').value,
-      activity: document.getElementById('profileActivity').value,
-      goal: parseFloat(document.getElementById('profileGoal').value)
-    };
-  }
-
-  function validateProfile(profile) {
-    return profile.height >= 120 && profile.height <= 230
-      && profile.weight >= 30 && profile.weight <= 300
-      && profile.age >= 16 && profile.age <= 100
-      && ['male', 'female'].includes(profile.gender)
-      && ACTIVITY_MULTIPLIERS[profile.activity]
-      && [0.25, 0.5, 0.75].includes(profile.goal);
-  }
-
-  function getSavedProfile() {
-    const profile = getStoredJSON(STORAGE_KEYS.profile, null);
-    return profile && validateProfile(profile) ? profile : null;
-  }
-
-  function setProfileFormValues(profile) {
-    document.getElementById('profileHeight').value = profile.height;
-    document.getElementById('profileWeight').value = profile.weight;
-    document.getElementById('profileAge').value = profile.age;
-    document.getElementById('profileGender').value = profile.gender;
-    document.getElementById('profileActivity').value = profile.activity;
-    document.getElementById('profileGoal').value = profile.goal;
-  }
-
-  function setProfileStatus(text, highlight = false) {
-    const el = document.getElementById('profileSaveStatus');
-    el.textContent = text;
-    el.style.color = highlight ? 'var(--orange)' : 'var(--green-dark)';
-  }
-
-  function calculateMetrics(profile) {
-    const bmi = profile.weight / ((profile.height / 100) ** 2);
-    const leanBodyMass = profile.gender === 'male'
-      ? (0.407 * profile.weight) + (0.267 * profile.height) - 19.2
-      : (0.252 * profile.weight) + (0.473 * profile.height) - 48.3;
-    const bmr = profile.gender === 'male'
-      ? (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) + 5
-      : (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) - 161;
-    const tdee = bmr * ACTIVITY_MULTIPLIERS[profile.activity];
-    // 7700 kcal ≈ 1kg fat; 7700/7 ≈ 1100 kcal daily deficit per kg/week
-    const calorieTarget = tdee - (profile.goal * 1100);
-    const proteinTarget = profile.weight * 2;
-    const fatTarget = (calorieTarget * 0.25) / 9;
-    const carbTarget = Math.max(0, (calorieTarget - proteinTarget * 4 - fatTarget * 9) / 4);
-    return {
-      bmi,
-      leanBodyMass,
-      bmr,
-      tdee,
-      calorieTarget,
-      proteinTarget,
-      fatTarget,
-      carbTarget
-    };
-  }
-
-  function renderMetrics(profile) {
-    if (!profile) {
-      ['profileBmi', 'profileLeanMass', 'profileBmr', 'profileTdee', 'goalCalories', 'goalProtein', 'goalFat', 'goalCarb'].forEach(id => setText(id, '--'));
-      setText('goalStrategyText', '保存个人设置后，这里会自动计算每日热量缺口与摄入目标。');
-      setText('dietTargetText', '保存个人设置后，这里会同步显示你的全天热量与蛋白目标');
-      return null;
-    }
-
-    const metrics = calculateMetrics(profile);
-    setText('profileBmi', roundToOneDecimal(metrics.bmi).toFixed(1));
-    setText('profileLeanMass', formatMass(metrics.leanBodyMass));
-    setText('profileBmr', formatKcal(metrics.bmr));
-    setText('profileTdee', formatKcal(metrics.tdee));
-    setText('goalCalories', formatKcal(metrics.calorieTarget));
-    setText('goalProtein', formatGrams(metrics.proteinTarget));
-    setText('goalFat', formatGrams(metrics.fatTarget));
-    setText('goalCarb', formatGrams(metrics.carbTarget));
-    setText('goalStrategyText', `按每周减重 ${profile.goal} kg 估算：TDEE ${roundToInt(metrics.tdee)} kcal - ${roundToInt(profile.goal * 1100)} kcal 缺口 ≈ 每日摄入 ${roundToInt(metrics.calorieTarget)} kcal。`);
-    setText('dietTargetText', `目标：约 ${roundToInt(metrics.calorieTarget)} kcal / 天 · 蛋白质 ${roundToInt(metrics.proteinTarget)}g · 活动水平：${ACTIVITY_LABELS[profile.activity]}`);
-    return metrics;
-  }
-
-  function restoreDefaultProfileForm() {
-    setProfileFormValues(DEFAULT_PROFILE);
-    if (hasSavedProfile) {
-      saveProfileSettings(null, true);
-      return;
-    }
-    setProfileStatus('已恢复默认值，点击“保存设置并计算”后才会正式启用。', true);
-  }
-
-  function saveProfileSettings(event, silent = false) {
-    if (event) event.preventDefault();
-    const profile = getProfileFormData();
-    if (!validateProfile(profile)) {
-      window.alert('请填写有效的个人设置：身高 120-230cm、体重 30-300kg、年龄 16-100 岁。');
-      return;
-    }
-    localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
-    hasSavedProfile = true;
-    renderMetrics(profile);
-    ensureWeeklyPlanForCurrentWeek({ profile, forceRegenerate: false, triggeredByProfileChange: true });
-    setProfileStatus(`已保存：${profile.height}cm / ${profile.weight}kg / ${profile.age}岁，目标每周减重 ${profile.goal}kg。`);
-    if (!silent) window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function initProfileSettings() {
-    const savedProfile = getSavedProfile();
-    setProfileFormValues(savedProfile || DEFAULT_PROFILE);
-    if (savedProfile) {
-      hasSavedProfile = true;
-      renderMetrics(savedProfile);
-      setProfileStatus(`已恢复上次保存的设置：${savedProfile.height}cm / ${savedProfile.weight}kg / ${savedProfile.age}岁。`);
-    } else {
-      hasSavedProfile = false;
-      renderMetrics(null);
-      setProfileStatus('当前尚未启用个人设置。', true);
-    }
-
-    ['profileHeight', 'profileWeight', 'profileAge', 'profileGender', 'profileActivity', 'profileGoal'].forEach(id => {
-      document.getElementById(id).addEventListener('change', () => {
-        if (hasSavedProfile) {
-          saveProfileSettings(null, true);
-        } else {
-          setProfileStatus('表单已修改，点击“保存设置并计算”后开始生效。', true);
-        }
-      });
-    });
-  }
-
-  // ── Weekly plan generation ──
-  function makeItem(foodName, grams) {
-    return { food: FOOD_MAP[foodName], grams: roundPortion(grams) };
-  }
-
-  function nutritionFromItem(item) {
-    const scale = item.grams / 100;
-    return {
-      kcal: item.food.kcal_per_100g * scale,
-      protein: item.food.protein_per_100g * scale,
-      carb: item.food.carb_per_100g * scale,
-      fat: item.food.fat_per_100g * scale
-    };
-  }
-
-  function sumNutrition(items) {
-    return items.reduce((totals, item) => {
-      const nutrition = nutritionFromItem(item);
-      return {
-        kcal: totals.kcal + nutrition.kcal,
-        protein: totals.protein + nutrition.protein,
-        carb: totals.carb + nutrition.carb,
-        fat: totals.fat + nutrition.fat
-      };
-    }, { kcal: 0, protein: 0, carb: 0, fat: 0 });
-  }
-
-  function adjustItemsToCalories(items, targetKcal, adjustableIndexes) {
-    const current = sumNutrition(items).kcal;
-    if (!current || !adjustableIndexes.length) return items;
-    const scale = clamp(targetKcal / current, 0.75, 1.6);
-    adjustableIndexes.forEach(index => {
-      items[index].grams = roundPortion(items[index].grams * scale);
-    });
-    return items;
-  }
-
-  function incrementUsage(usageMap, food) {
-    usageMap[food.name] = (usageMap[food.name] || 0) + 1;
-  }
-
-  function chooseByUsage(candidates, rng, dayUsage = {}, weekUsage = {}, excludedNames = []) {
-    const filtered = candidates.filter(food => !excludedNames.includes(food.name) && (dayUsage[food.name] || 0) < 2);
-    const pool = filtered.length ? filtered : candidates.filter(food => !excludedNames.includes(food.name));
-    const ranked = [...pool].sort((a, b) => ((dayUsage[a.name] || 0) * 10 + (weekUsage[a.name] || 0)) - ((dayUsage[b.name] || 0) * 10 + (weekUsage[b.name] || 0)));
-    const minScore = (dayUsage[ranked[0].name] || 0) * 10 + (weekUsage[ranked[0].name] || 0);
-    const shortlist = ranked.filter(food => ((dayUsage[food.name] || 0) * 10 + (weekUsage[food.name] || 0)) <= minScore + 1);
-    return shortlist[Math.floor(rng() * shortlist.length)];
-  }
-
-  function pickFoodsByTag(group, tags) {
-    return FOOD_GROUPS[group].filter(food => tags.some(tag => food.tags.includes(tag)));
-  }
-
-  function createMealObject(type, items, name, description) {
-    const totals = sumNutrition(items);
-    return {
-      type,
-      label: MEAL_LABELS[type],
-      name,
-      description,
-      items: items.map(item => ({
-        name: item.food.name,
-        grams: item.grams,
-        category: item.food.category
-      })),
-      totals
-    };
-  }
-
-  function getFoodUnit(foodName) {
-    return foodName === '脱脂牛奶' ? 'ml' : 'g';
-  }
-
-  function buildIngredientText(items) {
-    return items.map(item => `${item.name} ${item.grams}${getFoodUnit(item.name)}`).join(' · ');
-  }
-
-  function createBreakfast(targetKcal, rng, dayUsage, weekUsage) {
-    const carb = chooseByUsage(pickFoodsByTag('carbs', ['早餐']), rng, dayUsage, weekUsage);
-    const protein = chooseByUsage(pickFoodsByTag('proteins', ['早餐']), rng, dayUsage, weekUsage, [carb.name]);
-    const addFruit = rng() > 0.25;
-    const fruit = addFruit ? chooseByUsage(FOOD_GROUPS.fruits, rng, dayUsage, weekUsage) : null;
-    const items = [makeItem(carb.name, carb.serving_g), makeItem(protein.name, protein.serving_g)];
-    if (fruit) items.push(makeItem(fruit.name, fruit.serving_g));
-    adjustItemsToCalories(items, targetKcal, [0, 1]);
-    incrementUsage(dayUsage, protein);
-    incrementUsage(weekUsage, protein);
-    const breakfastName = fruit ? `${fruit.name}${protein.name}${carb.name}早餐碗` : `${protein.name}${carb.name}能量早餐`;
-    const description = `1 份碳水 + 1 份蛋白${fruit ? ' + 1 份水果' : ''}`;
-    return createMealObject('breakfast', items, breakfastName, description);
-  }
-
-  function createSnack(targetKcal, rng, dayUsage, weekUsage) {
-    const dairyPool = ['低脂希腊酸奶', '脱脂牛奶', '鸡蛋'].map(name => FOOD_MAP[name]);
-    const protein = chooseByUsage(dairyPool, rng, dayUsage, weekUsage);
-    const extraPool = rng() > 0.4 ? FOOD_GROUPS.fruits : [FOOD_MAP['杏仁'], FOOD_MAP['核桃'], FOOD_MAP['亚麻籽']];
-    const extra = chooseByUsage(extraPool, rng, dayUsage, weekUsage, [protein.name]);
-    const items = [makeItem(protein.name, protein.serving_g), makeItem(extra.name, extra.serving_g)];
-    adjustItemsToCalories(items, targetKcal, [0, 1]);
-    incrementUsage(dayUsage, protein);
-    incrementUsage(weekUsage, protein);
-    const snackName = `${protein.name}${extra.name}轻加餐`;
-    const description = protein.tags.includes('乳制品') ? '乳制品优先，补蛋白并控饥饿' : '高蛋白加餐，兼顾饱腹感';
-    return createMealObject('snack', items, snackName, description);
-  }
-
-  function createMainMeal(type, targetKcal, rng, dayUsage, weekUsage) {
-    const carb = chooseByUsage(pickFoodsByTag('carbs', [type === 'lunch' ? '午餐' : '晚餐']), rng, dayUsage, weekUsage);
-    const vegCandidates = pickFoodsByTag('vegetables', [type === 'lunch' ? '午餐' : '晚餐']);
-    const proteinCandidates = pickFoodsByTag('proteins', [type === 'lunch' ? '午餐' : '晚餐']).filter(food => !food.tags.includes('乳制品') && !food.tags.includes('痛风谨慎'));
-
-    const primaryProtein = chooseByUsage(proteinCandidates, rng, dayUsage, weekUsage);
-    const items = [makeItem(carb.name, carb.serving_g), makeItem(primaryProtein.name, primaryProtein.serving_g)];
-    incrementUsage(dayUsage, primaryProtein);
-    incrementUsage(weekUsage, primaryProtein);
-
-    const secondProteinAllowed = targetKcal > 520 || rng() > 0.55;
-    if (secondProteinAllowed) {
-      const secondaryProtein = chooseByUsage(proteinCandidates, rng, dayUsage, weekUsage, [primaryProtein.name]);
-      if (secondaryProtein) {
-        items.push(makeItem(secondaryProtein.name, secondaryProtein.serving_g * (type === 'dinner' ? 0.8 : 0.65)));
-        incrementUsage(dayUsage, secondaryProtein);
-        incrementUsage(weekUsage, secondaryProtein);
-      }
-    }
-
-    const requiredVegCount = type === 'dinner' ? 2 : (rng() > 0.45 ? 2 : 1);
-    const chosenVeg = [];
-    let vegPool = [...vegCandidates];
-    while (chosenVeg.length < requiredVegCount && vegPool.length) {
-      const veggie = chooseByUsage(vegPool, rng, dayUsage, weekUsage, chosenVeg.map(item => item.name));
-      chosenVeg.push(veggie);
-      vegPool = vegPool.filter(food => food.name !== veggie.name);
-    }
-    chosenVeg.forEach(veg => items.push(makeItem(veg.name, veg.serving_g)));
-
-    items.push(makeItem('橄榄油', type === 'dinner' ? 8 : 6));
-    adjustItemsToCalories(items, targetKcal, [0, 1, items.length - 1]);
-
-    const proteins = items.filter(item => item.food.category === '蛋白质来源').map(item => item.food.name);
-    const vegNames = chosenVeg.map(veg => veg.name);
-    const mealName = `${vegNames[0] || '时蔬'}${proteins[0]}${carb.name}${type === 'dinner' ? '盘' : '碗'}`;
-    const description = `${proteins.join(' + ')} 搭配 ${vegNames.join('、')} 与 ${carb.name}`;
-    return createMealObject(type, items, mealName, description);
-  }
-
-  function rebalanceDay(dayPlan, metrics) {
-    const totals = dayPlan.meals.reduce((acc, meal) => ({
-      kcal: acc.kcal + meal.totals.kcal,
-      protein: acc.protein + meal.totals.protein,
-      carb: acc.carb + meal.totals.carb,
-      fat: acc.fat + meal.totals.fat
-    }), { kcal: 0, protein: 0, carb: 0, fat: 0 });
-
-    const dinner = dayPlan.meals.find(meal => meal.type === 'dinner');
-    if (!dinner) return totals;
-
-    if (metrics.proteinTarget - totals.protein > 8) {
-      const dinnerProtein = dinner.items.find(item => FOOD_MAP[item.name].category === '蛋白质来源');
-      if (dinnerProtein) {
-        const proteinFood = FOOD_MAP[dinnerProtein.name];
-        const extraProteinGrams = ((metrics.proteinTarget - totals.protein) / proteinFood.protein_per_100g) * 100 * 0.35;
-        dinnerProtein.grams = roundPortion(dinnerProtein.grams + extraProteinGrams);
-      }
-    }
-
-    const recalculatedDinnerItems = dinner.items.map(item => ({ food: FOOD_MAP[item.name], grams: item.grams }));
-    const dinnerCarb = recalculatedDinnerItems.find(item => item.food.category === '碳水来源');
-    const beforeDinner = sumNutrition(recalculatedDinnerItems);
-    const projectedTotal = totals.kcal - dinner.totals.kcal + beforeDinner.kcal;
-    const diff = metrics.calorieTarget - projectedTotal;
-    if (dinnerCarb && Math.abs(diff) > 40) {
-      const gramsDelta = (diff / dinnerCarb.food.kcal_per_100g) * 100 * 0.6;
-      dinnerCarb.grams = roundPortion(clamp(dinnerCarb.grams + gramsDelta, 60, 260));
-    }
-
-    dinner.items = recalculatedDinnerItems.map(item => ({ name: item.food.name, grams: item.grams, category: item.food.category }));
-    dinner.totals = sumNutrition(recalculatedDinnerItems);
-
-    return dayPlan.meals.reduce((acc, meal) => ({
-      kcal: acc.kcal + meal.totals.kcal,
-      protein: acc.protein + meal.totals.protein,
-      carb: acc.carb + meal.totals.carb,
-      fat: acc.fat + meal.totals.fat
-    }), { kcal: 0, protein: 0, carb: 0, fat: 0 });
-  }
-
-  function generateWeeklyPlan(metrics, weekInfo, variant = 0, profileSignature = '') {
-    const rng = createSeededRandom(`${weekInfo.key}|${variant}|${roundToInt(metrics.calorieTarget)}|${roundToInt(metrics.proteinTarget)}|${profileSignature}`);
-    const weekProteinUsage = {};
-    const days = [];
-    const mealRatios = { breakfast: 0.2, lunch: 0.3, snack: 0.1, dinner: 0.4 };
-
-    for (let index = 0; index < 7; index++) {
-      const date = new Date(weekInfo.startDate);
-      date.setDate(weekInfo.startDate.getDate() + index);
-      const dayUsage = {};
-      const meals = [
-        createBreakfast(metrics.calorieTarget * mealRatios.breakfast, rng, dayUsage, weekProteinUsage),
-        createMainMeal('lunch', metrics.calorieTarget * mealRatios.lunch, rng, dayUsage, weekProteinUsage),
-        createSnack(metrics.calorieTarget * mealRatios.snack, rng, dayUsage, weekProteinUsage),
-        createMainMeal('dinner', metrics.calorieTarget * mealRatios.dinner, rng, dayUsage, weekProteinUsage)
-      ];
-      const dayPlan = {
-        dayLabel: `周${['一', '二', '三', '四', '五', '六', '日'][index]}`,
-        dateLabel: formatShortDate(date),
-        meals
-      };
-      dayPlan.totals = rebalanceDay(dayPlan, metrics);
-      days.push(dayPlan);
-    }
-
-    return {
-      weekKey: weekInfo.key,
-      weekLabel: `${weekInfo.key}（${formatShortDate(weekInfo.startDate)} - ${formatShortDate(weekInfo.endDate)}）`,
-      variant,
-      profileSignature,
-      targets: {
-        calories: roundToInt(metrics.calorieTarget),
-        protein: roundToInt(metrics.proteinTarget),
-        carb: roundToInt(metrics.carbTarget),
-        fat: roundToInt(metrics.fatTarget)
-      },
-      days,
-      generatedAt: new Date().toISOString()
-    };
-  }
-
-  function getSavedWeeklyPlan() {
-    return getStoredJSON(STORAGE_KEYS.weeklyPlan, null);
-  }
-
-  function saveWeeklyPlan(plan) {
-    localStorage.setItem(STORAGE_KEYS.weeklyPlan, JSON.stringify(plan));
-  }
-
-  function renderWeeklyPlan(plan) {
-    const container = document.getElementById('weeklyPlanContainer');
-    if (!plan) {
-      setText('weeklyPlanMeta', '保存个人设置后会自动生成本周菜单。');
-      container.innerHTML = '<div class="alert alert-blue" style="margin-bottom:0"><strong>先完成个人设置</strong>点击“个人设置”保存资料后，系统会按你的热量与宏量目标生成 7 天菜单，并自动保存在本地。</div>';
-      return;
-    }
-
-    setText('weeklyPlanMeta', `${plan.weekLabel} · 目标 ${plan.targets.calories} kcal / 蛋白质 ${plan.targets.protein}g / 碳水 ${plan.targets.carb}g / 脂肪 ${plan.targets.fat}g`);
-    container.innerHTML = `<div class="weekly-list">${plan.days.map(day => `
-      <div class="weekly-day">
-        <div class="weekly-day-header">
-          <div>
-            <div class="weekly-day-title">${day.dayLabel}</div>
-            <div class="weekly-day-subtitle">${day.dateLabel}</div>
-          </div>
-          <div class="weekly-total">合计 ${roundToInt(day.totals.kcal)} kcal · 蛋白质 ${roundToInt(day.totals.protein)}g · 碳水 ${roundToInt(day.totals.carb)}g · 脂肪 ${roundToInt(day.totals.fat)}g</div>
+<!-- ═══════════════════ PAGE: Nutrition Pools ═══════════════════ -->
+<div id="page-pools" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>📦 食材营养池</h1>
+      <p>每100g生重 · 按主要营养成分分类 · 数据来自USDA FoodData Central</p>
+    </div>
+
+    <div class="alert alert-blue" style="margin-bottom:16px">
+      <strong>💡 动态数据</strong>
+      下方为常用食材的本地参考数据。更精确的实时数据请使用「🔍 食物搜索」功能直接查询USDA数据库。
+    </div>
+
+    <div class="pool-tabs">
+      <button class="pool-tab active" onclick="showPool('carb')">🌾 碳水池</button>
+      <button class="pool-tab" onclick="showPool('protein')">🥩 蛋白质池</button>
+      <button class="pool-tab" onclick="showPool('fat')">🫒 脂肪池</button>
+      <button class="pool-tab" onclick="showPool('micro')">🥦 微量元素池</button>
+    </div>
+
+    <!-- Carb Pool -->
+    <div id="pool-carb" class="pool-panel active">
+      <div class="card">
+        <div class="card-title"><span class="icon">🌾</span>碳水化合物池（每100g）</div>
+        <div class="alert alert-blue" style="margin-bottom:14px">
+          <strong>选择原则</strong>
+          优先选择低GI复合碳水，避免血糖剧烈波动。高膳食纤维粗粮有助减脂、稳定尿酸。
         </div>
-        <div class="weekly-meals">${day.meals.map(meal => `
-          <div class="weekly-meal">
-            <div class="weekly-meal-top">
-              <div>
-                <div class="weekly-meal-label">${meal.label}</div>
-                <div class="weekly-meal-name">${meal.name}</div>
-              </div>
-              <span class="meal-kcal">${roundToInt(meal.totals.kcal)} kcal</span>
-            </div>
-            <div class="weekly-meal-desc">${meal.description}</div>
-            <div class="weekly-meal-ingredients">食材：${buildIngredientText(meal.items)}</div>
-            <div class="weekly-macros">
-              <span class="macro-chip primary">蛋白质 ${roundToOneDecimal(meal.totals.protein).toFixed(1)}g</span>
-              <span class="macro-chip">碳水 ${roundToOneDecimal(meal.totals.carb).toFixed(1)}g</span>
-              <span class="macro-chip">脂肪 ${roundToOneDecimal(meal.totals.fat).toFixed(1)}g</span>
-            </div>
-          </div>
-        `).join('')}</div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>食材</th><th>热量(kcal)</th><th>碳水(g)</th><th>蛋白质(g)</th><th>脂肪(g)</th><th>膳食纤维(g)</th><th>GI</th><th>特点</th></tr></thead>
+            <tbody>
+              <tr><td>糙米（干）</td><td>364</td><td>76</td><td>8.0</td><td>2.7</td><td>3.4</td><td>低 55</td><td>B族维生素丰富，减脂主食首选</td></tr>
+              <tr><td>燕麦（干）</td><td>389</td><td>67</td><td>17</td><td>7.0</td><td>10</td><td>低 55</td><td>β-葡聚糖降胆固醇，高蛋白主食</td></tr>
+              <tr><td>藜麦（干）</td><td>368</td><td>64</td><td>14</td><td>6.1</td><td>7.0</td><td>低 53</td><td>完全蛋白，含全部必需氨基酸</td></tr>
+              <tr><td>红薯（生）</td><td>90</td><td>21</td><td>1.6</td><td>0.1</td><td>3.0</td><td>中 61</td><td>β-胡萝卜素丰富，高钾低脂</td></tr>
+              <tr><td>紫薯（生）</td><td>82</td><td>19</td><td>1.5</td><td>0.1</td><td>2.5</td><td>中 58</td><td>花青素强效抗氧化</td></tr>
+              <tr><td>山药（生）</td><td>57</td><td>13</td><td>1.9</td><td>0.2</td><td>1.0</td><td>低 51</td><td>助消化，低热量饱腹感强</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    `).join('')}</div>`;
-  }
+    </div>
 
-  function ensureWeeklyPlanForCurrentWeek({ profile = getSavedProfile(), forceRegenerate = false, triggeredByProfileChange = false } = {}) {
-    if (!profile) {
-      renderWeeklyPlan(null);
-      return null;
-    }
+    <!-- Protein Pool -->
+    <div id="pool-protein" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🥩</span>蛋白质池（每100g生重）</div>
+        <div class="alert alert-orange" style="margin-bottom:14px">
+          <strong>⚠️ 嘌呤分级</strong>
+          低 &lt;25 mg · 中 25–150 mg · 高 &gt;150 mg（每100g）。中嘌呤食材每份≤80g，高嘌呤食材禁用。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>食材</th><th>热量(kcal)</th><th>蛋白质(g)</th><th>脂肪(g)</th><th>嘌呤</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>🐔 鸡胸肉（去皮）</td><td>165</td><td>31</td><td>3.6</td><td><span class="purine-badge purine-mid">中</span></td><td>高蛋白低脂，减脂首选</td></tr>
+              <tr><td>🐄 牛里脊</td><td>147</td><td>22</td><td>6.5</td><td><span class="purine-badge purine-mid">中</span></td><td>铁2.7mg，锌4.4mg</td></tr>
+              <tr><td>🐷 猪里脊</td><td>143</td><td>22</td><td>6.2</td><td><span class="purine-badge purine-mid">中</span></td><td>瘦肉高蛋白低脂</td></tr>
+              <tr><td>🐟 鲈鱼</td><td>105</td><td>19</td><td>3.4</td><td><span class="purine-badge purine-mid">中</span></td><td>DHA丰富，清蒸最佳</td></tr>
+              <tr><td>🥚 鸡蛋（全蛋）</td><td>155</td><td>13</td><td>11</td><td><span class="purine-badge purine-low">低</span></td><td>完全蛋白，性价比最高</td></tr>
+              <tr><td>🫘 老豆腐</td><td>76</td><td>8.1</td><td>4.8</td><td><span class="purine-badge purine-low">低</span></td><td>促尿酸排泄，痛风友好</td></tr>
+              <tr><td>🥛 低脂希腊酸奶</td><td>59</td><td>10</td><td>0.4</td><td><span class="purine-badge purine-low">极低</span></td><td>促尿酸排泄，加餐首选</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-red" style="margin-top:16px">
+          <strong>❌ 禁用食材（高嘌呤）</strong>
+          动物内脏 · 带壳海鲜 · 沙丁鱼 · 凤尾鱼 · 鲭鱼 · 鱼皮/鱼籽
+        </div>
+      </div>
+    </div>
 
-    const metrics = calculateMetrics(profile);
-    const savedPlan = getSavedWeeklyPlan();
-    const weekInfo = getWeekInfo();
-    const profileSignature = getProfileSignature(profile);
+    <!-- Fat Pool -->
+    <div id="pool-fat" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🫒</span>脂肪池（每100g）</div>
+        <div class="alert alert-green" style="margin-bottom:14px">
+          <strong>选择原则</strong>
+          优先单不饱和脂肪酸和ω-3；减少饱和脂肪。烹饪用油控制在10ml以内。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>食材</th><th>热量(kcal)</th><th>总脂肪(g)</th><th>ω-3(g)</th><th>蛋白质(g)</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>橄榄油（初榨）</td><td>884</td><td>100</td><td>0.8</td><td>0</td><td>抗炎，煎炒腌制均可</td></tr>
+              <tr><td>亚麻籽油</td><td>884</td><td>100</td><td>53.4</td><td>0</td><td>ω-3最佳植物来源，拌凉菜用</td></tr>
+              <tr><td>牛油果（鲜）</td><td>160</td><td>15</td><td>0.1</td><td>2.0</td><td>钾487mg，膳食纤维7g</td></tr>
+              <tr><td>核桃（生）</td><td>654</td><td>65</td><td>9.1</td><td>15</td><td>ω-3最丰富坚果，每天≤30g</td></tr>
+              <tr><td>杏仁（生）</td><td>579</td><td>50</td><td>0.003</td><td>21</td><td>维E丰富，每天≤30g</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    const savedMatchesWeek = savedPlan && savedPlan.weekKey === weekInfo.key;
-    const variant = savedMatchesWeek ? (savedPlan.variant || 0) + (forceRegenerate ? 1 : 0) : 0;
-    const shouldReuse = savedMatchesWeek
-      && !forceRegenerate
-      && !triggeredByProfileChange
-      && savedPlan.profileSignature === profileSignature;
+    <!-- Micronutrient Pool -->
+    <div id="pool-micro" class="pool-panel">
+      <div class="card">
+        <div class="card-title"><span class="icon">🥦</span>微量元素池（每100g生重）</div>
+        <div class="alert alert-green" style="margin-bottom:14px">
+          <strong>选择原则</strong>
+          蔬菜是微量营养素的主要来源。优先选高钾（促尿酸排泄）、高维C（降尿酸）、高钙、高铁品种。
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>食材</th><th>热量(kcal)</th><th>钙(mg)</th><th>维C(mg)</th><th>钾(mg)</th><th>嘌呤</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>🌿 菠菜</td><td>23</td><td>99</td><td>28</td><td>558</td><td><span class="purine-badge purine-low">低</span></td><td>⚠️草酸高，必须焯水</td></tr>
+              <tr><td>🥦 西兰花</td><td>34</td><td>47</td><td>89</td><td>316</td><td><span class="purine-badge purine-low">低</span></td><td>萝卜硫素，维C高</td></tr>
+              <tr><td>🥕 胡萝卜</td><td>41</td><td>33</td><td>6</td><td>320</td><td><span class="purine-badge purine-low">低</span></td><td>β-胡萝卜素，与油同食吸收好</td></tr>
+              <tr><td>🫑 彩椒</td><td>31</td><td>7</td><td>128</td><td>211</td><td><span class="purine-badge purine-low">低</span></td><td>✨维C最高，有助降尿酸</td></tr>
+              <tr><td>🍅 番茄</td><td>18</td><td>10</td><td>23</td><td>237</td><td><span class="purine-badge purine-low">低</span></td><td>番茄红素，加热后吸收翻倍</td></tr>
+              <tr><td>🥒 西葫芦</td><td>17</td><td>16</td><td>17</td><td>262</td><td><span class="purine-badge purine-low">低</span></td><td>低热量，冷冻复热口感好</td></tr>
+              <tr><td>🥬 小白菜</td><td>13</td><td>90</td><td>28</td><td>178</td><td><span class="purine-badge purine-low">低</span></td><td>铁钙均衡</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    const plan = shouldReuse
-      ? savedPlan
-      : generateWeeklyPlan(metrics, weekInfo, forceRegenerate ? variant : (savedMatchesWeek ? (savedPlan.variant || 0) : 0), profileSignature);
-
-    saveWeeklyPlan(plan);
-    renderWeeklyPlan(plan);
-    return plan;
-  }
-
-  function regenerateWeeklyPlan() {
-    const profile = getSavedProfile();
-    if (!profile) {
-      window.alert('请先在“个人设置”里保存资料，再生成每周食谱。');
-      showPage('profile');
-      return;
-    }
-    ensureWeeklyPlanForCurrentWeek({ profile, forceRegenerate: true });
-  }
-
-  // ── Weight tracking ──
-  function getWeightRecords() {
-    const data = getStoredJSON(STORAGE_KEYS.weight, []);
-    return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
-  }
-
-  function setWeightRecords(records) {
-    localStorage.setItem(STORAGE_KEYS.weight, JSON.stringify(records));
-  }
-
-  function saveWeightRecord(event) {
-    event.preventDefault();
-    const date = document.getElementById('weightDate').value;
-    const value = parseFloat(document.getElementById('weightValue').value);
-    if (!date || Number.isNaN(value) || value < 20 || value > 300) {
-      window.alert('请输入有效日期和体重（20-300kg）。');
-      return;
-    }
-
-    const existingRecords = getWeightRecords();
-    const existed = existingRecords.some(record => record.date === date);
-    if (existed && !window.confirm('该日期已有记录，是否覆盖？')) return;
-
-    const records = existingRecords.filter(record => record.date !== date);
-    records.push({ date, weight: roundToOneDecimal(value) });
-    setWeightRecords(records);
-    renderWeightRecords();
-    document.getElementById('weightValue').value = '';
-  }
-
-  function deleteWeightRecord(date) {
-    const records = getWeightRecords().filter(record => record.date !== date);
-    setWeightRecords(records);
-    renderWeightRecords();
-  }
-
-  function renderWeightRecords() {
-    const records = getWeightRecords();
-    const tbody = document.getElementById('weightTableBody');
-    const emptyTip = document.getElementById('weightEmptyTip');
-    tbody.innerHTML = '';
-
-    if (!records.length) {
-      emptyTip.style.display = 'block';
-      document.getElementById('latestWeight').textContent = '--';
-      document.getElementById('weightChange').textContent = '--';
-      document.getElementById('recordCount').textContent = '0';
-      return;
-    }
-
-    emptyTip.style.display = 'none';
-    const first = records[0];
-    const latest = records[records.length - 1];
-    const change = roundToOneDecimal(latest.weight - first.weight);
-
-    document.getElementById('latestWeight').textContent = `${latest.weight.toFixed(1)} kg`;
-    document.getElementById('weightChange').textContent = `${formatSigned(change)} kg`;
-    document.getElementById('recordCount').textContent = String(records.length);
-
-    const rows = records.map((record, index) => {
-      const previous = records[index - 1];
-      const delta = previous ? roundToOneDecimal(record.weight - previous.weight) : 0;
-      return { ...record, delta };
-    });
-
-    [...rows].reverse().forEach(record => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${record.date}</td>
-        <td>${record.weight.toFixed(1)} kg</td>
-        <td>${formatSigned(record.delta)} kg</td>
-        <td class="weight-table-actions"><button onclick="deleteWeightRecord('${record.date}')">删除</button></td>
-      `;
-      tbody.appendChild(row);
-    });
-  }
-
-  function initWeightTracker() {
-    const now = new Date();
-    const localDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    document.getElementById('weightDate').value = localDate;
-    renderWeightRecords();
-  }
-
-  function initApp() {
-    initProfileSettings();
-    initWeightTracker();
-    ensureWeeklyPlanForCurrentWeek();
-  }
-
-  initApp();
+<!-- ═══════════════════ JavaScript Modules ═══════════════════ -->
+<script src="js/nutrition-api.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/food-pool.js"></script>
+<script src="js/week-data.js"></script>
+<script src="js/meal-plan.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Initialize meal plan rendering after all modules loaded
+  MealPlan.init();
 </script>
 </body>
 </html>

@@ -168,10 +168,10 @@ const Profile = (() => {
           添加已确诊的疾病，系统将自动调整食物推荐（如避开高嘌呤食物）
         </p>
         <ul class="condition-list" id="conditionList">
-          ${profile.conditions.map(c => `
+          ${profile.conditions.map((c, i) => `
             <li class="condition-item">
               <span class="tag tag-red">${escapeHtml(c)}</span>
-              <button class="remove-btn" onclick="Profile.removeCondition('${escapeHtml(c).replace(/'/g, "\\'")}')">✕</button>
+              <button class="remove-btn" data-remove-condition="${i}">✕</button>
             </li>
           `).join('')}
         </ul>
@@ -199,10 +199,10 @@ const Profile = (() => {
       <div class="card">
         <div class="card-title"><span class="icon">⚠️</span>食物过敏 / 不耐受</div>
         <ul class="condition-list" id="allergyList">
-          ${profile.allergies.map(a => `
+          ${profile.allergies.map((a, i) => `
             <li class="condition-item">
               <span class="tag tag-orange">${escapeHtml(a)}</span>
-              <button class="remove-btn" onclick="Profile.removeAllergy('${escapeHtml(a).replace(/'/g, "\\'")}')">✕</button>
+              <button class="remove-btn" data-remove-allergy="${i}">✕</button>
             </li>
           `).join('')}
         </ul>
@@ -276,6 +276,7 @@ const Profile = (() => {
     // Re-render to update calculated metrics
     const page = document.getElementById('page-profile');
     page.innerHTML = renderPage();
+    attachProfileEvents();
     showToast('✅ 个人指标已保存');
   }
 
@@ -290,6 +291,7 @@ const Profile = (() => {
     }
     select.value = '';
     document.getElementById('page-profile').innerHTML = renderPage();
+    attachProfileEvents();
   }
 
   function addCustomCondition() {
@@ -303,6 +305,7 @@ const Profile = (() => {
     }
     input.value = '';
     document.getElementById('page-profile').innerHTML = renderPage();
+    attachProfileEvents();
   }
 
   function removeCondition(condition) {
@@ -310,6 +313,7 @@ const Profile = (() => {
     profile.conditions = profile.conditions.filter(c => c !== condition);
     save(profile);
     document.getElementById('page-profile').innerHTML = renderPage();
+    attachProfileEvents();
   }
 
   function addAllergy() {
@@ -323,6 +327,7 @@ const Profile = (() => {
     }
     input.value = '';
     document.getElementById('page-profile').innerHTML = renderPage();
+    attachProfileEvents();
   }
 
   function removeAllergy(allergy) {
@@ -330,6 +335,45 @@ const Profile = (() => {
     profile.allergies = profile.allergies.filter(a => a !== allergy);
     save(profile);
     document.getElementById('page-profile').innerHTML = renderPage();
+    attachProfileEvents();
+  }
+
+  /**
+   * Attach event delegation for remove buttons (avoids inline onclick with user data)
+   */
+  function attachProfileEvents() {
+    const conditionList = document.getElementById('conditionList');
+    if (conditionList) {
+      conditionList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-remove-condition]');
+        if (btn) {
+          const index = parseInt(btn.dataset.removeCondition);
+          const profile = load();
+          if (index >= 0 && index < profile.conditions.length) {
+            profile.conditions.splice(index, 1);
+            save(profile);
+            document.getElementById('page-profile').innerHTML = renderPage();
+            attachProfileEvents();
+          }
+        }
+      });
+    }
+    const allergyList = document.getElementById('allergyList');
+    if (allergyList) {
+      allergyList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-remove-allergy]');
+        if (btn) {
+          const index = parseInt(btn.dataset.removeAllergy);
+          const profile = load();
+          if (index >= 0 && index < profile.allergies.length) {
+            profile.allergies.splice(index, 1);
+            save(profile);
+            document.getElementById('page-profile').innerHTML = renderPage();
+            attachProfileEvents();
+          }
+        }
+      });
+    }
   }
 
   return {
@@ -342,5 +386,6 @@ const Profile = (() => {
     removeCondition,
     addAllergy,
     removeAllergy,
+    attachProfileEvents,
   };
 })();

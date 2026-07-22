@@ -23,6 +23,7 @@ function showPage(pageId) {
   // Render dynamic pages
   if (pageId === 'profile') {
     page.innerHTML = Profile.renderPage();
+    Profile.attachProfileEvents();
   } else if (pageId === 'search') {
     page.innerHTML = FoodPool.renderSearchPage();
   }

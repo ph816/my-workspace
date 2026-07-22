@@ -858,7 +858,6 @@
 
 <!-- ══════════════════════════════════════════ -->
 <!-- PAGE: shopping                            -->
-<!-- ══════════════════════════════════════════ -->                            -->
 <!-- ══════════════════════════════════════════ -->
 <div id="page-shopping" class="page">
   <div class="page-wrap">
@@ -1698,9 +1697,10 @@
     return mulberry32(xmur3(seedText)());
   }
 
+  // ISO 8601 week number: convert JS Sunday=0 to Monday=0 indexing
   function getWeekInfo(baseDate = new Date()) {
     const date = new Date(baseDate);
-    const day = (date.getDay() + 6) % 7;
+    const day = (date.getDay() + 6) % 7; // Monday=0 ... Sunday=6
     date.setHours(0, 0, 0, 0);
     date.setDate(date.getDate() - day + 3);
     const firstThursday = new Date(date.getFullYear(), 0, 4);
@@ -1837,6 +1837,7 @@
       ? (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) + 5
       : (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) - 161;
     const tdee = bmr * ACTIVITY_MULTIPLIERS[profile.activity];
+    // 7700 kcal ≈ 1kg fat; 7700/7 ≈ 1100 kcal daily deficit per kg/week
     const calorieTarget = tdee - (profile.goal * 1100);
     const proteinTarget = profile.weight * 2;
     const fatTarget = (calorieTarget * 0.25) / 9;
